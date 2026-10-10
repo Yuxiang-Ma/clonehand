@@ -1,0 +1,1625 @@
+{
+  "scope": {
+    "handedness": "right",
+    "boundary": "Muscles that move the hand, wrist, and forearm rotation. A muscle is in scope when at least one end attaches to the hand (carpals, metacarpals, phalanges, or palmar soft tissue) or a finger, or when it rotates the forearm (pronator teres, pronator quadratus, supinator), because the simulation includes forearm rotation. Muscles that act mainly at the elbow (brachioradialis, anconeus) are excluded. Bones cover the hand plus the radius and ulna.",
+    "counting_rules": [
+      "Count 8 carpals, 5 metacarpals, and 14 phalanges as 27 hand bones; add radius and ulna for 29. Include the pisiform among carpals; exclude other sesamoids and accessory bones.",
+      "Count 18 forearm muscles: 8 anterior and 10 posterior. 15 insert on the hand (palmaris longus counts because it inserts into the palmar aponeurosis); pronator teres, pronator quadratus, and supinator are included as forearm rotators.",
+      "Count 19 intrinsic hand muscles: 4 thumb muscles, 3 hypothenar muscles, palmaris brevis, 4 lumbricals, 4 dorsal interossei, and 3 palmar interossei. Adductor pollicis counts once despite two heads.",
+      "Count each named muscle once; FDS, FDP, and extensor digitorum each count once despite four modeled digital actuators. Do not equate anatomical totals with actuator totals."
+    ],
+    "variations": [
+      "Palmaris longus can be absent; this reference inventory includes it.",
+      "Use the three-palmar-interossei convention; a separately described thumb palmar interosseous and accessory muscles are outside this count.",
+      "Origins and insertions are attachment summaries, not specimen-specific coordinates. Head variants and accessory slips are not enumerated."
+    ],
+    "model_limits": [
+      "MyoHand has 39 actuators. 5 actuators from MUSIC (APB_r, FPB_r, AdP_r, ADM_r, FDM_r) are added when the MUSIC cache is present, giving 44. Twelve finger intrinsic channels retain bundled model labels because an exact muscle-by-muscle correspondence has not been established.",
+      "Empty model_actuators means no confirmed dedicated actuator; a muscle may contribute to a bundled channel without an established mapping.",
+      "Forearm rotation (pro_sup_r) has two pronator actuators (PT_r, PQ_r) and no supinator, as in MyoHand and MUSIC.",
+      "The anatomical inventory is a research reference. Muscle paths, joint axes, limits, and posture-dependent moment arms must be read from the exported model catalog."
+    ],
+    "conventions": {
+      "digits": "1 thumb, 2 index, 3 middle, 4 ring, 5 little",
+      "MCP": "metacarpophalangeal",
+      "PIP": "proximal interphalangeal",
+      "DIP": "distal interphalangeal",
+      "CMC": "carpometacarpal",
+      "IP": "thumb interphalangeal",
+      "abduction": "Fingers move away from digit 3; thumb abduction has a different anatomical plane.",
+      "coordinate_units": "Anatomical descriptions use named directions; numeric model geometry uses metres and joint angles use radians. Refer to the model catalog for axis frames and signs."
+    },
+    "source_ids": [
+      "openstax_bones",
+      "forearm_compartments",
+      "intrinsic_count",
+      "myohand",
+      "myohand_build"
+    ],
+    "excluded_muscles": [
+      {
+        "id": "brachioradialis",
+        "name": "Brachioradialis",
+        "origin": "Humeral lateral supracondylar ridge.",
+        "insertion": "Distal radius near styloid.",
+        "reason": "Runs from the humerus to the distal radius; it acts mainly at the elbow and does not attach to the hand.",
+        "source_ids": [
+          "forearm_muscles"
+        ]
+      },
+      {
+        "id": "anconeus",
+        "name": "Anconeus",
+        "origin": "Humeral lateral epicondyle.",
+        "insertion": "Olecranon and proximal posterior ulna.",
+        "reason": "Runs from the humerus to the ulna; it acts at the elbow and does not attach to the hand.",
+        "source_ids": [
+          "forearm_compartments"
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "bones_total": 29,
+    "hand_bones": 27,
+    "forearm_bones": 2,
+    "anatomical_muscles_total": 37,
+    "forearm_muscles": 18,
+    "intrinsic_hand_muscles": 19,
+    "model_actuators": 44
+  },
+  "sources": [
+    {
+      "id": "openstax_bones",
+      "title": "OpenStax, Anatomy and Physiology 2e, Bones of the Upper Limb",
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/8-2-bones-of-the-upper-limb"
+    },
+    {
+      "id": "uams",
+      "title": "UAMS Department of Neuroscience, Muscles of the Upper Limb",
+      "url": "https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/muscle-tables/muscles-of-the-upper-limb/"
+    },
+    {
+      "id": "grays_forearm",
+      "title": "Gray’s Anatomy, forearm chapter (publisher text)",
+      "url": "https://elsevier-elibrary.com/contents/fullcontent/58750/epubcontent_v2/OEBPS/B9780443066849500573.htm"
+    },
+    {
+      "id": "grays_hand",
+      "title": "Gray’s Anatomy, hand chapter (publisher text)",
+      "url": "https://elsevier-elibrary.com/contents/fullcontent/58750/epubcontent_v2/OEBPS/B9780443066849500585.htm"
+    },
+    {
+      "id": "grays_students",
+      "title": "Gray’s Anatomy for Students, upper limb (publisher text)",
+      "url": "https://elsevier-elibrary.com/contents/fullcontent/58090/epubcontent_v2/OEBPS/B9780443069529000126A.htm"
+    },
+    {
+      "id": "forearm_muscles",
+      "title": "StatPearls, Anatomy, Shoulder and Upper Limb, Forearm Muscles",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK536975/"
+    },
+    {
+      "id": "forearm_compartments",
+      "title": "StatPearls, Anatomy, Shoulder and Upper Limb, Forearm Compartments",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK539784/"
+    },
+    {
+      "id": "hand_muscles",
+      "title": "StatPearls, Anatomy, Shoulder and Upper Limb, Hand Muscles",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK537229/"
+    },
+    {
+      "id": "dorsal_forearm",
+      "title": "Dorsal forearm muscles: US anatomy, pictorial essay",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3552760/"
+    },
+    {
+      "id": "ecrl",
+      "title": "Elsevier Complete Anatomy, Extensor Carpi Radialis Longus",
+      "url": "https://www.elsevier.com/resources/anatomy/muscular-system/muscles-of-upper-limb/extensor-carpi-radialis-longus/22064"
+    },
+    {
+      "id": "ecrb_origin",
+      "title": "Greenbaum et al. (1999), Extensor carpi radialis brevis: an anatomical analysis of its origin",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10530864/"
+    },
+    {
+      "id": "palmaris_brevis",
+      "title": "Structural and functional anatomy of the palmaris brevis: grasping for answers",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5696130/"
+    },
+    {
+      "id": "intrinsic_count",
+      "title": "StatPearls, Intrinsic Hand Deformity",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33232025/"
+    },
+    {
+      "id": "myohand",
+      "title": "MyoSim, MyoHand model documentation",
+      "url": "https://github.com/MyoHub/myo_sim/blob/93b0ca8f4ec90c9899ee7f05fee561e9911da91b/myo_sim/models/arm/README_hand.md"
+    },
+    {
+      "id": "myohand_build",
+      "title": "MyoSim, hand composition and actuator selection",
+      "url": "https://github.com/MyoHub/myo_sim/blob/93b0ca8f4ec90c9899ee7f05fee561e9911da91b/myo_sim/build/hand.py"
+    },
+    {
+      "id": "myohand_tendons",
+      "title": "MyoSim, right arm tendon definitions",
+      "url": "https://github.com/MyoHub/myo_sim/blob/93b0ca8f4ec90c9899ee7f05fee561e9911da91b/myo_sim/models/arm/assets/myoarm_r_tendon.xml"
+    },
+    {
+      "id": "music",
+      "title": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning Muscle-Driven Dexterous Hand Control. ACM Trans Graph 45(4), 2026. Model files at github.com/xupei0610/music commit 1b13b79; the repository has no license, so they are used locally and not redistributed.",
+      "url": "https://doi.org/10.1145/3811402"
+    }
+  ],
+  "bones": [
+    {
+      "id": "radius",
+      "name": "Radius",
+      "group": "forearm",
+      "function": "Rotating forearm support; wrist articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "ulna",
+      "name": "Ulna",
+      "group": "forearm",
+      "function": "Forearm support; elbow articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "scaphoid",
+      "name": "Scaphoid",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "lunate",
+      "name": "Lunate",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "triquetrum",
+      "name": "Triquetrum",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "pisiform",
+      "name": "Pisiform",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "trapezium",
+      "name": "Trapezium",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "trapezoid",
+      "name": "Trapezoid",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "capitate",
+      "name": "Capitate",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "hamate",
+      "name": "Hamate",
+      "group": "carpal",
+      "function": "Wrist support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "metacarpal_1",
+      "name": "Metacarpal 1",
+      "group": "metacarpal",
+      "function": "Palm support; digit articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "metacarpal_2",
+      "name": "Metacarpal 2",
+      "group": "metacarpal",
+      "function": "Palm support; digit articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "metacarpal_3",
+      "name": "Metacarpal 3",
+      "group": "metacarpal",
+      "function": "Palm support; digit articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "metacarpal_4",
+      "name": "Metacarpal 4",
+      "group": "metacarpal",
+      "function": "Palm support; digit articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "metacarpal_5",
+      "name": "Metacarpal 5",
+      "group": "metacarpal",
+      "function": "Palm support; digit articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "proximal_phalanx_1",
+      "name": "Digit 1 proximal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "distal_phalanx_1",
+      "name": "Digit 1 distal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "proximal_phalanx_2",
+      "name": "Digit 2 proximal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "middle_phalanx_2",
+      "name": "Digit 2 middle phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "distal_phalanx_2",
+      "name": "Digit 2 distal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "proximal_phalanx_3",
+      "name": "Digit 3 proximal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "middle_phalanx_3",
+      "name": "Digit 3 middle phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "distal_phalanx_3",
+      "name": "Digit 3 distal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "proximal_phalanx_4",
+      "name": "Digit 4 proximal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "middle_phalanx_4",
+      "name": "Digit 4 middle phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "distal_phalanx_4",
+      "name": "Digit 4 distal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "proximal_phalanx_5",
+      "name": "Digit 5 proximal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "middle_phalanx_5",
+      "name": "Digit 5 middle phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    },
+    {
+      "id": "distal_phalanx_5",
+      "name": "Digit 5 distal phalanx",
+      "group": "phalanx",
+      "function": "Digit support and articulation.",
+      "source_ids": [
+        "openstax_bones"
+      ]
+    }
+  ],
+  "muscles": [
+    {
+      "id": "pronator_teres",
+      "name": "Pronator teres",
+      "group": "forearm_anterior",
+      "origin": "Humeral medial epicondyle; ulnar coronoid.",
+      "insertion": "Lateral mid-radius.",
+      "function": "Pronates forearm; assists elbow flexion.",
+      "model_actuators": [
+        "PT_r"
+      ],
+      "source_ids": [
+        "forearm_compartments"
+      ]
+    },
+    {
+      "id": "flexor_carpi_radialis",
+      "name": "Flexor carpi radialis",
+      "group": "forearm_anterior",
+      "origin": "Humeral medial epicondyle.",
+      "insertion": "Palmar bases of metacarpals 2–3.",
+      "function": "Flexes wrist; radial deviation.",
+      "model_actuators": [
+        "FCR_r"
+      ],
+      "source_ids": [
+        "forearm_compartments"
+      ]
+    },
+    {
+      "id": "palmaris_longus",
+      "name": "Palmaris longus",
+      "group": "forearm_anterior",
+      "origin": "Humeral medial epicondyle.",
+      "insertion": "Palmar aponeurosis and flexor retinaculum.",
+      "function": "Tenses palmar fascia; assists wrist flexion.",
+      "model_actuators": [
+        "PL_r"
+      ],
+      "source_ids": [
+        "forearm_compartments"
+      ]
+    },
+    {
+      "id": "flexor_carpi_ulnaris",
+      "name": "Flexor carpi ulnaris",
+      "group": "forearm_anterior",
+      "origin": "Humeral medial epicondyle; olecranon and posterior ulna.",
+      "insertion": "Pisiform; ligament connections to hamate and metacarpal 5.",
+      "function": "Flexes wrist; ulnar deviation.",
+      "model_actuators": [
+        "FCU_r"
+      ],
+      "source_ids": [
+        "grays_forearm"
+      ]
+    },
+    {
+      "id": "flexor_digitorum_superficialis",
+      "name": "Flexor digitorum superficialis",
+      "group": "forearm_anterior",
+      "origin": "Medial epicondyle, coronoid, anterior radius.",
+      "insertion": "Middle phalanges 2–5, through split tendons.",
+      "function": "Flexes PIP and MCP joints; assists wrist flexion.",
+      "model_actuators": [
+        "FDS2_r",
+        "FDS3_r",
+        "FDS4_r",
+        "FDS5_r"
+      ],
+      "source_ids": [
+        "grays_forearm",
+        "grays_students"
+      ]
+    },
+    {
+      "id": "flexor_digitorum_profundus",
+      "name": "Flexor digitorum profundus",
+      "group": "forearm_anterior",
+      "origin": "Proximal ulna and interosseous membrane.",
+      "insertion": "Palmar distal phalanges 2–5.",
+      "function": "Flexes DIP, PIP, and MCP joints; assists wrist flexion.",
+      "model_actuators": [
+        "FDP2_r",
+        "FDP3_r",
+        "FDP4_r",
+        "FDP5_r"
+      ],
+      "source_ids": [
+        "grays_forearm"
+      ]
+    },
+    {
+      "id": "flexor_pollicis_longus",
+      "name": "Flexor pollicis longus",
+      "group": "forearm_anterior",
+      "origin": "Anterior radius and interosseous membrane.",
+      "insertion": "Palmar distal thumb phalanx.",
+      "function": "Flexes thumb IP and MCP joints.",
+      "model_actuators": [
+        "FPL_r"
+      ],
+      "source_ids": [
+        "forearm_muscles"
+      ]
+    },
+    {
+      "id": "pronator_quadratus",
+      "name": "Pronator quadratus",
+      "group": "forearm_anterior",
+      "origin": "Anterior distal ulna.",
+      "insertion": "Anterior distal radius.",
+      "function": "Pronates forearm.",
+      "model_actuators": [
+        "PQ_r"
+      ],
+      "source_ids": [
+        "forearm_compartments"
+      ]
+    },
+    {
+      "id": "extensor_carpi_radialis_longus",
+      "name": "Extensor carpi radialis longus",
+      "group": "forearm_posterior",
+      "origin": "Distal humeral lateral supracondylar ridge.",
+      "insertion": "Dorsal metacarpal 2 base.",
+      "function": "Extends wrist; radial deviation.",
+      "model_actuators": [
+        "ECRL_r"
+      ],
+      "source_ids": [
+        "ecrl"
+      ]
+    },
+    {
+      "id": "extensor_carpi_radialis_brevis",
+      "name": "Extensor carpi radialis brevis",
+      "group": "forearm_posterior",
+      "origin": "Common extensor origin at lateral epicondyle.",
+      "insertion": "Dorsal metacarpal 3 base.",
+      "function": "Extends wrist; radial deviation.",
+      "model_actuators": [
+        "ECRB_r"
+      ],
+      "source_ids": [
+        "forearm_muscles",
+        "ecrb_origin"
+      ]
+    },
+    {
+      "id": "extensor_digitorum",
+      "name": "Extensor digitorum",
+      "group": "forearm_posterior",
+      "origin": "Common extensor origin at lateral epicondyle.",
+      "insertion": "Extensor expansions of digits 2–5.",
+      "function": "Extends MCP joints and contributes to IP extension; extends wrist.",
+      "model_actuators": [
+        "EDC2_r",
+        "EDC3_r",
+        "EDC4_r",
+        "EDC5_r"
+      ],
+      "source_ids": [
+        "dorsal_forearm"
+      ]
+    },
+    {
+      "id": "extensor_digiti_minimi",
+      "name": "Extensor digiti minimi",
+      "group": "forearm_posterior",
+      "origin": "Humeral lateral epicondyle.",
+      "insertion": "Little-finger extensor expansion.",
+      "function": "Extends little finger.",
+      "model_actuators": [
+        "EDM_r"
+      ],
+      "source_ids": [
+        "dorsal_forearm"
+      ]
+    },
+    {
+      "id": "extensor_carpi_ulnaris",
+      "name": "Extensor carpi ulnaris",
+      "group": "forearm_posterior",
+      "origin": "Humeral lateral epicondyle; posterior ulna.",
+      "insertion": "Ulnar metacarpal 5 base.",
+      "function": "Extends wrist; ulnar deviation.",
+      "model_actuators": [
+        "ECU_r"
+      ],
+      "source_ids": [
+        "dorsal_forearm"
+      ]
+    },
+    {
+      "id": "abductor_pollicis_longus",
+      "name": "Abductor pollicis longus",
+      "group": "forearm_posterior",
+      "origin": "Posterior radius, ulna, interosseous membrane.",
+      "insertion": "Radial metacarpal 1 base.",
+      "function": "Abducts and extends thumb at CMC.",
+      "model_actuators": [
+        "APL_r"
+      ],
+      "source_ids": [
+        "dorsal_forearm"
+      ]
+    },
+    {
+      "id": "extensor_pollicis_brevis",
+      "name": "Extensor pollicis brevis",
+      "group": "forearm_posterior",
+      "origin": "Posterior radius and interosseous membrane.",
+      "insertion": "Dorsal proximal thumb phalanx.",
+      "function": "Extends thumb MCP and CMC joints.",
+      "model_actuators": [
+        "EPB_r"
+      ],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "extensor_pollicis_longus",
+      "name": "Extensor pollicis longus",
+      "group": "forearm_posterior",
+      "origin": "Posterior ulna and interosseous membrane.",
+      "insertion": "Dorsal distal thumb phalanx.",
+      "function": "Extends thumb IP joint; assists MCP and CMC extension.",
+      "model_actuators": [
+        "EPL_r"
+      ],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "extensor_indicis",
+      "name": "Extensor indicis",
+      "group": "forearm_posterior",
+      "origin": "Distal posterior ulna and interosseous membrane.",
+      "insertion": "Index-finger extensor expansion.",
+      "function": "Extends index finger.",
+      "model_actuators": [
+        "EIP_r"
+      ],
+      "source_ids": [
+        "dorsal_forearm"
+      ]
+    },
+    {
+      "id": "supinator",
+      "name": "Supinator",
+      "group": "forearm_posterior",
+      "origin": "Lateral epicondyle, proximal ulna, adjacent elbow ligaments.",
+      "insertion": "Proximal radius.",
+      "function": "Supinates forearm.",
+      "model_actuators": [],
+      "source_ids": [
+        "forearm_muscles"
+      ]
+    },
+    {
+      "id": "abductor_pollicis_brevis",
+      "name": "Abductor pollicis brevis",
+      "group": "intrinsic_thumb",
+      "origin": "Scaphoid, trapezium, flexor retinaculum.",
+      "insertion": "Radial proximal thumb phalanx.",
+      "function": "Abducts thumb; assists opposition.",
+      "model_actuators": [
+        "APB_r"
+      ],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "flexor_pollicis_brevis",
+      "name": "Flexor pollicis brevis",
+      "group": "intrinsic_thumb",
+      "origin": "Flexor retinaculum and carpals; head attachments vary.",
+      "insertion": "Radial proximal thumb phalanx via sesamoid.",
+      "function": "Flexes thumb MCP joint.",
+      "model_actuators": [
+        "FPB_r"
+      ],
+      "source_ids": [
+        "grays_hand"
+      ]
+    },
+    {
+      "id": "opponens_pollicis",
+      "name": "Opponens pollicis",
+      "group": "intrinsic_thumb",
+      "origin": "Trapezium and flexor retinaculum.",
+      "insertion": "Radial metacarpal 1 shaft.",
+      "function": "Opposes thumb through CMC flexion and rotation.",
+      "model_actuators": [
+        "OP_r"
+      ],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "adductor_pollicis",
+      "name": "Adductor pollicis",
+      "group": "intrinsic_thumb",
+      "origin": "Capitate, bases of metacarpals 2–3, metacarpal 3 shaft.",
+      "insertion": "Ulnar proximal thumb phalanx.",
+      "function": "Adducts thumb; assists MCP flexion.",
+      "model_actuators": [
+        "AdP_r"
+      ],
+      "source_ids": [
+        "hand_muscles"
+      ]
+    },
+    {
+      "id": "abductor_digiti_minimi",
+      "name": "Abductor digiti minimi",
+      "group": "intrinsic_hypothenar",
+      "origin": "Pisiform; flexor carpi ulnaris tendon.",
+      "insertion": "Ulnar proximal phalanx 5 and extensor expansion.",
+      "function": "Abducts little finger; assists MCP flexion.",
+      "model_actuators": [
+        "ADM_r"
+      ],
+      "source_ids": [
+        "grays_students"
+      ]
+    },
+    {
+      "id": "flexor_digiti_minimi_brevis",
+      "name": "Flexor digiti minimi brevis",
+      "group": "intrinsic_hypothenar",
+      "origin": "Hamate hook and flexor retinaculum.",
+      "insertion": "Ulnar proximal phalanx 5.",
+      "function": "Flexes little-finger MCP joint.",
+      "model_actuators": [
+        "FDM_r"
+      ],
+      "source_ids": [
+        "grays_students"
+      ]
+    },
+    {
+      "id": "opponens_digiti_minimi",
+      "name": "Opponens digiti minimi",
+      "group": "intrinsic_hypothenar",
+      "origin": "Hamate hook and flexor retinaculum.",
+      "insertion": "Ulnar metacarpal 5 shaft.",
+      "function": "Draws and rotates metacarpal 5 forward for opposition.",
+      "model_actuators": [],
+      "source_ids": [
+        "grays_students"
+      ]
+    },
+    {
+      "id": "palmaris_brevis",
+      "name": "Palmaris brevis",
+      "group": "intrinsic_superficial",
+      "origin": "Palmar aponeurosis and flexor retinaculum.",
+      "insertion": "Skin along ulnar palm.",
+      "function": "Wrinkles hypothenar skin; has no direct joint insertion.",
+      "model_actuators": [],
+      "source_ids": [
+        "palmaris_brevis"
+      ]
+    },
+    {
+      "id": "lumbrical_1",
+      "name": "Lumbrical 1",
+      "group": "intrinsic_lumbrical",
+      "origin": "Radial FDP tendon for digit 2.",
+      "insertion": "Radial extensor expansion of digit 2.",
+      "function": "Flexes MCP 2; extends PIP and DIP 2.",
+      "model_actuators": [],
+      "source_ids": [
+        "hand_muscles"
+      ]
+    },
+    {
+      "id": "lumbrical_2",
+      "name": "Lumbrical 2",
+      "group": "intrinsic_lumbrical",
+      "origin": "Radial FDP tendon for digit 3.",
+      "insertion": "Radial extensor expansion of digit 3.",
+      "function": "Flexes MCP 3; extends PIP and DIP 3.",
+      "model_actuators": [],
+      "source_ids": [
+        "hand_muscles"
+      ]
+    },
+    {
+      "id": "lumbrical_3",
+      "name": "Lumbrical 3",
+      "group": "intrinsic_lumbrical",
+      "origin": "Adjacent FDP tendons for digits 3–4.",
+      "insertion": "Radial extensor expansion of digit 4.",
+      "function": "Flexes MCP 4; extends PIP and DIP 4.",
+      "model_actuators": [],
+      "source_ids": [
+        "hand_muscles"
+      ]
+    },
+    {
+      "id": "lumbrical_4",
+      "name": "Lumbrical 4",
+      "group": "intrinsic_lumbrical",
+      "origin": "Adjacent FDP tendons for digits 4–5.",
+      "insertion": "Radial extensor expansion of digit 5.",
+      "function": "Flexes MCP 5; extends PIP and DIP 5.",
+      "model_actuators": [],
+      "source_ids": [
+        "hand_muscles"
+      ]
+    },
+    {
+      "id": "dorsal_interosseous_1",
+      "name": "Dorsal interosseous 1",
+      "group": "intrinsic_interosseous",
+      "origin": "Facing shafts of metacarpals 1 and 2.",
+      "insertion": "Radial proximal phalanx and extensor expansion, digit 2.",
+      "function": "Abducts digit 2; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "grays_hand"
+      ]
+    },
+    {
+      "id": "dorsal_interosseous_2",
+      "name": "Dorsal interosseous 2",
+      "group": "intrinsic_interosseous",
+      "origin": "Facing shafts of metacarpals 2 and 3.",
+      "insertion": "Radial proximal phalanx and extensor expansion, digit 3.",
+      "function": "Abducts digit 3; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "grays_hand"
+      ]
+    },
+    {
+      "id": "dorsal_interosseous_3",
+      "name": "Dorsal interosseous 3",
+      "group": "intrinsic_interosseous",
+      "origin": "Facing shafts of metacarpals 3 and 4.",
+      "insertion": "Ulnar proximal phalanx and extensor expansion, digit 3.",
+      "function": "Abducts digit 3; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "grays_hand"
+      ]
+    },
+    {
+      "id": "dorsal_interosseous_4",
+      "name": "Dorsal interosseous 4",
+      "group": "intrinsic_interosseous",
+      "origin": "Facing shafts of metacarpals 4 and 5.",
+      "insertion": "Ulnar proximal phalanx and extensor expansion, digit 4.",
+      "function": "Abducts digit 4; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "grays_hand"
+      ]
+    },
+    {
+      "id": "palmar_interosseous_1",
+      "name": "Palmar interosseous 1",
+      "group": "intrinsic_interosseous",
+      "origin": "Ulnar metacarpal 2 shaft.",
+      "insertion": "Ulnar proximal phalanx and extensor expansion, digit 2.",
+      "function": "Adducts digit 2; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "palmar_interosseous_2",
+      "name": "Palmar interosseous 2",
+      "group": "intrinsic_interosseous",
+      "origin": "Radial metacarpal 4 shaft.",
+      "insertion": "Radial proximal phalanx and extensor expansion, digit 4.",
+      "function": "Adducts digit 4; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "uams"
+      ]
+    },
+    {
+      "id": "palmar_interosseous_3",
+      "name": "Palmar interosseous 3",
+      "group": "intrinsic_interosseous",
+      "origin": "Radial metacarpal 5 shaft.",
+      "insertion": "Radial proximal phalanx and extensor expansion, digit 5.",
+      "function": "Adducts digit 5; flexes MCP and extends IP joints.",
+      "model_actuators": [],
+      "source_ids": [
+        "uams"
+      ]
+    }
+  ],
+  "actuators": [
+    {
+      "id": "ECRL_r",
+      "name": "Extensor carpi radialis longus",
+      "group": "forearm_posterior",
+      "function": "Extends wrist; radial deviation.",
+      "anatomical_muscle_ids": [
+        "extensor_carpi_radialis_longus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "ecrl"
+      ],
+      "architecture_id": "ECRL"
+    },
+    {
+      "id": "ECRB_r",
+      "name": "Extensor carpi radialis brevis",
+      "group": "forearm_posterior",
+      "function": "Extends wrist; radial deviation.",
+      "anatomical_muscle_ids": [
+        "extensor_carpi_radialis_brevis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_muscles",
+        "ecrb_origin"
+      ],
+      "architecture_id": "ECRB"
+    },
+    {
+      "id": "ECU_r",
+      "name": "Extensor carpi ulnaris",
+      "group": "forearm_posterior",
+      "function": "Extends wrist; ulnar deviation.",
+      "anatomical_muscle_ids": [
+        "extensor_carpi_ulnaris"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "ECU"
+    },
+    {
+      "id": "FCR_r",
+      "name": "Flexor carpi radialis",
+      "group": "forearm_anterior",
+      "function": "Flexes wrist; radial deviation.",
+      "anatomical_muscle_ids": [
+        "flexor_carpi_radialis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_compartments"
+      ],
+      "architecture_id": "FCR"
+    },
+    {
+      "id": "FCU_r",
+      "name": "Flexor carpi ulnaris",
+      "group": "forearm_anterior",
+      "function": "Flexes wrist; ulnar deviation.",
+      "anatomical_muscle_ids": [
+        "flexor_carpi_ulnaris"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm"
+      ],
+      "architecture_id": "FCU"
+    },
+    {
+      "id": "PL_r",
+      "name": "Palmaris longus",
+      "group": "forearm_anterior",
+      "function": "Tenses palmar fascia; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "palmaris_longus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_compartments"
+      ],
+      "architecture_id": "PL"
+    },
+    {
+      "id": "PT_r",
+      "name": "Pronator teres",
+      "group": "forearm_anterior",
+      "function": "Pronates forearm.",
+      "anatomical_muscle_ids": [
+        "pronator_teres"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_compartments"
+      ],
+      "architecture_id": null,
+      "architecture_note": "No architecture entry collected yet; drawn size is estimated from maximum force."
+    },
+    {
+      "id": "PQ_r",
+      "name": "Pronator quadratus",
+      "group": "forearm_anterior",
+      "function": "Pronates forearm.",
+      "anatomical_muscle_ids": [
+        "pronator_quadratus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_compartments"
+      ],
+      "architecture_id": null,
+      "architecture_note": "No architecture entry collected yet; drawn size is estimated from maximum force."
+    },
+    {
+      "id": "FDS5_r",
+      "name": "Flexor digitorum superficialis · digit 5",
+      "group": "forearm_anterior",
+      "function": "Flexes PIP and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_superficialis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm",
+        "grays_students"
+      ],
+      "architecture_id": "FDS5"
+    },
+    {
+      "id": "FDS4_r",
+      "name": "Flexor digitorum superficialis · digit 4",
+      "group": "forearm_anterior",
+      "function": "Flexes PIP and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_superficialis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm",
+        "grays_students"
+      ],
+      "architecture_id": "FDS4"
+    },
+    {
+      "id": "FDS3_r",
+      "name": "Flexor digitorum superficialis · digit 3",
+      "group": "forearm_anterior",
+      "function": "Flexes PIP and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_superficialis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm",
+        "grays_students"
+      ],
+      "architecture_id": "FDS3"
+    },
+    {
+      "id": "FDS2_r",
+      "name": "Flexor digitorum superficialis · digit 2",
+      "group": "forearm_anterior",
+      "function": "Flexes PIP and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_superficialis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm",
+        "grays_students"
+      ],
+      "architecture_id": "FDS2"
+    },
+    {
+      "id": "FDP5_r",
+      "name": "Flexor digitorum profundus · digit 5",
+      "group": "forearm_anterior",
+      "function": "Flexes DIP, PIP, and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_profundus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm"
+      ],
+      "architecture_id": "FDP5"
+    },
+    {
+      "id": "FDP4_r",
+      "name": "Flexor digitorum profundus · digit 4",
+      "group": "forearm_anterior",
+      "function": "Flexes DIP, PIP, and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_profundus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm"
+      ],
+      "architecture_id": "FDP4"
+    },
+    {
+      "id": "FDP3_r",
+      "name": "Flexor digitorum profundus · digit 3",
+      "group": "forearm_anterior",
+      "function": "Flexes DIP, PIP, and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_profundus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm"
+      ],
+      "architecture_id": "FDP3"
+    },
+    {
+      "id": "FDP2_r",
+      "name": "Flexor digitorum profundus · digit 2",
+      "group": "forearm_anterior",
+      "function": "Flexes DIP, PIP, and MCP joints; assists wrist flexion.",
+      "anatomical_muscle_ids": [
+        "flexor_digitorum_profundus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "grays_forearm"
+      ],
+      "architecture_id": "FDP2"
+    },
+    {
+      "id": "EDC5_r",
+      "name": "Extensor digitorum · digit 5",
+      "group": "forearm_posterior",
+      "function": "Extends MCP joints and contributes to IP extension; extends wrist.",
+      "anatomical_muscle_ids": [
+        "extensor_digitorum"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EDC5"
+    },
+    {
+      "id": "EDC4_r",
+      "name": "Extensor digitorum · digit 4",
+      "group": "forearm_posterior",
+      "function": "Extends MCP joints and contributes to IP extension; extends wrist.",
+      "anatomical_muscle_ids": [
+        "extensor_digitorum"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EDC4"
+    },
+    {
+      "id": "EDC3_r",
+      "name": "Extensor digitorum · digit 3",
+      "group": "forearm_posterior",
+      "function": "Extends MCP joints and contributes to IP extension; extends wrist.",
+      "anatomical_muscle_ids": [
+        "extensor_digitorum"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EDC3"
+    },
+    {
+      "id": "EDC2_r",
+      "name": "Extensor digitorum · digit 2",
+      "group": "forearm_posterior",
+      "function": "Extends MCP joints and contributes to IP extension; extends wrist.",
+      "anatomical_muscle_ids": [
+        "extensor_digitorum"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "One digital subdivision of a multi-tendon anatomical muscle; model activation is independently controlled.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EDC2"
+    },
+    {
+      "id": "EDM_r",
+      "name": "Extensor digiti minimi",
+      "group": "forearm_posterior",
+      "function": "Extends little finger.",
+      "anatomical_muscle_ids": [
+        "extensor_digiti_minimi"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EDM"
+    },
+    {
+      "id": "EIP_r",
+      "name": "Extensor indicis",
+      "group": "forearm_posterior",
+      "function": "Extends index finger.",
+      "anatomical_muscle_ids": [
+        "extensor_indicis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "EIP"
+    },
+    {
+      "id": "EPL_r",
+      "name": "Extensor pollicis longus",
+      "group": "forearm_posterior",
+      "function": "Extends thumb IP joint; assists MCP and CMC extension.",
+      "anatomical_muscle_ids": [
+        "extensor_pollicis_longus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "uams"
+      ],
+      "architecture_id": "EPL"
+    },
+    {
+      "id": "EPB_r",
+      "name": "Extensor pollicis brevis",
+      "group": "forearm_posterior",
+      "function": "Extends thumb MCP and CMC joints.",
+      "anatomical_muscle_ids": [
+        "extensor_pollicis_brevis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "uams"
+      ],
+      "architecture_id": "EPB"
+    },
+    {
+      "id": "FPL_r",
+      "name": "Flexor pollicis longus",
+      "group": "forearm_anterior",
+      "function": "Flexes thumb IP and MCP joints.",
+      "anatomical_muscle_ids": [
+        "flexor_pollicis_longus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "forearm_muscles"
+      ],
+      "architecture_id": "FPL"
+    },
+    {
+      "id": "APL_r",
+      "name": "Abductor pollicis longus",
+      "group": "forearm_posterior",
+      "function": "Abducts and extends thumb at CMC.",
+      "anatomical_muscle_ids": [
+        "abductor_pollicis_longus"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "dorsal_forearm"
+      ],
+      "architecture_id": "APL"
+    },
+    {
+      "id": "OP_r",
+      "name": "Opponens pollicis",
+      "group": "intrinsic_thumb",
+      "function": "Opposes thumb through CMC flexion and rotation.",
+      "anatomical_muscle_ids": [
+        "opponens_pollicis"
+      ],
+      "mapping_status": "named_muscle",
+      "notes": "Named anatomical correspondence; model geometry and force parameters remain approximations.",
+      "source_ids": [
+        "myohand_build",
+        "uams"
+      ],
+      "architecture_id": "OP"
+    },
+    {
+      "id": "RI2_r",
+      "name": "Intrinsic channel RI · digit 2",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 2; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "DI1",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "LU_RB2_r",
+      "name": "Intrinsic channel LU_RB · digit 2",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 2; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "L1",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "UI_UB2_r",
+      "name": "Intrinsic channel UI_UB · digit 2",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 2; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "PI1",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "RI3_r",
+      "name": "Intrinsic channel RI · digit 3",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 3; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "DI2",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "LU_RB3_r",
+      "name": "Intrinsic channel LU_RB · digit 3",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 3; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "L2",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "UI_UB3_r",
+      "name": "Intrinsic channel UI_UB · digit 3",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 3; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "DI3",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "RI4_r",
+      "name": "Intrinsic channel RI · digit 4",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 4; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "PI2",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "LU_RB4_r",
+      "name": "Intrinsic channel LU_RB · digit 4",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 4; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "L3",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "UI_UB4_r",
+      "name": "Intrinsic channel UI_UB · digit 4",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 4; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "DI4",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "RI5_r",
+      "name": "Intrinsic channel RI · digit 5",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 5; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "PI3",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "LU_RB5_r",
+      "name": "Intrinsic channel LU_RB · digit 5",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 5; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": "L4",
+      "architecture_note": "Drawn size only: assumes the channel follows the interosseous or lumbrical on that side of the finger (index DI1/PI1, middle DI2/DI3, ring PI2/DI4, little PI3). The anatomical mapping itself stays unresolved."
+    },
+    {
+      "id": "UI_UB5_r",
+      "name": "Intrinsic channel UI_UB · digit 5",
+      "group": "intrinsic_bundle",
+      "function": "Modeled intrinsic action for digit 5; inspect current moment arms for affected DOFs.",
+      "anatomical_muscle_ids": [],
+      "mapping_status": "unresolved_bundle",
+      "notes": "Source model channel label retained. Exact correspondence to individual interossei, lumbricals, and extensor apparatus branches is unresolved; do not count this channel as a distinct anatomical muscle.",
+      "source_ids": [
+        "myohand_build",
+        "myohand_tendons"
+      ],
+      "architecture_id": null,
+      "architecture_note": "No architecture entry: ADM is modeled separately, so this channel's anatomical counterpart is unclear. Drawn size is estimated from maximum force."
+    },
+    {
+      "id": "APB_r",
+      "name": "Abductor pollicis brevis",
+      "group": "intrinsic_thumb",
+      "function": "Abducts the thumb at the CMC joint and assists CMC flexion.",
+      "anatomical_muscle_ids": [
+        "abductor_pollicis_brevis"
+      ],
+      "mapping_status": "named_muscle",
+      "provider": "music",
+      "notes": "Grafted from the MUSIC model at load time (one straight path through 2-3 sites, no wrapping). MUSIC has no license: local use only. Present only after scripts/fetch_music.py has run.",
+      "source_ids": [
+        "music"
+      ],
+      "architecture_id": "APB"
+    },
+    {
+      "id": "FPB_r",
+      "name": "Flexor pollicis brevis",
+      "group": "intrinsic_thumb",
+      "function": "Flexes the thumb MCP and CMC joints.",
+      "anatomical_muscle_ids": [
+        "flexor_pollicis_brevis"
+      ],
+      "mapping_status": "named_muscle",
+      "provider": "music",
+      "notes": "Grafted from the MUSIC model at load time (one straight path through 2-3 sites, no wrapping). MUSIC has no license: local use only. Present only after scripts/fetch_music.py has run.",
+      "source_ids": [
+        "music"
+      ],
+      "architecture_id": "FPB"
+    },
+    {
+      "id": "AdP_r",
+      "name": "Adductor pollicis",
+      "group": "intrinsic_thumb",
+      "function": "Adducts the thumb at the CMC joint; flexes CMC and MCP.",
+      "anatomical_muscle_ids": [
+        "adductor_pollicis"
+      ],
+      "mapping_status": "named_muscle",
+      "provider": "music",
+      "notes": "Grafted from the MUSIC model at load time (one straight path through 2-3 sites, no wrapping). MUSIC has no license: local use only. Present only after scripts/fetch_music.py has run.",
+      "source_ids": [
+        "music"
+      ],
+      "architecture_id": "AdP"
+    },
+    {
+      "id": "ADM_r",
+      "name": "Abductor digiti minimi",
+      "group": "intrinsic_hypothenar",
+      "function": "Abducts the little finger at the MCP joint.",
+      "anatomical_muscle_ids": [
+        "abductor_digiti_minimi"
+      ],
+      "mapping_status": "named_muscle",
+      "provider": "music",
+      "notes": "Grafted from the MUSIC model at load time (one straight path through 2-3 sites, no wrapping). MUSIC has no license: local use only. Present only after scripts/fetch_music.py has run.",
+      "source_ids": [
+        "music"
+      ],
+      "architecture_id": "ADM"
+    },
+    {
+      "id": "FDM_r",
+      "name": "Flexor digiti minimi brevis",
+      "group": "intrinsic_hypothenar",
+      "function": "Flexes the little-finger MCP joint.",
+      "anatomical_muscle_ids": [
+        "flexor_digiti_minimi_brevis"
+      ],
+      "mapping_status": "named_muscle",
+      "provider": "music",
+      "notes": "Grafted from the MUSIC model at load time (one straight path through 2-3 sites, no wrapping). MUSIC has no license: local use only. Present only after scripts/fetch_music.py has run.",
+      "source_ids": [
+        "music"
+      ],
+      "architecture_id": "FDM"
+    }
+  ]
+}

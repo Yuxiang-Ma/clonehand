@@ -1,0 +1,2819 @@
+{
+  "description": "Published architecture of the hand and wrist muscles, used to draw each muscle belly at its measured size. Keys are muscles or per-digit compartments (FDS2 = flexor digitorum superficialis to digit 2; DI1 = first dorsal interosseous; L1 = first lumbrical). Actuators link here through architecture_id in anatomy.json.",
+  "units": {
+    "length": "cm",
+    "volume": "cm3",
+    "pcsa": "cm2",
+    "mass": "g",
+    "force": "N",
+    "pennation": "degrees"
+  },
+  "choices": [
+    "Belly length: cadaver muscle length (Lieber 1990/1992, Jacobson 1992, Patil 2021). Fiber and muscle lengths are normalized to sarcomere length 2.2 um.",
+    "Volume: in vivo MRI volume (Holzbaur 2007) for forearm muscles; FDS, FDP, and EDC compartments split the whole-muscle MRI volume by Lieber's cadaver mass fractions. Hand muscles use cadaver volumes: Jacobson 1992 (interossei, lumbricals) and Mirakhorlo 2016 for all thenar and hypothenar muscles, which are not directly comparable with MRI values."
+  ],
+  "conflicts": [
+    "ECRL belly length: 9.4 cm in cadavers (Lieber 1990) versus 22.2 cm on MRI (Holzbaur 2007). The cadaver value is used.",
+    "MRI volumes are about 1.5-3x cadaver mass / 1.056 g/cm3 (FDS: 74 versus about 38 cm3).",
+    "Hand volumes: Kerkhof 2018 is 2-3x Mirakhorlo 2016 (AdP 17.0 versus about 6.2 cm3); each is a single cadaver.",
+    "Max force: Saul 2015 re-derived forces from MRI volume at 50.8 N/cm2, 2-5x Holzbaur 2005. MyoHand lumbrical forces (48-98 N) far exceed Jacobson PCSA x specific tension (3-6 N).",
+    "MUSIC max forces (APB 42.7, FPB 80, AdP 100, FDM 30, ADM 12.3 N) cite Holzbaur 2005 and Del Santo 2007, neither of which contains these muscles; they are untraced."
+  ],
+  "sources": [
+    {
+      "id": "lieber_1990",
+      "citation": "Lieber RL, Fazeli BM, Botte MJ. Architecture of selected wrist flexor and extensor muscles. J Hand Surg Am. 1990;15(2):244-250.",
+      "doi": "10.1016/0363-5023(90)90103-X",
+      "url": "http://web.archive.org/web/2020id_/http://muscle.ucsd.edu/More_HTML/papers/pdf/Lieber_JHS_1990.pdf",
+      "notes": "Table I. Formalin-fixed cadaver limbs, n=5 per muscle, mean ± SEM. Muscle length and fiber length normalized to sarcomere length 2.2 um. PCSA = mass*cos(theta)/(1.056 g/cm3 * FL). Pennation = surface pennation angle."
+    },
+    {
+      "id": "lieber_1992",
+      "citation": "Lieber RL, Jacobson MD, Fazeli BM, Abrams RA, Botte MJ. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am. 1992;17(5):787-798.",
+      "doi": "10.1016/0363-5023(92)90444-T",
+      "url": "http://web.archive.org/web/2020id_/http://muscle.ucsd.edu/More_HTML/papers/pdf/Lieber_JHS_1992.pdf",
+      "notes": "Table I. 18 formalin-fixed cadaver limbs, n=5-9 per muscle, mean ± SEM. ML = origin of most proximal fibers to insertion of most distal fibers. ML and FL normalized to sarcomere length 2.2 um. Same PCSA formula as lieber_1990. Digit naming: I=index(2), M=middle(3), R=ring(4), S=small(5); EDQ = EDM."
+    },
+    {
+      "id": "jacobson_1992",
+      "citation": "Jacobson MD, Raab R, Fazeli BM, Abrams RA, Botte MJ, Lieber RL. Architectural design of the human intrinsic hand muscles. J Hand Surg Am. 1992;17(5):804-809.",
+      "doi": "10.1016/0363-5023(92)90446-V",
+      "url": "http://web.archive.org/web/2020id_/http://muscle.ucsd.edu/More_HTML/papers/pdf/Jacobson_JHS_1992.pdf",
+      "notes": "Table I includes two thumb extrinsics (AbPL = APL, EPB). n=9 cadaver limbs, mean ± SD. Same Sacks & Roy method as Lieber 1990/1992."
+    },
+    {
+      "id": "holzbaur_2005",
+      "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng. 2005;33(6):829-840.",
+      "doi": "10.1007/s10439-005-3320-7",
+      "url": "http://nmbl.stanford.edu/publications/pdf/Holzbaur2005.pdf",
+      "notes": "Table 1. Optimal fiber lengths renormalized to 2.7 um sarcomere length; PCSA = literature volume / renormalized optimal fiber length; peak force = PCSA * 45 N/cm2 for forearm/hand muscles, except ECRL (and elbow muscles) taken from Murray et al. 2000 and scaled at 140 N/cm2. Tendon slack lengths chosen by the modelers (no direct measurement exists)."
+    },
+    {
+      "id": "saul_2015",
+      "citation": "Saul KR, Hu X, Goehler CM, Vidt ME, Daly M, Velisar A, Murray WM. Benchmarking of dynamic simulation predictions in two software platforms using an upper limb musculoskeletal model. Comput Methods Biomech Biomed Engin. 2015;18(13):1445-1458.",
+      "doi": "10.1080/10255842.2014.916698",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4282829/",
+      "notes": "MoBL-ARMS (Table 3). Fiber lengths and pennation from Holzbaur 2005. Peak forces re-derived from in vivo MRI volumes (Holzbaur 2007) with a best-fit specific tension of 50.8 N/cm2 fitted to isometric strength of 5 young males. Several tendon slack lengths changed from Holzbaur 2005. Values cross-checked against MOBL_ARMS_41.osim (third-party GitHub copy, ENGNajafpourBio/Parkinson-Tremor-Simulation-OpenSim) — they match Table 3."
+    },
+    {
+      "id": "holzbaur_2007",
+      "citation": "Holzbaur KRS, Murray WM, Gold GE, Delp SL. Upper limb muscle volumes in adult subjects. J Biomech. 2007;40(4):742-749.",
+      "doi": "10.1016/j.jbiomech.2006.11.011",
+      "url": "http://nmbl.stanford.edu/publications/pdf/Holzbaur2007a.pdf",
+      "notes": "Table 2. In vivo MRI, 10 healthy adults (5 M, 5 F, ages 26 ± 4), dominant limb, mean (SD). Volumes per whole muscle only (FDS, FDP, EDC not split by digit). Their 'Length' column is MRI-measured muscle length. Their PCSA uses volume/(measured length scaled by Lm/L0m from cadaver literature), no pennation cosine."
+    },
+    {
+      "id": "wang_2014",
+      "citation": "Wang K, McGlinn EP, Chung KC. A biomechanical and evolutionary perspective on the function of the lumbrical muscle. J Hand Surg Am. 2014;39(1):149-155.",
+      "doi": "10.1016/j.jhsa.2013.06.029",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4155599/",
+      "note": "Table 1 reproduces Jacobson 1992 mean ± SD for L1-L4, DI1-DI4, PI2-PI4 (older numbering, which counts a thumb PI1; PI2/PI3/PI4 = index/ring/little = PI1/PI2/PI3 here)."
+    },
+    {
+      "id": "mirakhorlo_2016",
+      "citation": "Mirakhorlo M, Visser JMA, Goislard de Monsabert BAAX, van der Helm FCT, Maas H, Veeger HEJ. Anatomical parameters for musculoskeletal modeling of the hand and wrist. International Biomechanics. 2016;3(1):40-49.",
+      "doi": "10.1080/23335432.2016.1191373",
+      "url": "https://spiral.imperial.ac.uk/bitstreams/d975e053-d163-49bb-a1c8-d098c70f6b73/download",
+      "note": "Single fresh-frozen right arm, female, 87 y. Table 2: optimal fiber length (sarcomere-normalised to 2.7 um), tendon length, pennation, mass, PCSA = mass/(1.0567e-3 g/mm^3 * Lopt), no cosine term. Tendons treated as rigid."
+    },
+    {
+      "id": "kerkhof_2018",
+      "citation": "Kerkhof FD, van Leeuwen T, Vereecke EE. The digital human forearm and hand. J Anat. 2018;233(5):557-566.",
+      "doi": "10.1111/joa.12877",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6183001/",
+      "note": "Single un-embalmed left arm, male, 60 y; 7T MRI + dissection. Only Table 3 (MRI vs submersion volumes) is used: Table 1/2 cells for intrinsic muscles are internally inconsistent in the PMC rendering (e.g. ADM volume listed as 1 mm^3 vs 8979 mm^3 in Table 3), so they were not used."
+    },
+    {
+      "id": "valero_cuevas_2003",
+      "citation": "Valero-Cuevas FJ, Johanson ME, Towles JD. Towards a realistic biomechanical model of the thumb: the choice of kinematic description may be more critical than the solution method or the variability/uncertainty of musculoskeletal parameters. J Biomech. 2003;36(7):1019-1030.",
+      "doi": "10.1016/S0021-9290(03)00061-7",
+      "url": "https://valerolab.org/Papers/Valero-CuevasJOB03Thumb.pdf",
+      "note": "Table 1 thumb PCSA mean ± SD, cited jointly to Lieber 1992, Jacobson 1992, Brand 1981 (per-muscle source not stated). Fmax = PCSA x 35.4 N/cm^2."
+    },
+    {
+      "id": "wohlman_murray_2013",
+      "citation": "Wohlman SJ, Murray WM. Bridging the gap between cadaveric and in vivo experiments: a biomechanical model evaluating thumb-tip endpoint forces. J Biomech. 2013;46(5):1014-1020.",
+      "doi": "10.1016/j.jbiomech.2012.10.044",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3627365/",
+      "note": "Adds APB, ADPt, ADPo, FPB, OPP to the Holzbaur 2005 OpenSim model. Intrinsic Fmax = Jacobson 1992 PCSA x 50.8 N/cm^2 (Mogk 2011); sensitivity runs used 35.4 N/cm^2 (Brand 1981). Numeric Fmax values are not printed in the paper."
+    },
+    {
+      "id": "mcfarland_2023",
+      "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng. 2023;70(5):1424-1435.",
+      "doi": "10.1109/TBME.2022.3217722",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10650739/",
+      "note": "ARMS hand model: finger intrinsic PCSA/Lopt/pennation from Jacobson 1992 and Kerkhof 2018; Fmax = PCSA x 50.8 N/cm^2. Numeric values live in the SimTK model file (login required, not accessed)."
+    },
+    {
+      "id": "rakauskas_2023",
+      "citation": "Rakauskas TR, Barron SM, Ordonez Diaz T, Nichols JA. Measuring fascicle lengths of extrinsic and intrinsic thumb muscles using extended field-of-view ultrasound. J Biomech. 2023;149:111512.",
+      "doi": "10.1016/j.jbiomech.2023.111512",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10849800/",
+      "note": "In vivo EFOV ultrasound, 8 subjects."
+    },
+    {
+      "id": "benoit_nichols_2025",
+      "citation": "Benoit AR, Nichols JA. A normative dataset of thumb muscle fascicle lengths in healthy, young adults: an extended field-of-view ultrasound study. J Biomech. 2025;192:112964.",
+      "doi": "10.1016/j.jbiomech.2025.112964",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12629664/",
+      "note": "In vivo EFOV ultrasound, 18 young adults (10 M, 8 F). APB and FPB fascicle lengths; reports cadaver (Jacobson) FPB differs significantly (p = 0.0029)."
+    },
+    {
+      "id": "patil_2021",
+      "citation": "Patil RK, Malhotra G, Tsai TM. Assessing the usability of flexor digiti minimi muscle for opponensplasty: an anatomic study. J Hand Surg Am. 2021;46(10):925.e1-925.e5.",
+      "doi": "10.1016/j.jhsa.2021.01.013",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33773875/",
+      "note": "30 cadaver hands; FDM absent in 33%. Muscle lengths came from a search-engine excerpt of the full text and were not checked against the paywalled article."
+    },
+    {
+      "id": "lee_2015",
+      "citation": "Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE. 2015;10(4):e0121712.",
+      "doi": "10.1371/journal.pone.0121712",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4390324/",
+      "note": "Gives attachments and moment arms only, with no architecture or Fmax tables. It defers to Brand & Hollister 1999 (Lopt, PCSA), Jacobson 1992 (pennation), Garner & Pandy 2003 (tendon slack) and Holzbaur 2005 (Fmax). Its 2nd-Hand OpenSim model file is behind a SimTK login."
+    },
+    {
+      "id": "myohand",
+      "citation": "MyoSuite MyoHand model (MyoHub/myo_sim, myo_sim/models/arm/assets/myoarm_r_muscle.xml), derived from MoBL-ARMS (Saul 2015/Holzbaur 2005) and the 2nd-Hand model (Lee 2015).",
+      "doi": null,
+      "url": "https://github.com/MyoHub/myo_sim",
+      "note": "MuJoCo muscle 'force' values (N); no fiber length or PCSA is stored. Intrinsics: OP, RI2-5, LU_RB2-5, UI_UB2-5 (lumbrical and interossei lumped with lateral bands)."
+    },
+    {
+      "id": "music_2026",
+      "citation": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning muscle-driven dexterous hand control. arXiv:2604.23886, 2026. Code: github.com/xupei0610/music (commit 1b13b79).",
+      "doi": null,
+      "url": "https://arxiv.org/abs/2604.23886",
+      "note": "Adds FPB, AdP, APB, FDM, ADM to MyoHand. Appendix A: peak force and optimal fiber length 'derived from' Holzbaur 2005 and Del Santo 2007 (Brain Res 1163:79-85), scaled per MyoHand conventions; attachments from Rohen 2006 and Gray's Anatomy. Numbers are only in assets/right_assets/right_hand_actuators_muscle.xml. Holzbaur 2005 contains none of these five muscles, and Del Santo 2007 is a surface-EMG/force study, so these forces cannot be traced to architecture data."
+    }
+  ],
+  "muscles": {
+    "ECRL": {
+      "mass_g": {
+        "value": 11.8,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported)"
+      },
+      "muscle_length_cm": {
+        "value": 9.37,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 22.2 ± 1.8 cm; Lieber notes ECRL is the shortest wrist muscle with the longest fibers (FL/ML 0.82) — conflicts strongly with the MRI length"
+      },
+      "fiber_length_cm": {
+        "value": 7.63,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 8.1,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); ECRL from Murray et al. 2000, not Lieber 1990; MoBL-ARMS .osim value 8.1 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.46,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 2.2 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.7 cm2"
+      },
+      "volume_cm3": {
+        "value": 37.5,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 19.0) of 10 adults; cadaver mass/1.056 from lieber_1990 = 11.2 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 22.4,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 24.4 cm"
+      },
+      "pennation_deg": {
+        "value": 2.5,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 0 deg"
+      },
+      "fmax_n": {
+        "value": 304.9,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 140 N/cm2 (ECRL scaled with elbow muscles from Murray et al. 2000); saul_2015 MoBL-ARMS value = 337.3 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 140,
+        "source": "holzbaur_2005"
+      }
+    },
+    "ECRB": {
+      "mass_g": {
+        "value": 13.8,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported)"
+      },
+      "muscle_length_cm": {
+        "value": 12.72,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 17.6 ± 2.4 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.77,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.9,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.85 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.73,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 2.2 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 21.6,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 9.1) of 10 adults; cadaver mass/1.056 from lieber_1990 = 13.1 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 22.2,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 22.23 cm"
+      },
+      "pennation_deg": {
+        "value": 8.9,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 9 deg"
+      },
+      "fmax_n": {
+        "value": 100.5,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 252.5 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "ECU": {
+      "mass_g": {
+        "value": 13.6,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported)"
+      },
+      "muscle_length_cm": {
+        "value": 18.16,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 21.1 ± 2.4 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.07,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.2,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.22 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.6,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 2.1 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.3 cm2"
+      },
+      "volume_cm3": {
+        "value": 17.0,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 7.4) of 10 adults; cadaver mass/1.056 from lieber_1990 = 12.9 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 22.8,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 22.85 cm"
+      },
+      "pennation_deg": {
+        "value": 3.5,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 4 deg"
+      },
+      "fmax_n": {
+        "value": 93.2,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 192.9 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FCR": {
+      "mass_g": {
+        "value": 10.9,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported)"
+      },
+      "muscle_length_cm": {
+        "value": 16.37,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 22.6 ± 2.9 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.12,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.3,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.28 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.99,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.6 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 3.9 cm2"
+      },
+      "volume_cm3": {
+        "value": 34.8,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 17.1) of 10 adults; cadaver mass/1.056 from lieber_1990 = 10.3 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 24.4,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 24.4 cm"
+      },
+      "pennation_deg": {
+        "value": 3.1,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 3 deg"
+      },
+      "fmax_n": {
+        "value": 74.0,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 407.9 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FCU": {
+      "mass_g": {
+        "value": 15.4,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported)"
+      },
+      "muscle_length_cm": {
+        "value": 22.78,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 24.9 ± 2.0 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.15,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.1,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.09 cm"
+      },
+      "pcsa_cm2": {
+        "value": 3.42,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 2.9 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 6.6 cm2"
+      },
+      "volume_cm3": {
+        "value": 37.1,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 13.6) of 10 adults; cadaver mass/1.056 from lieber_1990 = 14.6 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 26.5,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 26.5 cm"
+      },
+      "pennation_deg": {
+        "value": 12.1,
+        "source": "lieber_1990",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 12 deg"
+      },
+      "fmax_n": {
+        "value": 128.9,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 479.8 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "PL": {
+      "mass_g": {
+        "value": 4,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 13.4,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 6.0 ± 7.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.2,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.4,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.38 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.69,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.6 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 1.4 cm2"
+      },
+      "volume_cm3": {
+        "value": 10.0,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 3.9) of 10 adults; cadaver mass/1.056 from lieber_1992 = 3.8 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 26.9,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 26.94 cm"
+      },
+      "pennation_deg": {
+        "value": 4,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 4 deg"
+      },
+      "fmax_n": {
+        "value": 26.7,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 101.0 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDS2": {
+      "mass_g": {
+        "value": 12,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 20.7,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; FDS index has two bellies in series (proximal 93 mm, distal 119 mm); value is Lieber's combined FDS I(C); in vivo MRI length (holzbaur_2007, whole muscle) = 24.5 ± 1.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.8,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um; combined FDS I(C) (proximal belly 32 mm, distal 38 mm)"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 8.4,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 8.35 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.71,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); combined FDS I(C); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.4 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 6.0 cm2"
+      },
+      "volume_cm3": {
+        "value": 22.3,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDS in vivo volume 74.2 cm3 split by this compartment's share of summed lieber_1992 compartment masses (12/40 g = 0.300); cadaver-only estimate mass/1.056 = 11.4 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 27.5,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 27.5 cm"
+      },
+      "pennation_deg": {
+        "value": 6,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 6 deg"
+      },
+      "fmax_n": {
+        "value": 61.2,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 162.5 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDS3": {
+      "mass_g": {
+        "value": 16,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 18.3,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 24.5 ± 1.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.1,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.5,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.49 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.53,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 2.0 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 6.0 cm2"
+      },
+      "volume_cm3": {
+        "value": 29.7,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDS in vivo volume 74.2 cm3 split by this compartment's share of summed lieber_1992 compartment masses (16/40 g = 0.400); cadaver-only estimate mass/1.056 = 15.2 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 29.5,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 29.5 cm"
+      },
+      "pennation_deg": {
+        "value": 7,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 7 deg"
+      },
+      "fmax_n": {
+        "value": 91.0,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 258.8 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDS4": {
+      "mass_g": {
+        "value": 10,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 15.5,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 24.5 ± 1.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.0,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.4,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.36 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.61,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.3 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 6.0 cm2"
+      },
+      "volume_cm3": {
+        "value": 18.6,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDS in vivo volume 74.2 cm3 split by this compartment's share of summed lieber_1992 compartment masses (10/40 g = 0.250); cadaver-only estimate mass/1.056 = 9.5 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 32.8,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 32.8 cm"
+      },
+      "pennation_deg": {
+        "value": 4,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 4 deg"
+      },
+      "fmax_n": {
+        "value": 57.9,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 171.2 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDS5": {
+      "mass_g": {
+        "value": 2,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 10.3,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 24.5 ± 1.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.2,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.2,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.15 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.4,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.4 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 6.0 cm2"
+      },
+      "volume_cm3": {
+        "value": 3.7,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDS in vivo volume 74.2 cm3 split by this compartment's share of summed lieber_1992 compartment masses (2/40 g = 0.050); cadaver-only estimate mass/1.056 = 1.9 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 33.8,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 33.86 cm"
+      },
+      "pennation_deg": {
+        "value": 5,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 5 deg"
+      },
+      "fmax_n": {
+        "value": 16.5,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 75.3 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDP2": {
+      "mass_g": {
+        "value": 12,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 14.9,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 23.4 ± 1.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.1,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.5,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.49 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.77,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.5 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 8.4 cm2"
+      },
+      "volume_cm3": {
+        "value": 20.4,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDP in vivo volume 91.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (12/54 g = 0.222); cadaver-only estimate mass/1.056 = 11.4 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 29.4,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 30.15 cm"
+      },
+      "pennation_deg": {
+        "value": 7,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 7 deg"
+      },
+      "fmax_n": {
+        "value": 68.3,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 197.3 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDP3": {
+      "mass_g": {
+        "value": 16,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 20.0,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 23.4 ± 1.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.8,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 8.4,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 8.35 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.23,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.8 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 8.4 cm2"
+      },
+      "volume_cm3": {
+        "value": 27.1,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDP in vivo volume 91.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (16/54 g = 0.296); cadaver-only estimate mass/1.056 = 15.2 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 29.3,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 30.3 cm"
+      },
+      "pennation_deg": {
+        "value": 6,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 6 deg"
+      },
+      "fmax_n": {
+        "value": 81.7,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 212.4 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDP4": {
+      "mass_g": {
+        "value": 12,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 19.4,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 23.4 ± 1.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.5,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 8.0,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.98 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.72,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.4 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 8.4 cm2"
+      },
+      "volume_cm3": {
+        "value": 20.4,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDP in vivo volume 91.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (12/54 g = 0.222); cadaver-only estimate mass/1.056 = 11.4 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 28.2,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 29.15 cm"
+      },
+      "pennation_deg": {
+        "value": 7,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 7 deg"
+      },
+      "fmax_n": {
+        "value": 64.1,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 172.9 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FDP5": {
+      "mass_g": {
+        "value": 14,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 15.0,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 23.4 ± 1.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 6.1,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.5,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.49 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.2,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.8 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 8.4 cm2"
+      },
+      "volume_cm3": {
+        "value": 23.7,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-FDP in vivo volume 91.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (14/54 g = 0.259); cadaver-only estimate mass/1.056 = 13.3 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 28.2,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 28.19 cm"
+      },
+      "pennation_deg": {
+        "value": 8,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 8 deg"
+      },
+      "fmax_n": {
+        "value": 79.7,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 236.8 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EDC2": {
+      "mass_g": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 11.4,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 19.6 ± 3.2 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.7,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.0,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.0 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.52,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.4 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 5.4,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-EDC in vivo volume 28.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (3/16 g = 0.188); cadaver-only estimate mass/1.056 = 2.8 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 32.2,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 36.5 cm"
+      },
+      "pennation_deg": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 3 deg"
+      },
+      "fmax_n": {
+        "value": 18.3,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 48.8 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EDC3": {
+      "mass_g": {
+        "value": 6,
+        "source": "lieber_1992",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 11.2,
+        "source": "lieber_1992",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 19.6 ± 3.2 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.9,
+        "source": "lieber_1992",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.2,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.24 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.02,
+        "source": "lieber_1992",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.8 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 10.7,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-EDC in vivo volume 28.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (6/16 g = 0.375); cadaver-only estimate mass/1.056 = 5.7 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 33.5,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 36.5 cm"
+      },
+      "pennation_deg": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=5 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 3 deg"
+      },
+      "fmax_n": {
+        "value": 35.3,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 94.4 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EDC4": {
+      "mass_g": {
+        "value": 5,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 12.5,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 19.6 ± 3.2 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.1,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.3,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.26 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.86,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.8 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 8.9,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-EDC in vivo volume 28.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (5/16 g = 0.312); cadaver-only estimate mass/1.056 = 4.7 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 32.7,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 36.5 cm"
+      },
+      "pennation_deg": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 3 deg"
+      },
+      "fmax_n": {
+        "value": 34.0,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 109.2 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EDC5": {
+      "mass_g": {
+        "value": 2,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 12.1,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 19.6 ± 3.2 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.3,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.5,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.5 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.4,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.3 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 2.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 3.6,
+        "source": "holzbaur_2007",
+        "note": "DERIVED: holzbaur_2007 whole-EDC in vivo volume 28.6 cm3 split by this compartment's share of summed lieber_1992 compartment masses (2/16 g = 0.125); cadaver-only estimate mass/1.056 = 1.9 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 29.7,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 33.5 cm"
+      },
+      "pennation_deg": {
+        "value": 2,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 2 deg"
+      },
+      "fmax_n": {
+        "value": 13.1,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 39.4 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EDM": {
+      "mass_g": {
+        "value": 4,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 15.2,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 17.6 ± 2.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.5,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.8,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.75 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.64,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.6 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 0.9 cm2"
+      },
+      "volume_cm3": {
+        "value": 7.0,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 3.4) of 10 adults; cadaver mass/1.056 from lieber_1992 = 3.8 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 32.2,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 33.5 cm"
+      },
+      "pennation_deg": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 3 deg"
+      },
+      "fmax_n": {
+        "value": 25.3,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 72.4 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EIP": {
+      "mass_g": {
+        "value": 3,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 10.5,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 9.5 ± 2.2 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.8,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.9,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.89 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.56,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.5 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 0.8 cm2"
+      },
+      "volume_cm3": {
+        "value": 4.2,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 1.6) of 10 adults; cadaver mass/1.056 from lieber_1992 = 2.8 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 18.6,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 21.0 cm"
+      },
+      "pennation_deg": {
+        "value": 6,
+        "source": "lieber_1992",
+        "note": "mean of n=6 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 6 deg"
+      },
+      "fmax_n": {
+        "value": 21.7,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 47.3 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EPL": {
+      "mass_g": {
+        "value": 5,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 13.8,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 13.0 ± 2.9 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.4,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.4,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.4 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.98,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.9 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 1.3 cm2"
+      },
+      "volume_cm3": {
+        "value": 6.6,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 3.4) of 10 adults; cadaver mass/1.056 from lieber_1992 = 4.7 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 22.1,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 23.05 cm"
+      },
+      "pennation_deg": {
+        "value": 6,
+        "source": "lieber_1992",
+        "note": "mean of n=7 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 6 deg"
+      },
+      "fmax_n": {
+        "value": 39.5,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 88.3 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "EPB": {
+      "mass_g": {
+        "value": 2.25,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported)"
+      },
+      "muscle_length_cm": {
+        "value": 10.56,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 11.1 ± 2.6 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.5,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 6.8,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 6.75 cm"
+      },
+      "pcsa_cm2": {
+        "value": 0.47,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 0.3 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 0.6 cm2"
+      },
+      "volume_cm3": {
+        "value": 4.4,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 2.2) of 10 adults; cadaver mass/1.056 from jacobson_1992 = 2.1 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 11.5,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 11.55 cm"
+      },
+      "pennation_deg": {
+        "value": 7.2,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); surface pennation angle at fixation; holzbaur_2005 model uses 7 deg"
+      },
+      "fmax_n": {
+        "value": 14.2,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 46.0 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "FPL": {
+      "mass_g": {
+        "value": 10,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); Lieber 1992 reports mass to whole grams only"
+      },
+      "muscle_length_cm": {
+        "value": 16.8,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 13.8 ± 1.7 cm"
+      },
+      "fiber_length_cm": {
+        "value": 4.5,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 5.5,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 5.52 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.08,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.7 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 3.8 cm2"
+      },
+      "volume_cm3": {
+        "value": 17.1,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 6.3) of 10 adults; cadaver mass/1.056 from lieber_1992 = 9.5 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 19.4,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 19.7 cm"
+      },
+      "pennation_deg": {
+        "value": 7,
+        "source": "lieber_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SEM reported); surface pennation angle at fixation; holzbaur_2005 model uses 7 deg"
+      },
+      "fmax_n": {
+        "value": 77.2,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 201.0 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "APL": {
+      "mass_g": {
+        "value": 9.96,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported)"
+      },
+      "muscle_length_cm": {
+        "value": 16.04,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); normalized to sarcomere length 2.2 um; ML = origin of most proximal fibers to insertion of most distal fibers; in vivo MRI length (holzbaur_2007, whole muscle) = 15.5 ± 2.1 cm"
+      },
+      "fiber_length_cm": {
+        "value": 5.81,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); fiber-bundle length normalized to sarcomere length 2.2 um"
+      },
+      "optimal_fiber_length_cm": {
+        "value": 7.1,
+        "source": "holzbaur_2005",
+        "note": "Lieber/Jacobson/Murray fiber length renormalized to 2.7 um optimal sarcomere length (x2.7/2.2 ~ 1.23); MoBL-ARMS .osim value 7.13 cm"
+      },
+      "pcsa_cm2": {
+        "value": 1.93,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); PCSA = mass*cos(pennation)/(1.056 g/cm3 * fiber length); Holzbaur 2005 model PCSA (volume / 2.7-um-normalized fiber length) = 1.3 cm2; in vivo MRI PCSA (holzbaur_2007, whole muscle, no cosine) = 1.7 cm2"
+      },
+      "volume_cm3": {
+        "value": 11.9,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 5.7) of 10 adults; cadaver mass/1.056 from jacobson_1992 = 9.4 cm3"
+      },
+      "tendon_slack_length_cm": {
+        "value": 13.0,
+        "source": "holzbaur_2005",
+        "note": "model parameter chosen by the modelers, not measured; MoBL-ARMS (saul_2015 / .osim) uses 12.95 cm"
+      },
+      "pennation_deg": {
+        "value": 7.5,
+        "source": "jacobson_1992",
+        "note": "mean of n=9 formalin-fixed cadaver limbs (± SD reported); surface pennation angle at fixation; holzbaur_2005 model uses 8 deg"
+      },
+      "fmax_n": {
+        "value": 59.5,
+        "source": "holzbaur_2005",
+        "note": "PCSA x 45 N/cm2 specific tension; saul_2015 MoBL-ARMS value = 116.7 N (in vivo volumes, best-fit 50.8 N/cm2)"
+      },
+      "specific_tension_n_per_cm2": {
+        "value": 45,
+        "source": "holzbaur_2005"
+      }
+    },
+    "OP": {
+      "fiber_length_cm": {
+        "value": 2.99,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Pollicis'; optimal fiber length, single 87 y female"
+      },
+      "pcsa_cm2": {
+        "value": 1.02,
+        "source": "valero_cuevas_2003",
+        "note": "Mean, SD 0.35; cited jointly to Lieber 1992 / Jacobson 1992 / Brand 1981",
+        "sd": 0.35,
+        "alternatives": [
+          {
+            "value": 1.171,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Opponens Pollicis'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 3.5,
+        "source": "mirakhorlo_2016",
+        "note": "DERIVED: Mirakhorlo 2016 mass 3.7 g / 1.056 g/cm3, so all six thenar and hypothenar muscles share one source (one cadaver, female, 87 years; likely smaller than average). Alternative: kerkhof_2018 4.5 cm3 (one male cadaver)."
+      },
+      "mass_g": {
+        "value": 3.7,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Pollicis'"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Pollicis'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 36.1,
+        "source": "valero_cuevas_2003",
+        "note": "Fmax used by Valero-Cuevas 2003 = 1.02 x 35.4",
+        "specific_tension_n_per_cm2": 35.4,
+        "alternatives": [
+          {
+            "value": 59.5,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 180,
+            "source": "myohand",
+            "note": "MyoHand/MUSIC OP force (inherited unchanged by MUSIC); not derivable from cadaver PCSA (would imply about 1.8-3.5 cm^2)"
+          }
+        ]
+      },
+      "belly_fraction_of_path": {
+        "value": 0.8,
+        "basis": "assumed",
+        "note": "No published belly length found. Thenar muscles are mostly fleshy with short tendons, so the belly is drawn over 80% of the model path."
+      }
+    },
+    "APB": {
+      "fiber_length_cm": {
+        "value": 4.5,
+        "source": "benoit_nichols_2025",
+        "note": "In vivo EFOV-US 4.5 ± 0.5 cm, 18 young adults",
+        "sd": 0.5,
+        "alternatives": [
+          {
+            "value": 5.1,
+            "source": "rakauskas_2023",
+            "note": "In vivo EFOV-US 5.1 ± 0.3 cm, 8 subjects; differs from cadaver data (p = 0.005)",
+            "sd": 0.3
+          },
+          {
+            "value": 4.97,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Abductor Pollicis Brevis'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.68,
+        "source": "valero_cuevas_2003",
+        "note": "Mean, SD 0.58; cited jointly to Lieber 1992 / Jacobson 1992 / Brand 1981",
+        "sd": 0.58,
+        "alternatives": [
+          {
+            "value": 0.438,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Abductor Pollicis Brevis'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 2.18,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper). Kerkhof 2018 gives FPB+APB combined 12.5 cm^3 (submersion)"
+      },
+      "mass_g": {
+        "value": 2.3,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Pollicis Brevis'"
+      },
+      "tendon_length_cm": {
+        "value": 2.45,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Pollicis Brevis'; external tendon length, rigid-tendon assumption"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Pollicis Brevis'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 24.1,
+        "source": "valero_cuevas_2003",
+        "note": "Fmax used by Valero-Cuevas 2003 = 0.68 cm^2 x 35.4 N/cm^2",
+        "specific_tension_n_per_cm2": 35.4,
+        "alternatives": [
+          {
+            "value": 22.3,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 42.7,
+            "source": "music_2026",
+            "note": "MUSIC model value; provenance not traceable"
+          }
+        ]
+      },
+      "belly_fraction_of_path": {
+        "value": 0.8,
+        "basis": "assumed",
+        "note": "No published belly length found. Thenar muscles are mostly fleshy with short tendons, so the belly is drawn over 80% of the model path."
+      }
+    },
+    "FPB": {
+      "fiber_length_cm": {
+        "value": 3.6,
+        "source": "benoit_nichols_2025",
+        "note": "In vivo EFOV-US mean ± SD 3.6 ± 0.4 cm, 18 young adults",
+        "sd": 0.4,
+        "alternatives": [
+          {
+            "value": null,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo heads: superficial 49.6 mm, deep 23.0 mm",
+            "heads": {
+              "superficial": 4.96,
+              "deep": 2.3
+            }
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.66,
+        "source": "valero_cuevas_2003",
+        "note": "Mean, SD 0.20; cited jointly to Lieber 1992 / Jacobson 1992 / Brand 1981",
+        "sd": 0.2,
+        "alternatives": [
+          {
+            "value": 0.375,
+            "source": "mirakhorlo_2016",
+            "note": "Derived sum of heads: superficial 0.210 + deep 0.165 cm^2",
+            "heads": {
+              "superficial": 0.21,
+              "deep": 0.165
+            }
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.42,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo summed mass / 1.0567. Kerkhof 2018 reports FPB+APB combined only (12.5 cm^3 submersion, 13.48 cm^3 MRI)"
+      },
+      "mass_g": {
+        "value": 1.5,
+        "source": "mirakhorlo_2016",
+        "note": "Derived sum of heads: superficial 1.1 g + deep 0.4 g",
+        "heads": {
+          "superficial": 1.1,
+          "deep": 0.4
+        }
+      },
+      "tendon_length_cm": {
+        "value": 1.2,
+        "source": "mirakhorlo_2016",
+        "note": "Deep head 12 mm; superficial head cell reads '14,8 7,1' (ambiguous, possibly 14.8 and 7.1 mm)"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Both heads 0 (pennation recorded only if >10 deg)"
+      },
+      "fmax_n": {
+        "value": 23.4,
+        "source": "valero_cuevas_2003",
+        "note": "Fmax used by Valero-Cuevas 2003 = 0.66 cm^2 x 35.4 N/cm^2",
+        "specific_tension_n_per_cm2": 35.4,
+        "alternatives": [
+          {
+            "value": 19.0,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo summed PCSA x 50.8"
+          },
+          {
+            "value": 80,
+            "source": "music_2026",
+            "note": "MUSIC model value; provenance not traceable"
+          }
+        ]
+      },
+      "belly_fraction_of_path": {
+        "value": 0.8,
+        "basis": "assumed",
+        "note": "No published belly length found. Thenar muscles are mostly fleshy with short tendons, so the belly is drawn over 80% of the model path."
+      }
+    },
+    "AdP": {
+      "fiber_length_cm": {
+        "value": null,
+        "source": "mirakhorlo_2016",
+        "note": "Whole-muscle value not reported; see heads",
+        "heads": {
+          "oblique": {
+            "value": 3.07,
+            "source": "mirakhorlo_2016"
+          },
+          "transverse": {
+            "value": 4.08,
+            "source": "mirakhorlo_2016"
+          }
+        }
+      },
+      "pcsa_cm2": {
+        "value": 1.826,
+        "source": "mirakhorlo_2016",
+        "note": "Derived sum of heads: oblique 1.293 + transverse 0.533 cm^2",
+        "heads": {
+          "oblique": 1.293,
+          "transverse": 0.533
+        },
+        "alternatives": [
+          {
+            "value": 4.0,
+            "source": "valero_cuevas_2003",
+            "note": "'ADD' mean, SD 0.80; cited jointly to Lieber 1992 / Jacobson 1992 / Brand 1981",
+            "sd": 0.8
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 6.16,
+        "source": "mirakhorlo_2016",
+        "note": "DERIVED: Mirakhorlo 2016 mass 6.5 g / 1.056 g/cm3, so all six thenar and hypothenar muscles share one source (one cadaver, female, 87 years; likely smaller than average). Alternative: kerkhof_2018 17.0 cm3 (one male cadaver)."
+      },
+      "mass_g": {
+        "value": 6.5,
+        "source": "mirakhorlo_2016",
+        "note": "Derived sum of heads: oblique 4.2 g + transverse 2.3 g",
+        "heads": {
+          "oblique": 4.2,
+          "transverse": 2.3
+        }
+      },
+      "tendon_length_cm": {
+        "value": null,
+        "source": "mirakhorlo_2016",
+        "note": "Heads: oblique 0 mm, transverse 24 mm",
+        "heads": {
+          "oblique": 0.0,
+          "transverse": 2.4
+        }
+      },
+      "pennation_deg": {
+        "value": null,
+        "source": "mirakhorlo_2016",
+        "note": "Heads: oblique 0 deg, transverse 24 deg",
+        "heads": {
+          "oblique": 0,
+          "transverse": 24
+        }
+      },
+      "fmax_n": {
+        "value": 141.6,
+        "source": "valero_cuevas_2003",
+        "note": "Fmax used by Valero-Cuevas 2003 = 4.00 cm^2 x 35.4 N/cm^2",
+        "specific_tension_n_per_cm2": 35.4,
+        "alternatives": [
+          {
+            "value": 92.8,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo summed PCSA x 50.8",
+            "heads": {
+              "oblique": 65.7,
+              "transverse": 27.1
+            }
+          },
+          {
+            "value": 100,
+            "source": "music_2026",
+            "note": "MUSIC model value (single AdP actuator); provenance not traceable (see source note)"
+          }
+        ]
+      },
+      "belly_fraction_of_path": {
+        "value": 0.8,
+        "basis": "assumed",
+        "note": "No published belly length found. Thenar muscles are mostly fleshy with short tendons, so the belly is drawn over 80% of the model path."
+      }
+    },
+    "ADM": {
+      "fiber_length_cm": {
+        "value": 3.77,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Digiti Minimi'; optimal fiber length, single 87 y female"
+      },
+      "pcsa_cm2": {
+        "value": 0.904,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Digiti Minimi'; PCSA without cos(pennation)"
+      },
+      "volume_cm3": {
+        "value": 3.41,
+        "source": "mirakhorlo_2016",
+        "note": "DERIVED: Mirakhorlo 2016 mass 3.6 g / 1.056 g/cm3, so all six thenar and hypothenar muscles share one source (one cadaver, female, 87 years; likely smaller than average). Alternative: kerkhof_2018 10.0 cm3 (one male cadaver)."
+      },
+      "mass_g": {
+        "value": 3.6,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Digiti Minimi'"
+      },
+      "muscle_length_cm": {
+        "value": 7.7,
+        "source": "patil_2021",
+        "note": "Mean muscle length 77 mm, 30 hands; value from a search excerpt, full text not verified",
+        "confidence": "low"
+      },
+      "tendon_length_cm": {
+        "value": 1.95,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Digiti Minimi'; external tendon length, rigid-tendon assumption"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Abductor Digiti Minimi'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 45.9,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 12.3,
+            "source": "music_2026",
+            "note": "MUSIC model value; provenance not traceable"
+          },
+          {
+            "value": 47.9,
+            "source": "myohand",
+            "note": "MyoHand UI_UB5 (ulnar side of little finger), which acts as the ADM-like ulnar intrinsic; mapping uncertain"
+          }
+        ]
+      }
+    },
+    "FDM": {
+      "fiber_length_cm": {
+        "value": 3.36,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Flexor Digiti Minimi'; optimal fiber length, single 87 y female"
+      },
+      "pcsa_cm2": {
+        "value": 0.113,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Flexor Digiti Minimi'; PCSA without cos(pennation)"
+      },
+      "volume_cm3": {
+        "value": 0.38,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+      },
+      "mass_g": {
+        "value": 0.4,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Flexor Digiti Minimi'; FDM absent in about 1/3 of hands (patil_2021). This specimen's FDM is very small"
+      },
+      "muscle_length_cm": {
+        "value": 7.1,
+        "source": "patil_2021",
+        "note": "Mean muscle length 71 mm in the 20 hands where FDM was present; value from a search excerpt, full text not verified",
+        "confidence": "low"
+      },
+      "tendon_length_cm": {
+        "value": 0.6,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Flexor Digiti Minimi'; external tendon length, rigid-tendon assumption"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Flexor Digiti Minimi'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 5.7,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 30,
+            "source": "music_2026",
+            "note": "MUSIC model value; provenance not traceable"
+          }
+        ]
+      }
+    },
+    "ODM": {
+      "fiber_length_cm": {
+        "value": 1.67,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Digiti Minimi'; optimal fiber length, single 87 y female"
+      },
+      "pcsa_cm2": {
+        "value": 1.302,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Digiti Minimi'; PCSA without cos(pennation)"
+      },
+      "volume_cm3": {
+        "value": 2.18,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+      },
+      "mass_g": {
+        "value": 2.3,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Digiti Minimi'"
+      },
+      "tendon_length_cm": {
+        "value": 3.6,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Digiti Minimi'; external tendon length, rigid-tendon assumption"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Opponens Digiti Minimi'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 66.1,
+        "source": "mirakhorlo_2016",
+        "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+        "specific_tension_n_per_cm2": 50.8
+      }
+    },
+    "DI1": {
+      "fiber_length_cm": {
+        "value": 3.17,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 1'; mean ± SD 3.17 ± 0.28 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.28,
+        "alternatives": [
+          {
+            "value": 3.96,
+            "source": "mirakhorlo_2016",
+            "note": "MC1 head: Lopt 39.6 mm"
+          },
+          {
+            "value": 1.96,
+            "source": "mirakhorlo_2016",
+            "note": "MC2 head: Lopt 19.6 mm"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 1.5,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 1'; SD 0.4",
+        "sd": 0.4,
+        "alternatives": [
+          {
+            "value": 1.73,
+            "source": "mirakhorlo_2016",
+            "note": "Derived sum of heads: MC1 0.621 + MC2 1.109 cm^2"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 4.42,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 9.0,
+            "source": "kerkhof_2018",
+            "note": "Submersion volume 9000 mm^3 (MRI model 7854 mm^3), 'Interosseus I'; single 60 y male"
+          },
+          {
+            "value": 4.64,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo summed mass / 1.0567"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 4.67,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 1'; SD 1.17",
+        "sd": 1.17,
+        "alternatives": [
+          {
+            "value": 4.9,
+            "source": "mirakhorlo_2016",
+            "note": "Derived sum of heads: MC1 2.6 g + MC2 2.3 g"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 6.19,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 1'; SD 0.25 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.25
+      },
+      "tendon_length_cm": {
+        "value": 1.05,
+        "source": "mirakhorlo_2016",
+        "note": "MC1 head 10.5 mm; MC2 head 21.7 mm; external tendon, extensor-hood contribution not separated",
+        "heads": {
+          "MC1": 1.05,
+          "MC2": 2.17
+        }
+      },
+      "pennation_deg": {
+        "value": 15,
+        "source": "mirakhorlo_2016",
+        "note": "MC1 head 15 deg; MC2 head 40 deg",
+        "heads": {
+          "MC1": 15,
+          "MC2": 40
+        }
+      },
+      "fmax_n": {
+        "value": 76.2,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 53.1 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 87.9,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo summed PCSA 1.73 cm^2 x 50.8"
+          },
+          {
+            "value": 61.2,
+            "source": "myohand",
+            "note": "MyoHand actuator RI2 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "DI2": {
+      "fiber_length_cm": {
+        "value": 2.51,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 2'; mean ± SD 2.51 ± 0.63 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.63,
+        "alternatives": [
+          {
+            "value": 1.99,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 2 (MC3/MC4 -> PP3)'; optimal fiber length, single 87 y female; Mirakhorlo's DI2/DI3 origins (MC3/MC4 and MC2/MC3) are swapped relative to standard anatomy (DI2 from MC2/MC3, DI3 from MC3/MC4), so the row-to-muscle mapping is uncertain"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 1.34,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 2'; SD 0.77",
+        "sd": 0.77,
+        "alternatives": [
+          {
+            "value": 1.235,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 2 (MC3/MC4 -> PP3)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 2.51,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 2.46,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 2.65,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 2'; SD 1.01",
+        "sd": 1.01,
+        "alternatives": [
+          {
+            "value": 2.6,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 2 (MC3/MC4 -> PP3)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 6.28,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 2'; SD 0.81 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.81
+      },
+      "tendon_length_cm": {
+        "value": 4.1,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 2 (MC3/MC4 -> PP3)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 15,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 2 (MC3/MC4 -> PP3)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 68.1,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 47.4 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 62.7,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 61.2,
+            "source": "myohand",
+            "note": "MyoHand actuator RI3 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "DI3": {
+      "fiber_length_cm": {
+        "value": 2.58,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 3'; mean ± SD 2.58 ± 0.34 cm; Jacobson normalised fiber length to sarcomere length; DI3 and DI4 report identical 25.8 ± 3.4 mm, which may be a transcription duplicate in the reproduction",
+        "sd": 0.34,
+        "alternatives": [
+          {
+            "value": 1.69,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 3 (MC2/MC3 -> PP3)'; optimal fiber length, single 87 y female; Mirakhorlo's DI2/DI3 origins (MC3/MC4 and MC2/MC3) are swapped relative to standard anatomy (DI2 from MC2/MC3, DI3 from MC3/MC4), so the row-to-muscle mapping is uncertain"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.95,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 3'; SD 0.45",
+        "sd": 0.45,
+        "alternatives": [
+          {
+            "value": 1.122,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 3 (MC2/MC3 -> PP3)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.9,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 1.89,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 2.01,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 3'; SD 0.66",
+        "sd": 0.66,
+        "alternatives": [
+          {
+            "value": 2.0,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 3 (MC2/MC3 -> PP3)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 5.49,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 3'; SD 0.46 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.46
+      },
+      "tendon_length_cm": {
+        "value": 3.6,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 3 (MC2/MC3 -> PP3)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 25,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus 3 (MC2/MC3 -> PP3)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 48.3,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 33.6 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 57.0,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 98,
+            "source": "myohand",
+            "note": "MyoHand actuator UI_UB3 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "DI4": {
+      "fiber_length_cm": {
+        "value": 2.58,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 4'; mean ± SD 2.58 ± 0.34 cm; Jacobson normalised fiber length to sarcomere length; DI3 and DI4 report identical 25.8 ± 3.4 mm, which may be a transcription duplicate in the reproduction",
+        "sd": 0.34,
+        "alternatives": [
+          {
+            "value": 1.82,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus IV (MC4/MC5 -> PP4)'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.91,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 4'; SD 0.38",
+        "sd": 0.38,
+        "alternatives": [
+          {
+            "value": 1.142,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus IV (MC4/MC5 -> PP4)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.8,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 2.08,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 1.9,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 4'; SD 0.62",
+        "sd": 0.62,
+        "alternatives": [
+          {
+            "value": 2.2,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus IV (MC4/MC5 -> PP4)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 5.01,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'DI 4'; SD 0.53 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.53
+      },
+      "tendon_length_cm": {
+        "value": 2.8,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus IV (MC4/MC5 -> PP4)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 20,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Dorsal Interosseus IV (MC4/MC5 -> PP4)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 46.2,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 32.2 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 58.0,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 76.9,
+            "source": "myohand",
+            "note": "MyoHand actuator UI_UB4 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "PI1": {
+      "fiber_length_cm": {
+        "value": 2.5,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 2 (index)'; mean ± SD 2.50 ± 0.50 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.5,
+        "alternatives": [
+          {
+            "value": 2.56,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus II (MC2/MC3 -> PP2, index)'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.75,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 2 (index)'; SD 0.25",
+        "sd": 0.25,
+        "alternatives": [
+          {
+            "value": 0.517,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus II (MC2/MC3 -> PP2, index)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.48,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 1.32,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 1.56,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 2 (index)'; SD 0.22",
+        "sd": 0.22,
+        "alternatives": [
+          {
+            "value": 1.4,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus II (MC2/MC3 -> PP2, index)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 5.51,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 2 (index)'; SD 0.50 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.5
+      },
+      "tendon_length_cm": {
+        "value": 2.5,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus II (MC2/MC3 -> PP2, index)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus II (MC2/MC3 -> PP2, index)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 38.1,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 26.5 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 26.3,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 61.2,
+            "source": "myohand",
+            "note": "MyoHand actuator UI_UB2 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "PI2": {
+      "fiber_length_cm": {
+        "value": 2.6,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 3 (ring)'; mean ± SD 2.60 ± 0.43 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.43,
+        "alternatives": [
+          {
+            "value": 2.09,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus III (MC4 -> PP4, ring)'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.65,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 3 (ring)'; SD 0.26",
+        "sd": 0.26,
+        "alternatives": [
+          {
+            "value": 0.589,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus III (MC4 -> PP4, ring)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.21,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 1.23,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 1.28,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 3 (ring)'; SD 0.28",
+        "sd": 0.28,
+        "alternatives": [
+          {
+            "value": 1.3,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus III (MC4 -> PP4, ring)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 4.82,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 3 (ring)'; SD 0.29 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.29
+      },
+      "tendon_length_cm": {
+        "value": 1.0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus III (MC4 -> PP4, ring)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 19,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus III (MC4 -> PP4, ring)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 33.0,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 23.0 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 29.9,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 97.0,
+            "source": "myohand",
+            "note": "MyoHand actuator RI4 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "PI3": {
+      "fiber_length_cm": {
+        "value": 2.36,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 4 (little)'; mean ± SD 2.36 ± 0.26 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.26,
+        "alternatives": [
+          {
+            "value": 1.76,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus V (MC5 -> PP5, little)'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.61,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 4 (little)'; SD 0.23",
+        "sd": 0.23,
+        "alternatives": [
+          {
+            "value": 0.646,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus V (MC5 -> PP5, little)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 1.13,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 1.14,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 1.19,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 4 (little)'; SD 0.33",
+        "sd": 0.33,
+        "alternatives": [
+          {
+            "value": 1.2,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus V (MC5 -> PP5, little)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 4.53,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'PI 4 (little)'; SD 0.58 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.58
+      },
+      "tendon_length_cm": {
+        "value": 2.45,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus V (MC5 -> PP5, little)'; external tendon length, rigid-tendon assumption; extensor-hood contribution not separated"
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Palmar Interosseus V (MC5 -> PP5, little)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 31.0,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 21.6 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 32.8,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 59.9,
+            "source": "myohand",
+            "note": "MyoHand actuator RI5 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "L1": {
+      "fiber_length_cm": {
+        "value": 5.54,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L1'; mean ± SD 5.54 ± 1.02 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 1.02,
+        "alternatives": [
+          {
+            "value": 7.84,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales I'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.11,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L1'; SD 0.03",
+        "sd": 0.03,
+        "alternatives": [
+          {
+            "value": 0.072,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales I'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 0.54,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 0.57,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          },
+          {
+            "value": 1.0,
+            "source": "kerkhof_2018",
+            "note": "Derived: Kerkhof L1-L4 combined submersion 4.0 cm^3 / 4 (equal split assumed)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 0.57,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L1'; SD 0.19",
+        "sd": 0.19,
+        "alternatives": [
+          {
+            "value": 0.6,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales I'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 6.49,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L1'; SD 1.00 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 1.0
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales I'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 5.6,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 3.9 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 3.7,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 61.2,
+            "source": "myohand",
+            "note": "MyoHand actuator LU_RB2 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "L2": {
+      "fiber_length_cm": {
+        "value": 5.55,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L2'; mean ± SD 5.55 ± 1.77 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 1.77,
+        "alternatives": [
+          {
+            "value": 7.37,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales 2'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.08,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L2'; SD 0.04",
+        "sd": 0.04,
+        "alternatives": [
+          {
+            "value": 0.128,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales 2'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 0.37,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 0.95,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          },
+          {
+            "value": 1.0,
+            "source": "kerkhof_2018",
+            "note": "Derived: Kerkhof L1-L4 combined submersion 4.0 cm^3 / 4 (equal split assumed)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 0.39,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L2'; SD 0.22",
+        "sd": 0.22,
+        "alternatives": [
+          {
+            "value": 1.0,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales 2'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 6.12,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L2'; SD 1.78 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 1.78
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales 2'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 4.1,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 2.8 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 6.5,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 98,
+            "source": "myohand",
+            "note": "MyoHand actuator LU_RB3 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "L3": {
+      "fiber_length_cm": {
+        "value": 5.62,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L3'; mean ± SD 5.62 ± 1.07 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 1.07,
+        "alternatives": [
+          {
+            "value": 6.88,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales III'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.08,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L3'; SD 0.04",
+        "sd": 0.04,
+        "alternatives": [
+          {
+            "value": 0.11,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales III'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 0.35,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 0.76,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          },
+          {
+            "value": 1.0,
+            "source": "kerkhof_2018",
+            "note": "Derived: Kerkhof L1-L4 combined submersion 4.0 cm^3 / 4 (equal split assumed)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 0.37,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L3'; SD 0.16",
+        "sd": 0.16,
+        "alternatives": [
+          {
+            "value": 0.8,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales III'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 6.43,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L3'; SD 0.89 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 0.89
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales III'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 4.1,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 2.8 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 5.6,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 76.9,
+            "source": "myohand",
+            "note": "MyoHand actuator LU_RB4 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    },
+    "L4": {
+      "fiber_length_cm": {
+        "value": 5.01,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L4'; mean ± SD 5.01 ± 0.84 cm; Jacobson normalised fiber length to sarcomere length",
+        "sd": 0.84,
+        "alternatives": [
+          {
+            "value": 6.11,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales V (FDPV -> PP5)'; optimal fiber length, single 87 y female"
+          }
+        ]
+      },
+      "pcsa_cm2": {
+        "value": 0.06,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L4'; SD 0.03",
+        "sd": 0.03,
+        "alternatives": [
+          {
+            "value": 0.077,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales V (FDPV -> PP5)'; PCSA without cos(pennation)"
+          }
+        ]
+      },
+      "volume_cm3": {
+        "value": 0.22,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson mass / 1.056 g/cm^3",
+        "alternatives": [
+          {
+            "value": 0.47,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo mass / 1.0567 g/cm^3 (density used in that paper)"
+          },
+          {
+            "value": 1.0,
+            "source": "kerkhof_2018",
+            "note": "Derived: Kerkhof L1-L4 combined submersion 4.0 cm^3 / 4 (equal split assumed)"
+          }
+        ]
+      },
+      "mass_g": {
+        "value": 0.23,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L4'; SD 0.11",
+        "sd": 0.11,
+        "alternatives": [
+          {
+            "value": 0.5,
+            "source": "mirakhorlo_2016",
+            "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales V (FDPV -> PP5)'"
+          }
+        ]
+      },
+      "muscle_length_cm": {
+        "value": 5.38,
+        "source": "jacobson_1992",
+        "note": "Jacobson 1992 as reproduced in wang_2014 Table 1, row 'L4'; SD 1.15 cm; belly length incl. muscle fibres, not tendon",
+        "sd": 1.15
+      },
+      "pennation_deg": {
+        "value": 0,
+        "source": "mirakhorlo_2016",
+        "note": "Mirakhorlo 2016 Table 2 row 'Lumbricales V (FDPV -> PP5)'; pennation measured only if >10 deg, else recorded 0"
+      },
+      "fmax_n": {
+        "value": 3.0,
+        "source": "jacobson_1992",
+        "note": "Derived: Jacobson PCSA x 50.8 N/cm^2 (convention of wohlman_murray_2013 / mcfarland_2023). With 35.4 N/cm^2 (Brand 1981): 2.1 N",
+        "specific_tension_n_per_cm2": 50.8,
+        "alternatives": [
+          {
+            "value": 3.9,
+            "source": "mirakhorlo_2016",
+            "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
+            "specific_tension_n_per_cm2": 50.8
+          },
+          {
+            "value": 47.9,
+            "source": "myohand",
+            "note": "MyoHand actuator LU_RB5 (also in MUSIC). Mapping by finger side (Lee 2015 corrected naming); UI_UB/LU_RB lump the muscle with its lateral band. Not consistent with cadaver PCSA (lumbrical PCSA 0.06-0.11 cm^2 gives about 3-6 N)"
+          }
+        ]
+      }
+    }
+  }
+}

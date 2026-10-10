@@ -1,0 +1,238 @@
+{
+  "description": "Passive rotational joint stiffness applied at runtime to the vendored MyoHand model. MyoHand defines joint damping but no stiffness; without it, a joint with any unopposed torque runs to its limit in zero gravity.",
+  "model": "models/myohand/hand.xml",
+  "units": "N*m/rad",
+  "reference_posture": "Each spring pulls toward the model reference posture qpos0 (all joints at 0 rad).",
+  "simplifications": [
+    "Linear springs. Measured passive moments become exponential near the end of range.",
+    "Each degree of freedom is independent. Measured wrist and forearm stiffness is coupled.",
+    "Values are population means from small samples, not subject-specific.",
+    "In-vivo measurements include passive muscle-tendon stiffness, which the MyoHand muscle model also produces, so that share is counted twice. Kuo and Deshpande 2012 found muscle-tendon units contribute a limited share at the index MCP; the overlap was not quantified for other joints."
+  ],
+  "sources": [
+    {
+      "id": "formica_2012",
+      "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108:1158-1166, 2012.",
+      "doi": "10.1152/jn.01014.2011",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3424077/"
+    },
+    {
+      "id": "shi_2020",
+      "citation": "Shi XQ, Heung HL, Tang ZQ, Tong KY, Li Z. Verification of finger joint stiffness estimation method with soft robotic actuator. Front Bioeng Biotechnol 8:592637, 2020.",
+      "doi": "10.3389/fbioe.2020.592637",
+      "url": "https://www.frontiersin.org/articles/10.3389/fbioe.2020.592637/full"
+    },
+    {
+      "id": "kuo_deshpande_2012",
+      "citation": "Kuo PH, Deshpande AD. Muscle-tendon units provide limited contributions to the passive stiffness of the index finger metacarpophalangeal joint. J Biomech 45:2531-2538, 2012.",
+      "doi": "10.1016/j.jbiomech.2012.07.034"
+    },
+    {
+      "id": "dionysian_2005",
+      "citation": "Dionysian E, Kabo JM, Dorey FJ, Meals RA. Proximal interphalangeal joint stiffness: measurement and analysis. J Hand Surg Am 30:573-579, 2005.",
+      "doi": "10.1016/j.jhsa.2004.10.010"
+    },
+    {
+      "id": "domalain_2010",
+      "citation": "Domalain M, Vigouroux L, Berton E. Determination of passive moment-angle relationships at the trapeziometacarpal joint. J Biomech Eng 132:071009, 2010.",
+      "doi": "10.1115/1.4001397"
+    },
+    {
+      "id": "thumb_stiffness_simulation",
+      "citation": "A simulating analysis of the effects of increased joint stiffness on muscle loading in a thumb (PMC2804669). Simulation study; its thumb stiffness values are model assumptions, not measurements. Authors not re-checked here.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2804669/"
+    }
+  ],
+  "joints": {
+    "pro_sup_r": {
+      "stiffness_nm_per_rad": 0.22,
+      "basis": "measured",
+      "source_ids": [
+        "formica_2012"
+      ],
+      "notes": "Mean of 0.24 (toward pronation) and 0.19 (toward supination); n=10, about +/-0.8 rad. Linear fit is weak (R2 0.61)."
+    },
+    "deviation_r": {
+      "stiffness_nm_per_rad": 1.74,
+      "basis": "measured",
+      "source_ids": [
+        "formica_2012"
+      ],
+      "notes": "Diagonal of the 2-D wrist stiffness matrix; n=10, +/-0.3 rad. The coupling term with flexion (-0.18) is omitted."
+    },
+    "flexion_r": {
+      "stiffness_nm_per_rad": 1.28,
+      "basis": "measured",
+      "source_ids": [
+        "formica_2012"
+      ],
+      "notes": "Diagonal of the 2-D wrist stiffness matrix; n=10. Measured stiffness toward extension (1.02) is about twice that toward flexion (0.55); one linear spring cannot capture that asymmetry."
+    },
+    "cmc_flexion_r": {
+      "stiffness_nm_per_rad": 0.15,
+      "basis": "assumed",
+      "source_ids": [
+        "thumb_stiffness_simulation",
+        "domalain_2010"
+      ],
+      "notes": "No linear in-vivo value found. Domalain 2010 reports a nonlinear moment-angle fit whose coefficients were not retrieved. Value matches a simulation study's assumption."
+    },
+    "cmc_abduction_r": {
+      "stiffness_nm_per_rad": 0.15,
+      "basis": "assumed",
+      "source_ids": [
+        "thumb_stiffness_simulation",
+        "domalain_2010"
+      ],
+      "notes": "Same basis as thumb CMC flexion."
+    },
+    "mp_flexion_r": {
+      "stiffness_nm_per_rad": 0.1,
+      "basis": "assumed",
+      "source_ids": [
+        "thumb_stiffness_simulation"
+      ],
+      "notes": "No in-vivo measurement found; simulation-study assumption."
+    },
+    "ip_flexion_r": {
+      "stiffness_nm_per_rad": 0.05,
+      "basis": "assumed",
+      "source_ids": [
+        "thumb_stiffness_simulation"
+      ],
+      "notes": "No in-vivo measurement found; simulation-study assumption."
+    },
+    "mcp2_flexion_r": {
+      "stiffness_nm_per_rad": 0.04,
+      "basis": "measured",
+      "source_ids": [
+        "shi_2020",
+        "kuo_deshpande_2012"
+      ],
+      "notes": "Index MCP, 0.033-0.047 in controls (n=4, about 10-40 deg flexion). Other studies range 0.016-0.21; treat as order of magnitude."
+    },
+    "mcp2_abduction_r": {
+      "stiffness_nm_per_rad": 0.06,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020"
+      ],
+      "notes": "No in-vivo abduction/adduction measurement found. Set to 1.5x the MCP flexion value."
+    },
+    "pm2_flexion_r": {
+      "stiffness_nm_per_rad": 0.029,
+      "basis": "measured",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "0.05 N*cm/deg across index, middle, and ring PIP (n=89)."
+    },
+    "md2_flexion_r": {
+      "stiffness_nm_per_rad": 0.015,
+      "basis": "assumed",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "No DIP measurement found. Set to about half the PIP value."
+    },
+    "mcp3_flexion_r": {
+      "stiffness_nm_per_rad": 0.04,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020",
+        "kuo_deshpande_2012"
+      ],
+      "notes": "Index MCP value reused; no digit-specific measurement found."
+    },
+    "mcp3_abduction_r": {
+      "stiffness_nm_per_rad": 0.06,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020"
+      ],
+      "notes": "No in-vivo abduction/adduction measurement found. Set to 1.5x the MCP flexion value."
+    },
+    "pm3_flexion_r": {
+      "stiffness_nm_per_rad": 0.029,
+      "basis": "measured",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "0.05 N*cm/deg across index, middle, and ring PIP (n=89)."
+    },
+    "md3_flexion_r": {
+      "stiffness_nm_per_rad": 0.015,
+      "basis": "assumed",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "No DIP measurement found. Set to about half the PIP value."
+    },
+    "mcp4_flexion_r": {
+      "stiffness_nm_per_rad": 0.04,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020",
+        "kuo_deshpande_2012"
+      ],
+      "notes": "Index MCP value reused; no digit-specific measurement found."
+    },
+    "mcp4_abduction_r": {
+      "stiffness_nm_per_rad": 0.06,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020"
+      ],
+      "notes": "No in-vivo abduction/adduction measurement found. Set to 1.5x the MCP flexion value."
+    },
+    "pm4_flexion_r": {
+      "stiffness_nm_per_rad": 0.029,
+      "basis": "measured",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "0.05 N*cm/deg across index, middle, and ring PIP (n=89)."
+    },
+    "md4_flexion_r": {
+      "stiffness_nm_per_rad": 0.015,
+      "basis": "assumed",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "No DIP measurement found. Set to about half the PIP value."
+    },
+    "mcp5_flexion_r": {
+      "stiffness_nm_per_rad": 0.04,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020",
+        "kuo_deshpande_2012"
+      ],
+      "notes": "Index MCP value reused; no digit-specific measurement found."
+    },
+    "mcp5_abduction_r": {
+      "stiffness_nm_per_rad": 0.06,
+      "basis": "assumed",
+      "source_ids": [
+        "shi_2020"
+      ],
+      "notes": "No in-vivo abduction/adduction measurement found. Set to 1.5x the MCP flexion value."
+    },
+    "pm5_flexion_r": {
+      "stiffness_nm_per_rad": 0.029,
+      "basis": "assumed",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "Index-ring PIP value reused for the little finger."
+    },
+    "md5_flexion_r": {
+      "stiffness_nm_per_rad": 0.015,
+      "basis": "assumed",
+      "source_ids": [
+        "dionysian_2005"
+      ],
+      "notes": "No DIP measurement found. Set to about half the PIP value."
+    }
+  }
+}

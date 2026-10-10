@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/MyoHub/myo_sim",
+  "revision": "93b0ca8f4ec90c9899ee7f05fee561e9911da91b",
+  "builder": "myo_sim.build.compose.build_right_hand_from_arm_spec",
+  "license": "Apache-2.0",
+  "export_changes": [
+    "meshdir rewritten to relative path"
+  ],
+  "runtime_changes": [
+    "gravity disabled for supported-hand exploration",
+    "timestep 0.002 s; implicitfast integrator",
+    "passive joint stiffness from models/myohand/passive_stiffness.json",
+    "5 actuators (APB, FPB, AdP, ADM, FDM) grafted from MUSIC commit 1b13b79 when its local cache exists; unlicensed, not vendored"
+  ]
+}
