@@ -6,7 +6,7 @@
 web
 
 ## Stack
-Implementation choice under the user's instruction to select a suitable simulator: MuJoCo with a local Python service and a Three.js browser interface. No external hosting is required.
+Implementation choice under the user's instruction to select a suitable simulator: MuJoCo with a local Python service and a Three.js browser interface. A static build also runs MuJoCo (WebAssembly) in the browser, so the demo can be hosted as plain files without the MUSIC muscles.
 
 ## Users
 The repository owner wants to explore human hand movement by actuating forearm and hand muscles. Research fidelity requirements beyond the first working model remain open.

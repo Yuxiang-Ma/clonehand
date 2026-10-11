@@ -18,6 +18,21 @@ npx playwright install chromium   # only for browser tests
 
 `fetch_music.py` clones the MUSIC hand model (Xu et al. 2026, commit `1b13b79`) into `~/.cache/clonehand/`. **The MUSIC repository has no license.** Its files are not copied into this project. The engine reads five muscle definitions from the cache when it loads, for local use only. Without the cache, the app runs with 39 actuators. Set `CLONEHAND_MUSIC_DIR` to use a different location.
 
+## Web demo (no install)
+
+**Try it: https://yuxiang-ma.github.io/clonehand/**
+
+The web demo runs MuJoCo compiled to WebAssembly inside your browser, so nothing has to be installed or launched. It needs a browser with WebGL. It runs MyoHand with 39 actuators and leaves out the five MUSIC muscles, because MUSIC has no license. Every push to `main` rebuilds and redeploys it (`.github/workflows/pages.yml`), after the lint, typecheck, and Python tests pass.
+
+To build it yourself and serve it from any static host:
+
+```bash
+npm run build:demo        # exports model data, then builds dist-demo/
+npm run preview:demo      # http://127.0.0.1:4173
+```
+
+`dist-demo/` is plain files (about 15 MB, 2.2 MB of it the gzipped physics engine), so any static file host can serve it.
+
 ## Run
 
 Production build, served by the Python service:
@@ -50,6 +65,9 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q
 # Browser: builds, starts the service on port 8765, drives the GUI in headless Chromium
 npm run test:browser
 
+# Browser, static demo: builds dist-demo/, serves it as plain files on port 8766
+npm run test:demo
+
 # Static checks
 .venv/bin/ruff check . && .venv/bin/ruff format --check .
 npm run typecheck
@@ -62,7 +80,10 @@ Generated files must match their sources. To regenerate after editing `data/anat
 ```bash
 .venv/bin/python scripts/generate_anatomy_docs.py      # -> docs/anatomy.md
 .venv/bin/python scripts/export_model_catalog.py       # -> data/anatomy/model.json, docs/model.md
+.venv/bin/python scripts/generate_validation.py        # -> docs/validation.md
 ```
+
+The browser tests also check the 3D view itself: colors, outlines, and path positions read back from the scene must match the simulation snapshot they were drawn from, and an active muscle must turn red in the rendered image.
 
 ## Layout
 
@@ -74,9 +95,12 @@ Generated files must match their sources. To regenerate after editing `data/anat
 | `models/myohand/` | Vendored MyoHand MJCF and meshes (MyoHub/myo_sim `93b0ca8f`, Apache-2.0), provenance, and the passive stiffness table. |
 | `src/simulation/engine.py` | `HandSimulation`, the only code that touches MuJoCo. |
 | `src/server.py` | FastAPI: `/api/model`, `/api/anatomy`, `/api/health`, and `/ws`. One simulation per WebSocket. |
-| `src/gui/` | TypeScript and Three.js interface. `main.ts` is the simulator; `anatomy.ts` renders the inventory page (`anatomy.html`). |
+| `src/gui/` | TypeScript and Three.js interface. `main.ts` is the simulator; `anatomy.ts` renders the inventory page (`anatomy.html`); `local-engine.ts` and `sim-worker.ts` run the physics in the browser for the web demo. |
 | `tests/` | pytest suites; `tests/browser/` holds the Playwright suite. |
-| `docs/` | Simulator decision, anatomy summary, model catalog. |
+| `data/validation/references.json` | Published moment arms and ranges of motion, with sources, used for `docs/validation.md`. |
+| `scripts/export_web_demo.py` | Writes the files the static web demo loads (no MUSIC data). |
+| `docs/` | Simulator decision, anatomy summary, model catalog, biomechanical validation. |
+| `DESIGN.md` | Visual system: colors, type, layout, components. |
 
 ## How the simulation differs from the source model
 
@@ -93,8 +117,8 @@ The engine changes four things when it loads `hand.xml`. All are listed in `mode
 - **The springs are a simplification.** Real passive joint moments rise steeply near the end of range, and the measured wrist and forearm stiffness is coupled across axes. The in-vivo values also include passive muscle force, which the muscle model already produces, so part of it is counted twice.
 - **Finger joints still reach their limits easily.** Finger stiffness is small (about 0.03 to 0.06 N·m/rad), so moderate excitation can carry a finger joint to its limit. The GUI marks such joints **At limit**.
 - **The model leaves things out.** With MUSIC fetched, 23 of the 37 in-scope muscles have their own model channel. The 11 interossei and lumbricals are approximated by 12 combined channels. Opponens digiti minimi (no fifth CMC joint in the model), palmaris brevis (moves only skin), and supinator (in neither MyoHand nor MUSIC) are not modeled, so forearm rotation is driven only by the two pronators plus passive stiffness.
-- **MUSIC's muscles are unvalidated and unlicensed.** Their paths are straight lines through 2-3 points with no wrapping. Their maximum forces (APB 42.7, FPB 80, AdP 100, FDM 30, ADM 12.3 N) cite sources that do not contain these muscles. They may only be used locally until the authors publish a license.
+- **MUSIC's muscles are unvalidated and unlicensed.** Their paths are straight lines through 2-3 points with no wrapping. Their maximum forces cite sources that do not contain these muscles. They may only be used locally until the authors publish a license.
 - **The belly view is a drawing, not a muscle-shape model.** Every belly is a spindle around its path line, starting at the origin. Flat or fan-shaped muscles (adductor pollicis, first dorsal interosseous) look thicker and narrower than they are. Forearm volumes come from in vivo MRI, while hand volumes come from cadavers, which run smaller. OP, APB, FPB, and AdP have no published belly length, so their bellies are drawn over 80% of the path. Bellies longer than the model path are shortened to fit. The combined channels are sized as the interosseous or lumbrical on that side of the finger; this is an assumption for drawing only. There is also no independent ring or little finger CMC motion, no skin, and no grasp objects. Muscle paths are line routes, not muscle bellies.
-- **Nothing here is validated against human data.** The model parameters come from MyoHand and the cited studies. They have not been checked against human measurements in this project.
+- **Moment arms and joint ranges are only partly checked against human data.** [docs/validation.md](docs/validation.md) compares 75 moment arms and 16 joint ranges with cadaver and in vivo measurements. Most moment arms agree in direction and size. The biggest gaps are in the joint limits: ulnar deviation stops at 10° (people: about 37°), wrist flexion and extension at 45° (people: 66–80°), and the index MCP and PIP cannot hyperextend. Muscle forces and simulated motion have not been compared with human data.
 
 See [docs/simulator-decision.md](docs/simulator-decision.md) for why MuJoCo and MyoHand were chosen, and [docs/model.md](docs/model.md) for coordinate conventions and sign rules.
