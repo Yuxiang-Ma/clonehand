@@ -95,3 +95,13 @@ def test_muscle_architecture_links_and_sources():
             assert actuator["architecture_note"]
         else:
             assert aid in architecture["muscles"], actuator["id"]
+
+
+def test_validation_document_is_current():
+    result = subprocess.run(
+        [sys.executable, "scripts/generate_validation.py", "--check"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
