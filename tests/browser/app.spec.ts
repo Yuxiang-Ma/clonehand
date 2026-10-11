@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { sceneTests } from './scene';
 
 async function open(page: Page) {
   await page.goto('/');
@@ -150,3 +151,5 @@ test('belly and tendon view shortens only the belly', async ({ page }) => {
   await page.click('[data-muscle-view="paths"]');
   await expect(page.locator('#legend-paths')).toBeVisible();
 });
+
+sceneTests(open);

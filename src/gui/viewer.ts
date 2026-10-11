@@ -254,6 +254,39 @@ export class HandViewer {
     this.setSegments(tendon, path.tail(bellyArc), selected ? tendonRadius * 1.3 : tendonRadius);
   }
 
+  /**
+   * What the scene draws right now, read back from the Three.js objects, next to the snapshot it
+   * was drawn from. The browser tests use this to check highlighting against simulation state.
+   */
+  describe() {
+    const anatomical = this.view === 'anatomical';
+    const matrix = new THREE.Matrix4();
+    return {
+      view: this.view,
+      selected: this.selected,
+      state: this.state,
+      bones: this.bones.map(bone => bone.position.toArray()),
+      muscles: this.model.actuators.map((actuator, index) => {
+        const object = anatomical ? this.bellies[index] : this.paths[index];
+        const material = object.material as THREE.MeshStandardMaterial;
+        let firstSegment: number[] | null = null;
+        if (!anatomical && this.paths[index].count > 0) {
+          this.paths[index].getMatrixAt(0, matrix);
+          firstSegment = new THREE.Vector3().setFromMatrixPosition(matrix).toArray();
+        }
+        const selected = index === this.selected;
+        return {
+          id: actuator.id,
+          visible: object.visible,
+          color: `#${material.color.getHexString()}`,
+          opacity: material.opacity,
+          outlined: selected && (anatomical ? this.outline.visible : this.selectedOutline.visible),
+          firstSegment,
+        };
+      }),
+    };
+  }
+
   /** Current belly and tendon lengths (metres) for the anatomical view. */
   muscleSplit(index: number) { return this.split[index]; }
 

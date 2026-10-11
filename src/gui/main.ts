@@ -293,6 +293,8 @@ async function start() {
     element('muscle-count').textContent = String(model.actuators.length);
     element('limitations').innerHTML = model.limitations.map(limitation => `<li>${escape(limitation)}</li>`).join('');
     viewer = new HandViewer(element('viewer'), model, selectMuscle);
+    // Read-only hook for tests/browser: compares the drawn scene with simulation state.
+    (window as unknown as { clonehand: unknown }).clonehand = { scene: () => viewer.describe() };
     selectMuscle(Math.max(0, model.actuators.findIndex(muscle => muscle.id === 'FDS2_r')));
     connect();
     function update(now: number) {

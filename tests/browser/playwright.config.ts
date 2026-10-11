@@ -4,6 +4,7 @@ const port = Number(process.env.CLONEHAND_TEST_PORT ?? 8765);
 
 export default defineConfig({
   testDir: '.',
+  testMatch: 'app.spec.ts',
   timeout: 60_000,
   expect: { timeout: 15_000 },
   fullyParallel: false,
