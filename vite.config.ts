@@ -11,7 +11,11 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: demo ? 'dist-demo' : 'dist',
       // Two pages: the simulator and the anatomy inventory reference.
-      rollupOptions: { input: { main: 'index.html', anatomy: 'anatomy.html' } },
+      rollupOptions: {
+        input: { main: 'index.html', anatomy: 'anatomy.html' },
+        // Three.js changes far less often than the app, so it gets its own long-cached chunk.
+        output: { manualChunks: { three: ['three', 'three/addons/controls/OrbitControls.js'] } },
+      },
     },
     worker: { format: 'es' },
     // The service build swaps the worker link for a stub so it ships no worker or WebAssembly.
