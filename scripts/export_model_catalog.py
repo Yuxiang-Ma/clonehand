@@ -101,7 +101,7 @@ def render():
             "time": "seconds",
             "angles": "radians internally; range is degrees for display; range_rad is radians",
             "axis": "unit axis in the named local body frame; right-hand positive rotation",
-            "passive_stiffness": "N*m/rad, linear spring toward reference_rad; basis is measured or assumed (see models/myohand/passive_stiffness.json)",
+            "passive_stiffness": "N*m/rad as [resisting positive motion, resisting negative motion], linear on each side of reference_rad; basis is measured or assumed (see models/myohand/passive_stiffness.json)",
             "moment_arm": "-d(tendon length)/d(joint angle); mm in this file; positive contraction torque acts along positive joint axis",
             "thumb_flexion": "negative coordinates; positive coordinates extend the thumb",
             "forearm_rotation": "positive pronation, negative supination",
@@ -134,15 +134,15 @@ def render():
     ]
     for joint in joints:
         lo, hi = joint["range"]
-        stiffness = (
-            f"{joint['passive_stiffness_nm_per_rad']:.3g} ({joint['passive_stiffness_basis']})"
-        )
+        positive, negative = joint["passive_stiffness_nm_per_rad"]
+        value = f"{positive:.3g}" if positive == negative else f"+{positive:.3g} / −{negative:.3g}"
+        stiffness = f"{value} ({joint['passive_stiffness_basis']})"
         lines.append(
             f"| `{joint['id']}` | {joint['name']} | {lo:.1f} to {hi:.1f} | {joint['positive']} | {joint['negative']} | {stiffness} |"
         )
     lines += [
         "",
-        "MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).",
+        "MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Where two values are given (+ / −), the spring is stiffer on one side: the first resists motion in the positive direction, the second in the negative direction. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).",
     ]
     lines += [
         "",

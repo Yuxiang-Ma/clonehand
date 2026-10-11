@@ -61,8 +61,9 @@ def physics_spec():
     spec.option.gravity = [0, 0, 0]
     spec.option.timestep = compiled.opt.timestep
     spec.option.integrator = compiled.opt.integrator
+    # Directional joints already carry one-sided tendon springs from build_spec().
     for name, entry in load_passive_stiffness()["joints"].items():
-        if name not in LOCKED_JOINTS:
+        if name not in LOCKED_JOINTS and not isinstance(entry["stiffness_nm_per_rad"], dict):
             spec.joint(name).stiffness = [entry["stiffness_nm_per_rad"], 0, 0]
     for body in spec.bodies[1:]:
         i = compiled.body(body.name).id

@@ -1,13 +1,13 @@
 {
   "description": "Passive rotational joint stiffness applied at runtime to the vendored MyoHand model. MyoHand defines joint damping but no stiffness; without it, a joint with any unopposed torque runs to its limit in zero gravity.",
   "model": "models/myohand/hand.xml",
-  "units": "N*m/rad",
+  "units": "N*m/rad. A number is a symmetric spring; {positive, negative} gives the stiffness resisting motion in the joint's positive and negative directions.",
   "reference_posture": "Each spring pulls toward the model reference posture qpos0 (all joints at 0 rad).",
   "simplifications": [
-    "Linear springs. Measured passive moments become exponential near the end of range.",
+    "Linear springs. Wrist and forearm springs differ on each side of the reference posture (Formica 2012), but every spring is linear. Measured passive moments become exponential near the end of range; only the index MCP has published nonlinear fits, and their printed coefficients do not reproduce the measured end moments (Kuo 2015 dissertation, Table 2.4; Shi 2020), so none is used.",
     "Each degree of freedom is independent. Measured wrist and forearm stiffness is coupled.",
     "Values are population means from small samples, not subject-specific.",
-    "In-vivo measurements include passive muscle-tendon stiffness, which the MyoHand muscle model also produces, so that share is counted twice. Kuo and Deshpande 2012 found muscle-tendon units contribute a limited share at the index MCP; the overlap was not quantified for other joints."
+    "In-vivo measurements include passive muscle-tendon stiffness, which the MyoHand muscle model also produces, so that share is counted twice. At the index MCP, muscle-tendon units do about 25% (24.9 +/- 10.6%) of the passive work (Kuo 2015 dissertation, Fig. 2.7, basis of Kuo and Deshpande 2012); the overlap was not quantified for other joints."
   ],
   "sources": [
     {
@@ -45,28 +45,37 @@
   ],
   "joints": {
     "pro_sup_r": {
-      "stiffness_nm_per_rad": 0.22,
+      "stiffness_nm_per_rad": {
+        "positive": 0.24,
+        "negative": 0.186
+      },
       "basis": "measured",
       "source_ids": [
         "formica_2012"
       ],
-      "notes": "Mean of 0.24 (toward pronation) and 0.19 (toward supination); n=10, about +/-0.8 rad. Linear fit is weak (R2 0.61)."
+      "notes": "Formica 2012 Table 2 directional values: 0.240 toward pronation, 0.186 toward supination (n=10, about +/-0.8 rad). Linear fit is weak (R2 0.61). Applied as two one-sided springs."
     },
     "deviation_r": {
-      "stiffness_nm_per_rad": 1.74,
+      "stiffness_nm_per_rad": {
+        "positive": 1.71,
+        "negative": 1.245
+      },
       "basis": "measured",
       "source_ids": [
         "formica_2012"
       ],
-      "notes": "Diagonal of the 2-D wrist stiffness matrix; n=10, +/-0.3 rad. The coupling term with flexion (-0.18) is omitted."
+      "notes": "Formica 2012 Table 2 directional values: 1.710 toward radial, 1.245 toward ulnar deviation (n=10). Applied as two one-sided springs. The coupling with flexion (-0.18 in the 2-D matrix) is omitted."
     },
     "flexion_r": {
-      "stiffness_nm_per_rad": 1.28,
+      "stiffness_nm_per_rad": {
+        "positive": 0.554,
+        "negative": 1.021
+      },
       "basis": "measured",
       "source_ids": [
         "formica_2012"
       ],
-      "notes": "Diagonal of the 2-D wrist stiffness matrix; n=10. Measured stiffness toward extension (1.02) is about twice that toward flexion (0.55); one linear spring cannot capture that asymmetry."
+      "notes": "Formica 2012 Table 2 directional values: 0.554 toward flexion, 1.021 toward extension (n=10, within about +/-17 deg). Applied as two one-sided springs. The 2-D matrix diagonal (1.28) used before averaged over both directions."
     },
     "cmc_flexion_r": {
       "stiffness_nm_per_rad": 0.15,

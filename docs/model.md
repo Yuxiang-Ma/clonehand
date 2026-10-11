@@ -12,9 +12,9 @@ Moment arms are −d(tendon length)/d(joint angle), displayed in millimetres. Th
 
 | Coordinate | Display name | Range (degrees) | Positive direction | Negative direction | Passive stiffness (N·m/rad) |
 | --- | --- | --- | --- | --- | --- |
-| `pro_sup_r` | Forearm rotation | -90.0 to 90.0 | Pronation | Supination | 0.22 (measured) |
-| `deviation_r` | Wrist deviation | -10.0 to 25.0 | Radial deviation | Ulnar deviation | 1.74 (measured) |
-| `flexion_r` | Wrist flexion | -45.0 to 45.0 | Flexion | Extension | 1.28 (measured) |
+| `pro_sup_r` | Forearm rotation | -90.0 to 90.0 | Pronation | Supination | +0.24 / −0.186 (measured) |
+| `deviation_r` | Wrist deviation | -10.0 to 25.0 | Radial deviation | Ulnar deviation | +1.71 / −1.25 (measured) |
+| `flexion_r` | Wrist flexion | -45.0 to 45.0 | Flexion | Extension | +0.554 / −1.02 (measured) |
 | `cmc_flexion_r` | Thumb CMC flexion | -44.7 to 40.1 | Extension | Flexion | 0.15 (assumed) |
 | `cmc_abduction_r` | Thumb CMC abduction | -28.6 to 44.7 | Abduction | Adduction | 0.15 (assumed) |
 | `mp_flexion_r` | Thumb MCP flexion | -45.0 to 40.0 | Extension | Flexion | 0.1 (assumed) |
@@ -36,7 +36,7 @@ Moment arms are −d(tendon length)/d(joint angle), displayed in millimetres. Th
 | `pm5_flexion_r` | Little PIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.029 (assumed) |
 | `md5_flexion_r` | Little DIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.015 (assumed) |
 
-MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).
+MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Where two values are given (+ / −), the spring is stiffer on one side: the first resists motion in the positive direction, the second in the negative direction. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).
 
 ## Muscle-to-DOF mapping
 

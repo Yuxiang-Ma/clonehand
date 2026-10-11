@@ -89,7 +89,7 @@ Keep the layers separate. `anatomy.json` must not depend on MuJoCo. The engine m
 - **Signs.** Thumb flexion is negative in this model; pronation and radial deviation are positive. Finger "radial motion" is not always abduction. `joint_description()` in `engine.py` holds the positive and negative labels. Fix wrong labels there, then regenerate the catalog.
 - **Excitation and activation.** Controls set excitation in [0, 1]. Activation lags behind it through MuJoCo activation dynamics. The UI must show both and must not present influence (moment arm) as measured motion.
 - **Runtime overrides** in `load_model()`: zero gravity, 0.002 s timestep, implicitfast integrator, passive joint stiffness from `models/myohand/passive_stiffness.json`, and the MUSIC graft when the cache exists. They are recorded in `provenance.json` (and in `scripts/vendor_model.py`, which rewrites it) and must stay in sync.
-- **Passive stiffness.** Every joint needs an entry with `basis` `measured` or `assumed` and `source_ids`; assumed entries need `notes`. Without stiffness, any unopposed torque drives joints to their limits, so do not remove it to "match upstream".
+- **Passive stiffness.** Every joint needs an entry with `basis` `measured` or `assumed` and `source_ids`; assumed entries need `notes`. `stiffness_nm_per_rad` is a number (one joint spring) or `{positive, negative}`; the latter becomes two one-sided fixed-tendon springs (`add_one_sided_springs()` in `engine.py`), because MuJoCo's polynomial joint stiffness needs 3.7+ and the browser build is 3.5.1. Without stiffness, any unopposed torque drives joints to their limits, so do not remove it to "match upstream".
 
 ## Rules specific to this repo
 

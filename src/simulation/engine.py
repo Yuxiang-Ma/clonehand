@@ -17,6 +17,35 @@ def load_passive_stiffness():
     return json.loads((ROOT / "models/myohand/passive_stiffness.json").read_text())
 
 
+def directional_stiffness(entry):
+    """(positive, negative) stiffness in N·m/rad: resisting motion in each joint direction."""
+    value = entry["stiffness_nm_per_rad"]
+    if isinstance(value, dict):
+        return value["positive"], value["negative"]
+    return value, value
+
+
+def add_one_sided_springs(spec):
+    """Joints whose stiffness differs by direction get two one-sided springs instead.
+
+    Each is a fixed tendon on the joint with a dead band: zero force on one side of the reference
+    posture, linear on the other. MuJoCo treats these as passive forces in both the Python and the
+    WebAssembly builds (polynomial joint stiffness needs MuJoCo 3.7, newer than the browser build).
+    """
+    for name, entry in load_passive_stiffness()["joints"].items():
+        if name in LOCKED_JOINTS or not isinstance(entry["stiffness_nm_per_rad"], dict):
+            continue
+        positive, negative = directional_stiffness(entry)
+        for side, stiffness, band in (
+            ("positive", positive, [-10, 0]),
+            ("negative", negative, [0, 10]),
+        ):
+            tendon = spec.add_tendon(name=f"passive_{name}_{side}")
+            tendon.wrap_joint(name, 1.0)
+            tendon.stiffness = [stiffness, 0, 0]
+            tendon.springlength = band
+
+
 # Actuators and joints removed at load time. Both are empty: forearm rotation and the two
 # pronators are kept, as in MUSIC, because later simulations may need palm-up/down motion.
 # Example: EXCLUDED_ACTUATORS = ("PT_r", "PQ_r"); LOCKED_JOINTS = ("pro_sup_r",) locks the
@@ -111,6 +140,7 @@ def build_spec(include_music=True):
         spec.delete(spec.tendon(tendon))
     for name in LOCKED_JOINTS:
         spec.delete(spec.joint(name))
+    add_one_sided_springs(spec)
     if include_music:
         add_music_muscles(spec)
     return spec
@@ -123,8 +153,9 @@ def apply_runtime_settings(model):
     model.opt.integrator = mujoco.mjtIntegrator.mjINT_IMPLICITFAST
     # MyoHand has no joint stiffness, so unopposed torque drives joints to their limits.
     # Add sourced passive springs toward the reference posture (qpos_spring == qpos0).
+    # Joints with directional values use the one-sided springs from add_one_sided_springs().
     for name, entry in load_passive_stiffness()["joints"].items():
-        if name in LOCKED_JOINTS:
+        if name in LOCKED_JOINTS or isinstance(entry["stiffness_nm_per_rad"], dict):
             continue
         model.jnt_stiffness[model.joint(name).id] = entry["stiffness_nm_per_rad"]
 
@@ -410,7 +441,9 @@ class HandSimulation:
                     "negative": negative,
                     "range": np.rad2deg(m.jnt_range[i]).tolist(),
                     "axis": m.jnt_axis[i].tolist(),
-                    "passive_stiffness_nm_per_rad": float(m.jnt_stiffness[i]),
+                    "passive_stiffness_nm_per_rad": directional_stiffness(
+                        stiffness.get(name, {"stiffness_nm_per_rad": 0.0})
+                    ),
                     "passive_stiffness_basis": stiffness.get(name, {}).get("basis", "none"),
                 }
             )
@@ -425,7 +458,7 @@ class HandSimulation:
                 "Actuators are not one per muscle: FDS, FDP, and EDC have four each, and 12 channels bundle the interossei and lumbricals.",
                 "Paths show muscle–tendon routing, not muscle-belly volumes. Intrinsic bundles have unresolved anatomical mappings.",
                 "Forearm rotation has two pronator actuators and no supinator. Gravity is disabled for supported-hand exploration.",
-                "Passive joint stiffness is added as linear springs toward the reference posture. Wrist, forearm, index MCP flexion, and PIP values are measured population means; the others are assumptions.",
+                "Passive joint stiffness is added as linear springs toward the reference posture; wrist and forearm springs are stiffer on one side, as measured. Wrist, forearm, index MCP flexion, and PIP values are measured population means; the others are assumptions.",
                 "RI2_r starts beyond its model length range and pulls with about 12 N at zero activation, so the relaxed index finger rests about 7° toward radial motion.",
                 "No independent ring/little CMC motion, deformable skin, or external grasp objects in this scene.",
                 "Moment arms describe local mechanical influence at the current posture, not guaranteed movement.",

@@ -1,5 +1,6 @@
 import json
 
+import mujoco
 import numpy as np
 import pytest
 
@@ -8,6 +9,7 @@ from src.simulation.engine import (
     LOCKED_JOINTS,
     ROOT,
     HandSimulation,
+    directional_stiffness,
     load_music_muscles,
     load_passive_stiffness,
 )
@@ -164,7 +166,7 @@ def test_every_joint_has_documented_passive_stiffness():
     # Locked joints keep their entry for when they are re-enabled.
     assert set(table["joints"]) == names | set(LOCKED_JOINTS)
     for name, entry in table["joints"].items():
-        assert entry["stiffness_nm_per_rad"] > 0
+        assert min(directional_stiffness(entry)) > 0
         assert entry["basis"] in {"measured", "assumed"}
         assert entry["source_ids"] and set(entry["source_ids"]) <= sources
         if entry["basis"] == "assumed":
@@ -172,7 +174,24 @@ def test_every_joint_has_documented_passive_stiffness():
         if name in LOCKED_JOINTS:
             continue
         joint = sim.model.joint(name).id
-        assert sim.model.jnt_stiffness[joint] == pytest.approx(entry["stiffness_nm_per_rad"])
+        if isinstance(entry["stiffness_nm_per_rad"], dict):
+            assert sim.model.jnt_stiffness[joint] == 0
+        else:
+            assert sim.model.jnt_stiffness[joint] == pytest.approx(entry["stiffness_nm_per_rad"])
+
+
+@pytest.mark.parametrize("name", ["flexion_r", "deviation_r", "pro_sup_r"])
+def test_directional_springs_resist_each_side_with_the_measured_stiffness(name):
+    sim = HandSimulation(include_music=False)
+    m, d = sim.model, sim.data
+    positive, negative = directional_stiffness(load_passive_stiffness()["joints"][name])
+    assert positive != negative
+    for angle, expected in ((0.2, -positive * 0.2), (-0.2, negative * 0.2), (0.0, 0.0)):
+        mujoco.mj_resetData(m, d)
+        d.qpos[m.joint(name).qposadr[0]] = angle
+        mujoco.mj_forward(m, d)
+        # Velocity is zero, so damping adds nothing; the passive force is the spring alone.
+        assert d.qfrc_passive[m.joint(name).dofadr[0]] == pytest.approx(expected, abs=1e-9)
 
 
 def test_relaxed_hand_holds_its_reference_posture():

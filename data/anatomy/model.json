@@ -20,7 +20,7 @@
     "time": "seconds",
     "angles": "radians internally; range is degrees for display; range_rad is radians",
     "axis": "unit axis in the named local body frame; right-hand positive rotation",
-    "passive_stiffness": "N*m/rad, linear spring toward reference_rad; basis is measured or assumed (see models/myohand/passive_stiffness.json)",
+    "passive_stiffness": "N*m/rad as [resisting positive motion, resisting negative motion], linear on each side of reference_rad; basis is measured or assumed (see models/myohand/passive_stiffness.json)",
     "moment_arm": "-d(tendon length)/d(joint angle); mm in this file; positive contraction torque acts along positive joint axis",
     "thumb_flexion": "negative coordinates; positive coordinates extend the thumb",
     "forearm_rotation": "positive pronation, negative supination",
@@ -57,7 +57,10 @@
         0.9926656437815011,
         -0.11966795705710145
       ],
-      "passive_stiffness_nm_per_rad": 0.22,
+      "passive_stiffness_nm_per_rad": [
+        0.24,
+        0.186
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         -1.5708,
@@ -80,7 +83,10 @@
         0.0,
         1.0
       ],
-      "passive_stiffness_nm_per_rad": 1.74,
+      "passive_stiffness_nm_per_rad": [
+        1.71,
+        1.245
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         -0.174533,
@@ -103,7 +109,10 @@
         0.0,
         0.0
       ],
-      "passive_stiffness_nm_per_rad": 1.28,
+      "passive_stiffness_nm_per_rad": [
+        0.554,
+        1.021
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         -0.785398,
@@ -126,7 +135,10 @@
         -0.66528585215587,
         0.7453838343559777
       ],
-      "passive_stiffness_nm_per_rad": 0.15,
+      "passive_stiffness_nm_per_rad": [
+        0.15,
+        0.15
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.78,
@@ -149,7 +161,10 @@
         0.7317360220889156,
         0.467959014126279
       ],
-      "passive_stiffness_nm_per_rad": 0.15,
+      "passive_stiffness_nm_per_rad": [
+        0.15,
+        0.15
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.5,
@@ -172,7 +187,10 @@
         -0.20348798895741932,
         0.9754419470661809
       ],
-      "passive_stiffness_nm_per_rad": 0.1,
+      "passive_stiffness_nm_per_rad": [
+        0.1,
+        0.1
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.785398,
@@ -195,7 +213,10 @@
         -0.4796230550650465,
         0.876043100577638
       ],
-      "passive_stiffness_nm_per_rad": 0.05,
+      "passive_stiffness_nm_per_rad": [
+        0.05,
+        0.05
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -1.309,
@@ -218,7 +239,10 @@
         0.09974995348316616,
         0.0
       ],
-      "passive_stiffness_nm_per_rad": 0.04,
+      "passive_stiffness_nm_per_rad": [
+        0.04,
+        0.04
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         0.0,
@@ -241,7 +265,10 @@
         0.08589896888623946,
         0.994784639675639
       ],
-      "passive_stiffness_nm_per_rad": 0.06,
+      "passive_stiffness_nm_per_rad": [
+        0.06,
+        0.06
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.261799,
@@ -264,7 +291,10 @@
         0.09983342830355166,
         -0.19767705604297942
       ],
-      "passive_stiffness_nm_per_rad": 0.029,
+      "passive_stiffness_nm_per_rad": [
+        0.029,
+        0.029
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         0.0,
@@ -287,7 +317,10 @@
         0.09983341658375151,
         0.0
       ],
-      "passive_stiffness_nm_per_rad": 0.015,
+      "passive_stiffness_nm_per_rad": [
+        0.015,
+        0.015
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -310,7 +343,10 @@
         0.0,
         0.19866893085825738
       ],
-      "passive_stiffness_nm_per_rad": 0.04,
+      "passive_stiffness_nm_per_rad": [
+        0.04,
+        0.04
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -333,7 +369,10 @@
         0.0,
         0.9800666589123603
       ],
-      "passive_stiffness_nm_per_rad": 0.06,
+      "passive_stiffness_nm_per_rad": [
+        0.06,
+        0.06
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.261799,
@@ -356,7 +395,10 @@
         0.0,
         0.0
       ],
-      "passive_stiffness_nm_per_rad": 0.029,
+      "passive_stiffness_nm_per_rad": [
+        0.029,
+        0.029
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         0.0,
@@ -379,7 +421,10 @@
         0.0,
         0.0
       ],
-      "passive_stiffness_nm_per_rad": 0.015,
+      "passive_stiffness_nm_per_rad": [
+        0.015,
+        0.015
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -402,7 +447,10 @@
         0.0,
         0.4349659519438768
       ],
-      "passive_stiffness_nm_per_rad": 0.04,
+      "passive_stiffness_nm_per_rad": [
+        0.04,
+        0.04
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -425,7 +473,10 @@
         0.0,
         0.9004469005163807
       ],
-      "passive_stiffness_nm_per_rad": 0.06,
+      "passive_stiffness_nm_per_rad": [
+        0.06,
+        0.06
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.261799,
@@ -448,7 +499,10 @@
         0.0,
         0.389418049758868
       ],
-      "passive_stiffness_nm_per_rad": 0.029,
+      "passive_stiffness_nm_per_rad": [
+        0.029,
+        0.029
+      ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
         0.0,
@@ -471,7 +525,10 @@
         0.0,
         0.5646419714686419
       ],
-      "passive_stiffness_nm_per_rad": 0.015,
+      "passive_stiffness_nm_per_rad": [
+        0.015,
+        0.015
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -494,7 +551,10 @@
         0.0,
         0.5646419714686419
       ],
-      "passive_stiffness_nm_per_rad": 0.04,
+      "passive_stiffness_nm_per_rad": [
+        0.04,
+        0.04
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -517,7 +577,10 @@
         0.0,
         0.8253359582957751
       ],
-      "passive_stiffness_nm_per_rad": 0.06,
+      "passive_stiffness_nm_per_rad": [
+        0.06,
+        0.06
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         -0.261799,
@@ -540,7 +603,10 @@
         0.0,
         0.5646419714686419
       ],
-      "passive_stiffness_nm_per_rad": 0.029,
+      "passive_stiffness_nm_per_rad": [
+        0.029,
+        0.029
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,
@@ -563,7 +629,10 @@
         -0.14943804366640048,
         0.4740421385170293
       ],
-      "passive_stiffness_nm_per_rad": 0.015,
+      "passive_stiffness_nm_per_rad": [
+        0.015,
+        0.015
+      ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
         0.0,

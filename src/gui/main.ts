@@ -2,7 +2,7 @@ import '@fontsource/ibm-plex-sans/400.css';
 import '@fontsource/ibm-plex-sans/500.css';
 import '@fontsource/ibm-plex-sans/600.css';
 import './style.css';
-import type { Model, State } from './types';
+import type { Joint, Model, State } from './types';
 import { splitMuscle } from './muscle-geometry';
 import { HandViewer, type MuscleView } from './viewer';
 import { MODEL_URL, STANDALONE, openLink, type SimulationLink } from './link';
@@ -17,6 +17,12 @@ const icons = {
 const icon = (name: keyof typeof icons) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name]}</svg>`;
 const escape = (text: unknown) => String(text ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 const groupName = (group: string) => ({ forearm_anterior: 'Forearm · anterior', forearm_posterior: 'Forearm · posterior', intrinsic_thumb: 'Hand · thumb', intrinsic_hypothenar: 'Hand · little finger', intrinsic_bundle: 'Hand · intrinsic' })[group] ?? group.replaceAll('_', ' ');
+/** "1.02 N·m/rad", or "0.55 toward flexion, 1.02 toward extension (N·m/rad)" when the sides differ. */
+const stiffnessText = (joint: Joint) => {
+  const [positive, negative] = joint.passive_stiffness_nm_per_rad;
+  if (positive === negative) return `${positive.toFixed(2)} N·m/rad`;
+  return `${positive.toFixed(2)} toward ${joint.positive.toLowerCase()}, ${negative.toFixed(2)} toward ${joint.negative.toLowerCase()} (N·m/rad)`;
+};
 const percent = (value: number) => `${Math.round(value * 100)}%`;
 const degrees = (radians: number) => `${(radians * 180 / Math.PI).toFixed(1)}°`;
 
@@ -196,7 +202,7 @@ function renderReadings(next: State) {
   if (key !== renderedInfluenceKey || !element('influences').querySelector('table')) {
     renderedInfluenceKey = key;
     element('influences').innerHTML = influences.length ? `<table><caption class="sr-only">Selected muscle mechanical influence</caption><thead><tr><th scope="col">Joint / action</th><th scope="col">Arm</th></tr></thead><tbody>${influences.map(({ joint, index, arm }) => `<tr><td>${escape(joint.name)}<span class="action-direction">${escape(arm > 0 ? joint.positive : joint.negative)}</span></td><td data-arm="${index}"></td></tr>`).join('')}</tbody></table>` : '<p class="empty-note">No moment arm above 0.1 mm at this posture.</p>';
-    element('angles').innerHTML = influences.length ? `<dl class="angle-list">${influences.map(({ joint, index }) => `<div><dt>${escape(joint.name)}<span>Limits ${joint.range[0].toFixed(0)}° to ${joint.range[1].toFixed(0)}°</span><span>Passive stiffness ${joint.passive_stiffness_nm_per_rad.toFixed(2)} N·m/rad, ${joint.passive_stiffness_basis}</span></dt><dd><span data-angle="${index}"></span><span class="limit-flag" data-limit="${index}" hidden>At limit</span></dd></div>`).join('')}</dl>` : '<p class="empty-note">No influenced joints at this posture.</p>';
+    element('angles').innerHTML = influences.length ? `<dl class="angle-list">${influences.map(({ joint, index }) => `<div><dt>${escape(joint.name)}<span>Limits ${joint.range[0].toFixed(0)}° to ${joint.range[1].toFixed(0)}°</span><span>Passive stiffness ${stiffnessText(joint)}, ${joint.passive_stiffness_basis}</span></dt><dd><span data-angle="${index}"></span><span class="limit-flag" data-limit="${index}" hidden>At limit</span></dd></div>`).join('')}</dl>` : '<p class="empty-note">No influenced joints at this posture.</p>';
   }
   influences.forEach(({ index, arm }) => {
     element('influences').querySelector(`[data-arm="${index}"]`)!.textContent = `${Math.abs(arm).toFixed(1)} mm`;

@@ -17,7 +17,8 @@ export interface Joint {
   negative: string;
   range: [number, number];
   axis: [number, number, number];
-  passive_stiffness_nm_per_rad: number;
+  /** Stiffness resisting motion in the positive and the negative direction (equal if symmetric). */
+  passive_stiffness_nm_per_rad: [number, number];
   passive_stiffness_basis: 'measured' | 'assumed' | 'none';
 }
 
