@@ -5,6 +5,7 @@ import './style.css';
 import type { Model, State } from './types';
 import { splitMuscle } from './muscle-geometry';
 import { HandViewer, type MuscleView } from './viewer';
+import { MODEL_URL, STANDALONE, openLink, type SimulationLink } from './link';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 const icons = {
@@ -25,7 +26,7 @@ app.innerHTML = `
     <div class="model-label">Right hand <span aria-hidden="true">/</span> MyoHand</div>
     <div class="connection" id="connection" role="status"><span class="status-dot"></span><span id="connection-text">Loading model</span></div>
   </header>
-  <div id="error" class="error-banner" role="alert" hidden><span id="error-text"></span><button id="retry">Reconnect</button></div>
+  <div id="error" class="error-banner" role="alert" hidden><span id="error-text"></span><button id="retry">${STANDALONE ? 'Restart' : 'Reconnect'}</button></div>
   <main class="workspace" aria-label="Hand simulation">
     <aside class="muscle-panel" aria-labelledby="muscles-title">
       <div class="panel-heading"><h2 id="muscles-title">Muscles</h2><span id="muscle-count" class="subtle">Loading</span></div>
@@ -75,12 +76,12 @@ app.innerHTML = `
       <details class="model-details"><summary>Model scope & limitations</summary><ul id="limitations"></ul><a href="anatomy.html" target="_blank" rel="noopener">Open anatomy inventory</a></details>
     </aside>
   </main>
-  <footer class="app-footer"><span>MuJoCo physics · MyoHand model</span><span>Exploratory simulation · See model scope for omissions</span></footer>`;
+  <footer class="app-footer"><span>${STANDALONE ? 'MuJoCo physics running in this browser · MyoHand model' : 'MuJoCo physics · MyoHand model'}</span><span>Exploratory simulation · See model scope for omissions</span></footer>`;
 
 const element = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 let model: Model;
 let viewer: HandViewer;
-let socket: WebSocket | undefined;
+let link: SimulationLink | undefined;
 let selected = 0;
 let state: State | undefined;
 let currentControls: number[] = [];
@@ -93,7 +94,7 @@ const rowControls: { row: HTMLElement; input: HTMLInputElement; output: HTMLOutp
 function setConnected(connected: boolean) {
   connectionReady = connected;
   element('connection').classList.toggle('connected', connected);
-  element('connection-text').textContent = connected ? 'Connected' : 'Disconnected';
+  element('connection-text').textContent = connected ? (STANDALONE ? 'Running locally' : 'Connected') : (STANDALONE ? 'Stopped' : 'Disconnected');
   for (const id of ['play', 'reset', 'relax', 'excitation']) (element(id) as HTMLButtonElement).disabled = !connected;
   for (const control of rowControls) control.input.disabled = !connected;
 }
@@ -104,8 +105,7 @@ function error(message: string) {
 }
 
 function send(message: unknown) {
-  if (!socket || socket.readyState !== WebSocket.OPEN) return;
-  socket.send(JSON.stringify(message));
+  link?.send(message);
 }
 
 function setExcitation(index: number, value: number) {
@@ -228,31 +228,31 @@ function renderState(next: State) {
   renderReadings(next);
 }
 
-function connect() {
-  if (socket) { socket.onclose = null; socket.close(); }
-  element('connection-text').textContent = 'Connecting';
-  socket = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws`);
+async function connect() {
+  link?.close();
+  element('connection-text').textContent = STANDALONE ? 'Starting physics' : 'Connecting';
   let initial = true;
-  socket.onmessage = event => {
-    const message = JSON.parse(event.data) as State | { type: 'error'; message: string };
-    if (message.type === 'error') { error(message.message); return; }
-    if (initial) {
-      initial = false;
-      currentControls = [...message.excitation];
-      syncControls();
-      setConnected(true);
-      element('error').hidden = true;
-      element('viewer-loading').hidden = true;
-      renderState(message);
-    }
-    lastState = message;
-  };
-  socket.onerror = () => error('Could not connect to the simulation service. Check that the Python server is running, then reconnect.');
-  socket.onclose = () => {
-    setConnected(false);
-    lastState = undefined;
-    error('Connection lost. Reconnect to start a fresh simulation.');
-  };
+  link = await openLink({
+    onMessage(message) {
+      if (message.type === 'error') { error(message.message); return; }
+      if (initial) {
+        initial = false;
+        currentControls = [...message.excitation];
+        syncControls();
+        setConnected(true);
+        element('error').hidden = true;
+        element('viewer-loading').hidden = true;
+        renderState(message);
+      }
+      lastState = message;
+    },
+    onClose(message, retryable) {
+      setConnected(false);
+      lastState = undefined;
+      element('retry').hidden = !retryable && !STANDALONE;
+      error(message);
+    },
+  });
 }
 
 element('search').addEventListener('input', filterList);
@@ -261,7 +261,7 @@ element('excitation').addEventListener('input', event => setExcitation(selected,
 element('play').addEventListener('click', () => send({ type: 'pause', paused: !state?.paused }));
 element('reset').addEventListener('click', () => { currentControls.fill(0); syncControls(); send({ type: 'reset' }); });
 element('relax').addEventListener('click', () => { currentControls.fill(0); syncControls(); send({ type: 'relax' }); });
-element('retry').addEventListener('click', () => model ? connect() : location.reload());
+element('retry').addEventListener('click', () => model && !STANDALONE ? void connect() : location.reload());
 document.querySelectorAll<HTMLButtonElement>('[data-muscle-view]').forEach(button => button.addEventListener('click', () => {
   const view = button.dataset.muscleView as MuscleView;
   viewer?.setView(view);
@@ -284,7 +284,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-view]').forEach(button => bu
 
 async function start() {
   try {
-    const response = await fetch('/api/model');
+    const response = await fetch(MODEL_URL);
     if (!response.ok) throw new Error(`Model request failed (${response.status}).`);
     model = await response.json() as Model;
     currentControls = model.actuators.map(() => 0);
@@ -296,7 +296,7 @@ async function start() {
     // Read-only hook for tests/browser: compares the drawn scene with simulation state.
     (window as unknown as { clonehand: unknown }).clonehand = { scene: () => viewer.describe() };
     selectMuscle(Math.max(0, model.actuators.findIndex(muscle => muscle.id === 'FDS2_r')));
-    connect();
+    void connect();
     function update(now: number) {
       if (connectionReady && lastState && now - lastRender > 50) {
         renderState(lastState);
@@ -307,8 +307,9 @@ async function start() {
     requestAnimationFrame(update);
   } catch (cause) {
     setConnected(false);
-    element('viewer-loading').innerHTML = '<p>Hand model unavailable</p><p class="caption">Check the service connection and reconnect.</p>';
-    error(`${cause instanceof Error ? cause.message : 'Could not load the model.'} Start the Python service and reconnect. WebGL is required for the 3D view.`);
+    element('viewer-loading').innerHTML = `<p>Hand model unavailable</p><p class="caption">${STANDALONE ? 'Reload the page to try again.' : 'Check the service connection and reconnect.'}</p>`;
+    const hint = STANDALONE ? 'Reload the page to try again.' : 'Start the Python service and reconnect.';
+    error(`${cause instanceof Error ? cause.message : 'Could not load the model.'} ${hint} WebGL is required for the 3D view.`);
   }
 }
 

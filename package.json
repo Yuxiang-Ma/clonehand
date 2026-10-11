@@ -7,10 +7,14 @@
     "dev": "vite --host 127.0.0.1",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
-    "test:browser": "playwright test --config tests/browser/playwright.config.ts"
+    "test:browser": "playwright test --config tests/browser/playwright.config.ts",
+    "build:demo": ".venv/bin/python scripts/export_web_demo.py && tsc --noEmit && vite build --mode demo",
+    "preview:demo": "vite preview --mode demo --outDir dist-demo --host 127.0.0.1 --port 4173",
+    "test:demo": "playwright test --config tests/browser/playwright.demo.config.ts"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.2.8",
+    "mujoco": "3.1.16",
     "three": "^0.180.0"
   },
   "devDependencies": {

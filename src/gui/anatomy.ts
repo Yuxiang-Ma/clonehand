@@ -3,6 +3,7 @@ import '@fontsource/ibm-plex-sans/500.css';
 import '@fontsource/ibm-plex-sans/600.css';
 import './style.css';
 import './anatomy.css';
+import { ANATOMY_URL } from './link';
 
 interface Source { id: string; title: string; url: string }
 interface Muscle { id: string; name: string; group: string; origin: string; insertion: string; function: string; model_actuators: string[]; source_ids: string[]; notes?: string }
@@ -16,6 +17,8 @@ interface Anatomy {
   bones: Bone[];
   muscles: Muscle[];
   actuators: Actuator[];
+  /** Present only in the web demo export (scripts/export_web_demo.py). */
+  edition?: { name: string; note: string; removed_actuators: string[] };
 }
 
 const GROUPS: [string, string, string][] = [
@@ -103,7 +106,9 @@ function render(data: Anatomy) {
           <output id="filter-count" aria-live="polite">${data.muscles.length} of ${data.muscles.length}</output>
         </div>
         <p class="empty-note" id="filter-empty" hidden>No muscles match. Clear the search or choose All.</p>
-        <p class="section-note">Five muscles (abductor and flexor pollicis brevis, adductor pollicis, abductor and flexor digiti minimi) come from the MUSIC model (<a href="#source-music">Xu et al. 2026</a>), which has no license; they are used locally and not redistributed. Of the ${absent} marked Not in model, opponens digiti minimi moves the fifth carpometacarpal joint, which the model lacks; palmaris brevis moves only skin; and supinator is in neither MyoHand nor MUSIC, so forearm rotation has only the two pronators.</p>
+        <p class="section-note">${data.edition
+          ? 'This browser version runs MyoHand only. Abductor and flexor pollicis brevis, adductor pollicis, and abductor and flexor digiti minimi come from the MUSIC model (<a href="#source-music">Xu et al. 2026</a>), which has no license, so they run only in the local version of the app and show as Not in model here. Of the other three, opponens'
+          : `Five muscles (abductor and flexor pollicis brevis, adductor pollicis, abductor and flexor digiti minimi) come from the MUSIC model (<a href="#source-music">Xu et al. 2026</a>), which has no license; they are used locally and not redistributed. Of the ${absent} marked Not in model, opponens`} digiti minimi moves the fifth carpometacarpal joint, which the model lacks; palmaris brevis moves only skin; and supinator is in neither MyoHand nor MUSIC, so forearm rotation has only the two pronators.</p>
         ${[...GROUPS, ...extraGroups].map(groupSection).join('')}
       </section>
 
@@ -148,7 +153,7 @@ function render(data: Anatomy) {
       <section id="sources" aria-labelledby="sources-title">
         <div class="section-heading"><h2 id="sources-title">Sources</h2></div>
         <ol class="source-list">${data.sources.map(source => `<li id="source-${escape(source.id)}"><a href="${escape(source.url)}" target="_blank" rel="noopener">${escape(source.title)}</a></li>`).join('')}</ol>
-        <p class="section-note">Machine-readable version: <a href="/api/anatomy">/api/anatomy</a> (JSON).</p>
+        <p class="section-note">Machine-readable version: <a href="${ANATOMY_URL}">${ANATOMY_URL.replace(/^data\//, '')}</a> (JSON).</p>
       </section>
     </main>`;
 
@@ -179,11 +184,11 @@ function render(data: Anatomy) {
 
 async function start() {
   try {
-    const response = await fetch('/api/anatomy');
+    const response = await fetch(ANATOMY_URL);
     if (!response.ok) throw new Error(`Inventory request failed (${response.status}).`);
     render(await response.json() as Anatomy);
   } catch (cause) {
-    app.innerHTML = `<div class="error-banner" role="alert"><span>${escape(cause instanceof Error ? cause.message : 'Could not load the inventory.')} Start the Python service, then reload.</span><button onclick="location.reload()">Reload</button></div>`;
+    app.innerHTML = `<div class="error-banner" role="alert"><span>${escape(cause instanceof Error ? cause.message : 'Could not load the inventory.')} ${ANATOMY_URL.startsWith('/api') ? 'Start the Python service, then reload.' : 'Reload the page to try again.'}</span><button onclick="location.reload()">Reload</button></div>`;
   }
 }
 

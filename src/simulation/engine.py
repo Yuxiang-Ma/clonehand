@@ -101,8 +101,8 @@ def add_music_muscles(spec):
         actuator.ctrllimited = mujoco.mjtLimited.mjLIMITED_TRUE
 
 
-@lru_cache(maxsize=1)
-def load_model():
+def build_spec(include_music=True):
+    """MyoHand with the load-time edits: excluded actuators, locked joints, MUSIC muscles."""
     spec = mujoco.MjSpec.from_file(str(ROOT / "models/myohand/hand.xml"))
     for name in EXCLUDED_ACTUATORS:
         actuator = spec.actuator(name)
@@ -111,8 +111,12 @@ def load_model():
         spec.delete(spec.tendon(tendon))
     for name in LOCKED_JOINTS:
         spec.delete(spec.joint(name))
-    add_music_muscles(spec)
-    model = spec.compile()
+    if include_music:
+        add_music_muscles(spec)
+    return spec
+
+
+def apply_runtime_settings(model):
     # A supported-hand exploration scene: no gravity, no external objects.
     model.opt.gravity[:] = 0
     model.opt.timestep = 0.002
@@ -123,6 +127,13 @@ def load_model():
         if name in LOCKED_JOINTS:
             continue
         model.jnt_stiffness[model.joint(name).id] = entry["stiffness_nm_per_rad"]
+
+
+@lru_cache(maxsize=2)
+def load_model(include_music=True):
+    """The simulated model. include_music=False gives the MyoHand-only model the web demo uses."""
+    model = build_spec(include_music).compile()
+    apply_runtime_settings(model)
     return model
 
 
@@ -237,8 +248,8 @@ def muscle_rendering(model, annotations):
 
 
 class HandSimulation:
-    def __init__(self):
-        self.model = load_model()
+    def __init__(self, include_music=True):
+        self.model = load_model(include_music)
         self.data = mujoco.MjData(self.model)
         self.paused = False
         self.actuator_ids = {self.model.actuator(i).name: i for i in range(self.model.nu)}

@@ -13,7 +13,7 @@
   --activation-dark: #9e4127;
 }
 * { box-sizing: border-box; }
-body { margin: 0; }
+body { margin: 0; background: #f6f4ee; }
 button, input, select { font: inherit; }
 button, select, input { accent-color: var(--selection); }
 button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 36px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; padding: 7px 11px; font-size: 13px; font-weight: 500; cursor: pointer; }
