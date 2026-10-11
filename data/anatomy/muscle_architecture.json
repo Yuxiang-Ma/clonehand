@@ -2787,6 +2787,70 @@
           }
         ]
       }
+    },
+    "PT": {
+      "mass_g": {
+        "value": 16.0,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 1.7 g"
+      },
+      "muscle_length_cm": {
+        "value": 13.0,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.47 cm; in vivo MRI length (holzbaur_2007) = 16.1 ± 2.3 cm; Murray 2000 (n=9, normalized to 2.8 um) = 17.6 ± 2.9 cm"
+      },
+      "fiber_length_cm": {
+        "value": 3.6,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.13 cm"
+      },
+      "pcsa_cm2": {
+        "value": 4.13,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.52 cm2; in vivo MRI PCSA (holzbaur_2007, no cosine) = 6.5 cm2"
+      },
+      "volume_cm3": {
+        "value": 38.4,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 17.2) of 10 adults; cadaver mass/1.056 from lieber_1992 = 15.2 cm3"
+      },
+      "pennation_deg": {
+        "value": 10.0,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.8 deg"
+      }
+    },
+    "PQ": {
+      "mass_g": {
+        "value": 5.0,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 1.0 g"
+      },
+      "muscle_length_cm": {
+        "value": 3.93,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.23 cm; in vivo MRI length (holzbaur_2007) = 4.2 ± 0.5 cm"
+      },
+      "fiber_length_cm": {
+        "value": 2.3,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.20 cm"
+      },
+      "pcsa_cm2": {
+        "value": 2.07,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.33 cm2; in vivo MRI PCSA (holzbaur_2007, no cosine) = 3.7 cm2"
+      },
+      "volume_cm3": {
+        "value": 11.2,
+        "source": "holzbaur_2007",
+        "note": "in vivo MRI, mean (SD 5.8) of 10 adults; cadaver mass/1.056 from lieber_1992 = 4.7 cm3"
+      },
+      "pennation_deg": {
+        "value": 10.0,
+        "source": "lieber_1992",
+        "note": "mean of n=8 formalin-fixed cadaver limbs (± SEM reported); normalized to sarcomere length 2.2 um; SEM 0.3 deg"
+      }
     }
   }
 }
