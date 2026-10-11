@@ -61,7 +61,7 @@ app.innerHTML = `
     </section>
     <aside class="inspector" aria-labelledby="selected-title">
       <div class="inspector-heading"><h2>Selected muscle</h2><span id="selected-id" class="anatomical-id"></span></div>
-      <h3 id="selected-title">Loading anatomy…</h3><p id="selected-group" class="subtle"></p>
+      <h3 id="selected-title">Loading anatomy…</h3><p id="selected-name-zh" class="name-zh" lang="zh-Hans"></p><p id="selected-group" class="subtle"></p>
       <p id="selected-function" class="muscle-function"></p>
       <div class="excitation-heading"><label for="excitation">Excitation</label><output id="excitation-output" for="excitation">0.00</output></div>
       <input id="excitation" type="range" min="0" max="1" step="0.01" value="0" aria-label="Selected muscle excitation" disabled />
@@ -127,6 +127,7 @@ function selectMuscle(index: number) {
   selected = index;
   const muscle = model.actuators[index];
   element('selected-title').textContent = muscle.name;
+  element('selected-name-zh').textContent = muscle.name_zh ?? '';
   element('selected-id').textContent = muscle.id;
   element('selected-group').textContent = groupName(muscle.group);
   element('selected-function').textContent = muscle.function;
@@ -147,7 +148,7 @@ function selectMuscle(index: number) {
 function renderList() {
   element('muscle-list').innerHTML = model.actuators.map((muscle, index) => `
     <div class="muscle-row" data-index="${index}">
-      <button class="muscle-select" aria-pressed="false" data-select="${index}"><span class="muscle-name">${escape(muscle.name)}</span><span class="muscle-code">${escape(muscle.id)}<span class="activation-indicator" aria-label="Resting"></span></span></button>
+      <button class="muscle-select" aria-pressed="false" data-select="${index}"><span class="muscle-name">${escape(muscle.name)}</span>${muscle.name_zh ? `<span class="muscle-name-zh" lang="zh-Hans">${escape(muscle.name_zh)}</span>` : ''}<span class="muscle-code">${escape(muscle.id)}<span class="activation-indicator" aria-label="Resting"></span></span></button>
       <div class="row-slider"><input type="range" min="0" max="1" step="0.01" value="0" aria-label="${escape(muscle.name)} excitation" data-slider="${index}" disabled /><output>0.00</output></div>
     </div>`).join('') + '<p class="empty-note" id="search-empty" hidden>No matching muscles. Try a name or model ID.</p>';
   model.actuators.forEach((_, index) => {
@@ -166,7 +167,7 @@ function filterList() {
   const group = element<HTMLSelectElement>('group').value;
   let visible = 0;
   model.actuators.forEach((muscle, index) => {
-    const show = `${muscle.name} ${muscle.id}`.toLowerCase().includes(search) && (group === 'all' || group === muscle.group);
+    const show = `${muscle.name} ${muscle.name_zh ?? ''} ${muscle.id}`.toLowerCase().includes(search) && (group === 'all' || group === muscle.group);
     rowControls[index].row.hidden = !show;
     if (show) visible++;
   });

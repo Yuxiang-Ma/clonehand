@@ -247,6 +247,10 @@ def muscle_rendering(model, annotations):
     return result
 
 
+# Chinese finger names for per-digit channels such as "Flexor digitorum superficialis · digit 2".
+DIGITS_ZH = {"2": "示指", "3": "中指", "4": "环指", "5": "小指"}
+
+
 class HandSimulation:
     def __init__(self, include_music=True):
         self.model = load_model(include_music)
@@ -384,6 +388,10 @@ class HandSimulation:
                 "; ".join(dict.fromkeys(x["origin"] for x in references))
                 or "Model attachment sites; anatomical bundle mapping unresolved."
             )
+            zh = [x["name_zh"] for x in references if x.get("name_zh")]
+            if zh and info.get("mapping_status") != "unresolved_bundle":
+                digit = DIGITS_ZH.get(info["name"].rpartition("· digit ")[2])
+                info["name_zh"] = "、".join(zh) + (f" · {digit}" if digit else "")
             info["insertion"] = (
                 "; ".join(dict.fromkeys(x["insertion"] for x in references))
                 or "See model tendon route."

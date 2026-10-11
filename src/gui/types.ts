@@ -1,6 +1,8 @@
 export interface Actuator {
   id: string;
   name: string;
+  /** Standard Chinese anatomical name, when the channel maps to named muscles. */
+  name_zh?: string;
   group: string;
   function: string;
   origin: string;

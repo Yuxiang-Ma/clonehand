@@ -105,3 +105,12 @@ def test_validation_document_is_current():
         text=True,
     )
     assert result.returncode == 0, result.stderr
+
+
+def test_every_muscle_and_bone_has_a_sourced_chinese_name():
+    anatomy = json.loads((ROOT / "data/anatomy/anatomy.json").read_text())
+    assert "termonline" in {source["id"] for source in anatomy["sources"]}
+    for item in anatomy["muscles"] + anatomy["bones"]:
+        assert item.get("name_zh"), item["id"]
+        assert all("一" <= c <= "鿿" or c.isdigit() for c in item["name_zh"]), item["id"]
+        assert "termonline" in item["source_ids"], item["id"]

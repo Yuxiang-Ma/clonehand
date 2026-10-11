@@ -33,6 +33,7 @@
 .muscle-table thead th:nth-child(5) { width: 14%; }
 .muscle-table thead th:nth-child(6) { width: 6.5%; }
 .name { display: block; font-weight: 500; }
+.name-zh { display: block; margin-top: 1px; color: var(--muted); font-weight: 400; }
 .reference code { font-family: inherit; font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .reference tbody th code { display: block; margin-top: 2px; }
 .status { display: inline-block; font-size: 12px; font-weight: 500; }

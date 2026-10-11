@@ -27,7 +27,8 @@
       "CMC": "carpometacarpal",
       "IP": "thumb interphalangeal",
       "abduction": "Fingers move away from digit 3; thumb abduction has a different anatomical plane.",
-      "coordinate_units": "Anatomical descriptions use named directions; numeric model geometry uses metres and joint angles use radians. Refer to the model catalog for axis frames and signs."
+      "coordinate_units": "Anatomical descriptions use named directions; numeric model geometry uses metres and joint angles use radians. Refer to the model catalog for axis frames and signs.",
+      "chinese_names": "Simplified Chinese names (name_zh) are the standard terms on termonline.cn (全国科学技术名词审定委员会), from 人体解剖学名词 except 蚓状肌 and 骨间背侧肌, which are listed in 手外科学名词. Numbered forms (第1…) follow the usual convention; termonline lists only the base terms."
     },
     "source_ids": [
       "openstax_bones",
@@ -153,268 +154,331 @@
       "id": "music",
       "title": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning Muscle-Driven Dexterous Hand Control. ACM Trans Graph 45(4), 2026. Model files at github.com/xupei0610/music commit 1b13b79; the repository has no license, so they are used locally and not redistributed.",
       "url": "https://doi.org/10.1145/3811402"
+    },
+    {
+      "id": "termonline",
+      "title": "术语在线 (termonline.cn), 全国科学技术名词审定委员会: 人体解剖学名词; 手外科学名词 (Chinese standard terms)",
+      "url": "https://www.termonline.cn/"
     }
   ],
   "bones": [
     {
       "id": "radius",
       "name": "Radius",
+      "name_zh": "桡骨",
       "group": "forearm",
       "function": "Rotating forearm support; wrist articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "ulna",
       "name": "Ulna",
+      "name_zh": "尺骨",
       "group": "forearm",
       "function": "Forearm support; elbow articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "scaphoid",
       "name": "Scaphoid",
+      "name_zh": "手舟骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "lunate",
       "name": "Lunate",
+      "name_zh": "月骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "triquetrum",
       "name": "Triquetrum",
+      "name_zh": "三角骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "pisiform",
       "name": "Pisiform",
+      "name_zh": "豌豆骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "trapezium",
       "name": "Trapezium",
+      "name_zh": "大多角骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "trapezoid",
       "name": "Trapezoid",
+      "name_zh": "小多角骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "capitate",
       "name": "Capitate",
+      "name_zh": "头状骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "hamate",
       "name": "Hamate",
+      "name_zh": "钩骨",
       "group": "carpal",
       "function": "Wrist support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "metacarpal_1",
       "name": "Metacarpal 1",
+      "name_zh": "第1掌骨",
       "group": "metacarpal",
       "function": "Palm support; digit articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "metacarpal_2",
       "name": "Metacarpal 2",
+      "name_zh": "第2掌骨",
       "group": "metacarpal",
       "function": "Palm support; digit articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "metacarpal_3",
       "name": "Metacarpal 3",
+      "name_zh": "第3掌骨",
       "group": "metacarpal",
       "function": "Palm support; digit articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "metacarpal_4",
       "name": "Metacarpal 4",
+      "name_zh": "第4掌骨",
       "group": "metacarpal",
       "function": "Palm support; digit articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "metacarpal_5",
       "name": "Metacarpal 5",
+      "name_zh": "第5掌骨",
       "group": "metacarpal",
       "function": "Palm support; digit articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "proximal_phalanx_1",
       "name": "Digit 1 proximal phalanx",
+      "name_zh": "第1近节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "distal_phalanx_1",
       "name": "Digit 1 distal phalanx",
+      "name_zh": "第1远节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "proximal_phalanx_2",
       "name": "Digit 2 proximal phalanx",
+      "name_zh": "第2近节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "middle_phalanx_2",
       "name": "Digit 2 middle phalanx",
+      "name_zh": "第2中节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "distal_phalanx_2",
       "name": "Digit 2 distal phalanx",
+      "name_zh": "第2远节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "proximal_phalanx_3",
       "name": "Digit 3 proximal phalanx",
+      "name_zh": "第3近节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "middle_phalanx_3",
       "name": "Digit 3 middle phalanx",
+      "name_zh": "第3中节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "distal_phalanx_3",
       "name": "Digit 3 distal phalanx",
+      "name_zh": "第3远节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "proximal_phalanx_4",
       "name": "Digit 4 proximal phalanx",
+      "name_zh": "第4近节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "middle_phalanx_4",
       "name": "Digit 4 middle phalanx",
+      "name_zh": "第4中节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "distal_phalanx_4",
       "name": "Digit 4 distal phalanx",
+      "name_zh": "第4远节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "proximal_phalanx_5",
       "name": "Digit 5 proximal phalanx",
+      "name_zh": "第5近节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "middle_phalanx_5",
       "name": "Digit 5 middle phalanx",
+      "name_zh": "第5中节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     },
     {
       "id": "distal_phalanx_5",
       "name": "Digit 5 distal phalanx",
+      "name_zh": "第5远节指骨",
       "group": "phalanx",
       "function": "Digit support and articulation.",
       "source_ids": [
-        "openstax_bones"
+        "openstax_bones",
+        "termonline"
       ]
     }
   ],
@@ -422,6 +486,7 @@
     {
       "id": "pronator_teres",
       "name": "Pronator teres",
+      "name_zh": "旋前圆肌",
       "group": "forearm_anterior",
       "origin": "Humeral medial epicondyle; ulnar coronoid.",
       "insertion": "Lateral mid-radius.",
@@ -430,12 +495,14 @@
         "PT_r"
       ],
       "source_ids": [
-        "forearm_compartments"
+        "forearm_compartments",
+        "termonline"
       ]
     },
     {
       "id": "flexor_carpi_radialis",
       "name": "Flexor carpi radialis",
+      "name_zh": "桡侧腕屈肌",
       "group": "forearm_anterior",
       "origin": "Humeral medial epicondyle.",
       "insertion": "Palmar bases of metacarpals 2–3.",
@@ -444,12 +511,14 @@
         "FCR_r"
       ],
       "source_ids": [
-        "forearm_compartments"
+        "forearm_compartments",
+        "termonline"
       ]
     },
     {
       "id": "palmaris_longus",
       "name": "Palmaris longus",
+      "name_zh": "掌长肌",
       "group": "forearm_anterior",
       "origin": "Humeral medial epicondyle.",
       "insertion": "Palmar aponeurosis and flexor retinaculum.",
@@ -458,12 +527,14 @@
         "PL_r"
       ],
       "source_ids": [
-        "forearm_compartments"
+        "forearm_compartments",
+        "termonline"
       ]
     },
     {
       "id": "flexor_carpi_ulnaris",
       "name": "Flexor carpi ulnaris",
+      "name_zh": "尺侧腕屈肌",
       "group": "forearm_anterior",
       "origin": "Humeral medial epicondyle; olecranon and posterior ulna.",
       "insertion": "Pisiform; ligament connections to hamate and metacarpal 5.",
@@ -472,12 +543,14 @@
         "FCU_r"
       ],
       "source_ids": [
-        "grays_forearm"
+        "grays_forearm",
+        "termonline"
       ]
     },
     {
       "id": "flexor_digitorum_superficialis",
       "name": "Flexor digitorum superficialis",
+      "name_zh": "指浅屈肌",
       "group": "forearm_anterior",
       "origin": "Medial epicondyle, coronoid, anterior radius.",
       "insertion": "Middle phalanges 2–5, through split tendons.",
@@ -490,12 +563,14 @@
       ],
       "source_ids": [
         "grays_forearm",
-        "grays_students"
+        "grays_students",
+        "termonline"
       ]
     },
     {
       "id": "flexor_digitorum_profundus",
       "name": "Flexor digitorum profundus",
+      "name_zh": "指深屈肌",
       "group": "forearm_anterior",
       "origin": "Proximal ulna and interosseous membrane.",
       "insertion": "Palmar distal phalanges 2–5.",
@@ -507,12 +582,14 @@
         "FDP5_r"
       ],
       "source_ids": [
-        "grays_forearm"
+        "grays_forearm",
+        "termonline"
       ]
     },
     {
       "id": "flexor_pollicis_longus",
       "name": "Flexor pollicis longus",
+      "name_zh": "拇长屈肌",
       "group": "forearm_anterior",
       "origin": "Anterior radius and interosseous membrane.",
       "insertion": "Palmar distal thumb phalanx.",
@@ -521,12 +598,14 @@
         "FPL_r"
       ],
       "source_ids": [
-        "forearm_muscles"
+        "forearm_muscles",
+        "termonline"
       ]
     },
     {
       "id": "pronator_quadratus",
       "name": "Pronator quadratus",
+      "name_zh": "旋前方肌",
       "group": "forearm_anterior",
       "origin": "Anterior distal ulna.",
       "insertion": "Anterior distal radius.",
@@ -535,12 +614,14 @@
         "PQ_r"
       ],
       "source_ids": [
-        "forearm_compartments"
+        "forearm_compartments",
+        "termonline"
       ]
     },
     {
       "id": "extensor_carpi_radialis_longus",
       "name": "Extensor carpi radialis longus",
+      "name_zh": "桡侧腕长伸肌",
       "group": "forearm_posterior",
       "origin": "Distal humeral lateral supracondylar ridge.",
       "insertion": "Dorsal metacarpal 2 base.",
@@ -549,12 +630,14 @@
         "ECRL_r"
       ],
       "source_ids": [
-        "ecrl"
+        "ecrl",
+        "termonline"
       ]
     },
     {
       "id": "extensor_carpi_radialis_brevis",
       "name": "Extensor carpi radialis brevis",
+      "name_zh": "桡侧腕短伸肌",
       "group": "forearm_posterior",
       "origin": "Common extensor origin at lateral epicondyle.",
       "insertion": "Dorsal metacarpal 3 base.",
@@ -564,12 +647,14 @@
       ],
       "source_ids": [
         "forearm_muscles",
-        "ecrb_origin"
+        "ecrb_origin",
+        "termonline"
       ]
     },
     {
       "id": "extensor_digitorum",
       "name": "Extensor digitorum",
+      "name_zh": "指伸肌",
       "group": "forearm_posterior",
       "origin": "Common extensor origin at lateral epicondyle.",
       "insertion": "Extensor expansions of digits 2–5.",
@@ -581,12 +666,14 @@
         "EDC5_r"
       ],
       "source_ids": [
-        "dorsal_forearm"
+        "dorsal_forearm",
+        "termonline"
       ]
     },
     {
       "id": "extensor_digiti_minimi",
       "name": "Extensor digiti minimi",
+      "name_zh": "小指伸肌",
       "group": "forearm_posterior",
       "origin": "Humeral lateral epicondyle.",
       "insertion": "Little-finger extensor expansion.",
@@ -595,12 +682,14 @@
         "EDM_r"
       ],
       "source_ids": [
-        "dorsal_forearm"
+        "dorsal_forearm",
+        "termonline"
       ]
     },
     {
       "id": "extensor_carpi_ulnaris",
       "name": "Extensor carpi ulnaris",
+      "name_zh": "尺侧腕伸肌",
       "group": "forearm_posterior",
       "origin": "Humeral lateral epicondyle; posterior ulna.",
       "insertion": "Ulnar metacarpal 5 base.",
@@ -609,12 +698,14 @@
         "ECU_r"
       ],
       "source_ids": [
-        "dorsal_forearm"
+        "dorsal_forearm",
+        "termonline"
       ]
     },
     {
       "id": "abductor_pollicis_longus",
       "name": "Abductor pollicis longus",
+      "name_zh": "拇长展肌",
       "group": "forearm_posterior",
       "origin": "Posterior radius, ulna, interosseous membrane.",
       "insertion": "Radial metacarpal 1 base.",
@@ -623,12 +714,14 @@
         "APL_r"
       ],
       "source_ids": [
-        "dorsal_forearm"
+        "dorsal_forearm",
+        "termonline"
       ]
     },
     {
       "id": "extensor_pollicis_brevis",
       "name": "Extensor pollicis brevis",
+      "name_zh": "拇短伸肌",
       "group": "forearm_posterior",
       "origin": "Posterior radius and interosseous membrane.",
       "insertion": "Dorsal proximal thumb phalanx.",
@@ -637,12 +730,14 @@
         "EPB_r"
       ],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "extensor_pollicis_longus",
       "name": "Extensor pollicis longus",
+      "name_zh": "拇长伸肌",
       "group": "forearm_posterior",
       "origin": "Posterior ulna and interosseous membrane.",
       "insertion": "Dorsal distal thumb phalanx.",
@@ -651,12 +746,14 @@
         "EPL_r"
       ],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "extensor_indicis",
       "name": "Extensor indicis",
+      "name_zh": "示指伸肌",
       "group": "forearm_posterior",
       "origin": "Distal posterior ulna and interosseous membrane.",
       "insertion": "Index-finger extensor expansion.",
@@ -665,24 +762,28 @@
         "EIP_r"
       ],
       "source_ids": [
-        "dorsal_forearm"
+        "dorsal_forearm",
+        "termonline"
       ]
     },
     {
       "id": "supinator",
       "name": "Supinator",
+      "name_zh": "旋后肌",
       "group": "forearm_posterior",
       "origin": "Lateral epicondyle, proximal ulna, adjacent elbow ligaments.",
       "insertion": "Proximal radius.",
       "function": "Supinates forearm.",
       "model_actuators": [],
       "source_ids": [
-        "forearm_muscles"
+        "forearm_muscles",
+        "termonline"
       ]
     },
     {
       "id": "abductor_pollicis_brevis",
       "name": "Abductor pollicis brevis",
+      "name_zh": "拇短展肌",
       "group": "intrinsic_thumb",
       "origin": "Scaphoid, trapezium, flexor retinaculum.",
       "insertion": "Radial proximal thumb phalanx.",
@@ -691,12 +792,14 @@
         "APB_r"
       ],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "flexor_pollicis_brevis",
       "name": "Flexor pollicis brevis",
+      "name_zh": "拇短屈肌",
       "group": "intrinsic_thumb",
       "origin": "Flexor retinaculum and carpals; head attachments vary.",
       "insertion": "Radial proximal thumb phalanx via sesamoid.",
@@ -705,12 +808,14 @@
         "FPB_r"
       ],
       "source_ids": [
-        "grays_hand"
+        "grays_hand",
+        "termonline"
       ]
     },
     {
       "id": "opponens_pollicis",
       "name": "Opponens pollicis",
+      "name_zh": "拇对掌肌",
       "group": "intrinsic_thumb",
       "origin": "Trapezium and flexor retinaculum.",
       "insertion": "Radial metacarpal 1 shaft.",
@@ -719,12 +824,14 @@
         "OP_r"
       ],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "adductor_pollicis",
       "name": "Adductor pollicis",
+      "name_zh": "拇收肌",
       "group": "intrinsic_thumb",
       "origin": "Capitate, bases of metacarpals 2–3, metacarpal 3 shaft.",
       "insertion": "Ulnar proximal thumb phalanx.",
@@ -733,12 +840,14 @@
         "AdP_r"
       ],
       "source_ids": [
-        "hand_muscles"
+        "hand_muscles",
+        "termonline"
       ]
     },
     {
       "id": "abductor_digiti_minimi",
       "name": "Abductor digiti minimi",
+      "name_zh": "小指展肌",
       "group": "intrinsic_hypothenar",
       "origin": "Pisiform; flexor carpi ulnaris tendon.",
       "insertion": "Ulnar proximal phalanx 5 and extensor expansion.",
@@ -747,12 +856,14 @@
         "ADM_r"
       ],
       "source_ids": [
-        "grays_students"
+        "grays_students",
+        "termonline"
       ]
     },
     {
       "id": "flexor_digiti_minimi_brevis",
       "name": "Flexor digiti minimi brevis",
+      "name_zh": "小指短屈肌",
       "group": "intrinsic_hypothenar",
       "origin": "Hamate hook and flexor retinaculum.",
       "insertion": "Ulnar proximal phalanx 5.",
@@ -761,163 +872,190 @@
         "FDM_r"
       ],
       "source_ids": [
-        "grays_students"
+        "grays_students",
+        "termonline"
       ]
     },
     {
       "id": "opponens_digiti_minimi",
       "name": "Opponens digiti minimi",
+      "name_zh": "小指对掌肌",
       "group": "intrinsic_hypothenar",
       "origin": "Hamate hook and flexor retinaculum.",
       "insertion": "Ulnar metacarpal 5 shaft.",
       "function": "Draws and rotates metacarpal 5 forward for opposition.",
       "model_actuators": [],
       "source_ids": [
-        "grays_students"
+        "grays_students",
+        "termonline"
       ]
     },
     {
       "id": "palmaris_brevis",
       "name": "Palmaris brevis",
+      "name_zh": "掌短肌",
       "group": "intrinsic_superficial",
       "origin": "Palmar aponeurosis and flexor retinaculum.",
       "insertion": "Skin along ulnar palm.",
       "function": "Wrinkles hypothenar skin; has no direct joint insertion.",
       "model_actuators": [],
       "source_ids": [
-        "palmaris_brevis"
+        "palmaris_brevis",
+        "termonline"
       ]
     },
     {
       "id": "lumbrical_1",
       "name": "Lumbrical 1",
+      "name_zh": "第1蚓状肌",
       "group": "intrinsic_lumbrical",
       "origin": "Radial FDP tendon for digit 2.",
       "insertion": "Radial extensor expansion of digit 2.",
       "function": "Flexes MCP 2; extends PIP and DIP 2.",
       "model_actuators": [],
       "source_ids": [
-        "hand_muscles"
+        "hand_muscles",
+        "termonline"
       ]
     },
     {
       "id": "lumbrical_2",
       "name": "Lumbrical 2",
+      "name_zh": "第2蚓状肌",
       "group": "intrinsic_lumbrical",
       "origin": "Radial FDP tendon for digit 3.",
       "insertion": "Radial extensor expansion of digit 3.",
       "function": "Flexes MCP 3; extends PIP and DIP 3.",
       "model_actuators": [],
       "source_ids": [
-        "hand_muscles"
+        "hand_muscles",
+        "termonline"
       ]
     },
     {
       "id": "lumbrical_3",
       "name": "Lumbrical 3",
+      "name_zh": "第3蚓状肌",
       "group": "intrinsic_lumbrical",
       "origin": "Adjacent FDP tendons for digits 3–4.",
       "insertion": "Radial extensor expansion of digit 4.",
       "function": "Flexes MCP 4; extends PIP and DIP 4.",
       "model_actuators": [],
       "source_ids": [
-        "hand_muscles"
+        "hand_muscles",
+        "termonline"
       ]
     },
     {
       "id": "lumbrical_4",
       "name": "Lumbrical 4",
+      "name_zh": "第4蚓状肌",
       "group": "intrinsic_lumbrical",
       "origin": "Adjacent FDP tendons for digits 4–5.",
       "insertion": "Radial extensor expansion of digit 5.",
       "function": "Flexes MCP 5; extends PIP and DIP 5.",
       "model_actuators": [],
       "source_ids": [
-        "hand_muscles"
+        "hand_muscles",
+        "termonline"
       ]
     },
     {
       "id": "dorsal_interosseous_1",
       "name": "Dorsal interosseous 1",
+      "name_zh": "第1骨间背侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Facing shafts of metacarpals 1 and 2.",
       "insertion": "Radial proximal phalanx and extensor expansion, digit 2.",
       "function": "Abducts digit 2; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "grays_hand"
+        "grays_hand",
+        "termonline"
       ]
     },
     {
       "id": "dorsal_interosseous_2",
       "name": "Dorsal interosseous 2",
+      "name_zh": "第2骨间背侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Facing shafts of metacarpals 2 and 3.",
       "insertion": "Radial proximal phalanx and extensor expansion, digit 3.",
       "function": "Abducts digit 3; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "grays_hand"
+        "grays_hand",
+        "termonline"
       ]
     },
     {
       "id": "dorsal_interosseous_3",
       "name": "Dorsal interosseous 3",
+      "name_zh": "第3骨间背侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Facing shafts of metacarpals 3 and 4.",
       "insertion": "Ulnar proximal phalanx and extensor expansion, digit 3.",
       "function": "Abducts digit 3; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "grays_hand"
+        "grays_hand",
+        "termonline"
       ]
     },
     {
       "id": "dorsal_interosseous_4",
       "name": "Dorsal interosseous 4",
+      "name_zh": "第4骨间背侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Facing shafts of metacarpals 4 and 5.",
       "insertion": "Ulnar proximal phalanx and extensor expansion, digit 4.",
       "function": "Abducts digit 4; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "grays_hand"
+        "grays_hand",
+        "termonline"
       ]
     },
     {
       "id": "palmar_interosseous_1",
       "name": "Palmar interosseous 1",
+      "name_zh": "第1骨间掌侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Ulnar metacarpal 2 shaft.",
       "insertion": "Ulnar proximal phalanx and extensor expansion, digit 2.",
       "function": "Adducts digit 2; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "palmar_interosseous_2",
       "name": "Palmar interosseous 2",
+      "name_zh": "第2骨间掌侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Radial metacarpal 4 shaft.",
       "insertion": "Radial proximal phalanx and extensor expansion, digit 4.",
       "function": "Adducts digit 4; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     },
     {
       "id": "palmar_interosseous_3",
       "name": "Palmar interosseous 3",
+      "name_zh": "第3骨间掌侧肌",
       "group": "intrinsic_interosseous",
       "origin": "Radial metacarpal 5 shaft.",
       "insertion": "Radial proximal phalanx and extensor expansion, digit 5.",
       "function": "Adducts digit 5; flexes MCP and extends IP joints.",
       "model_actuators": [],
       "source_ids": [
-        "uams"
+        "uams",
+        "termonline"
       ]
     }
   ],
@@ -1033,8 +1171,7 @@
         "myohand_build",
         "forearm_compartments"
       ],
-      "architecture_id": null,
-      "architecture_note": "No architecture entry collected yet; drawn size is estimated from maximum force."
+      "architecture_id": "PT"
     },
     {
       "id": "PQ_r",
@@ -1050,8 +1187,7 @@
         "myohand_build",
         "forearm_compartments"
       ],
-      "architecture_id": null,
-      "architecture_note": "No architecture entry collected yet; drawn size is estimated from maximum force."
+      "architecture_id": "PQ"
     },
     {
       "id": "FDS5_r",

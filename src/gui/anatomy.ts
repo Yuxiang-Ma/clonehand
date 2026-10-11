@@ -6,10 +6,10 @@ import './anatomy.css';
 import { ANATOMY_URL } from './link';
 
 interface Source { id: string; title: string; url: string }
-interface Muscle { id: string; name: string; group: string; origin: string; insertion: string; function: string; model_actuators: string[]; source_ids: string[]; notes?: string }
+interface Muscle { id: string; name: string; name_zh?: string; group: string; origin: string; insertion: string; function: string; model_actuators: string[]; source_ids: string[]; notes?: string }
 interface Actuator { id: string; name: string; group: string; function: string; mapping_status: string; notes?: string; source_ids: string[] }
 interface Excluded { id: string; name: string; origin: string; insertion: string; reason: string; source_ids: string[] }
-interface Bone { id: string; name: string; group: string; function: string }
+interface Bone { id: string; name: string; name_zh?: string; group: string; function: string }
 interface Anatomy {
   scope: { handedness: string; boundary: string; counting_rules: string[]; variations: string[]; model_limits: string[]; conventions: Record<string, string>; excluded_muscles?: Excluded[] };
   counts: Record<string, number>;
@@ -39,6 +39,7 @@ const STATUS_TEXT: Record<Status, string> = { simulated: 'Simulated', approximat
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 const escape = (text: unknown) => String(text ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+const zh = (name?: string) => name ? `<span class="name-zh" lang="zh-Hans">${escape(name)}</span>` : '';
 
 function render(data: Anatomy) {
   const sourceNumber = new Map(data.sources.map((source, index) => [source.id, index + 1]));
@@ -49,8 +50,8 @@ function render(data: Anatomy) {
   const excluded = data.scope.excluded_muscles ?? [];
 
   const muscleRow = (muscle: Muscle) => `
-    <tr data-muscle="${escape(muscle.id)}" data-status="${status(muscle)}" data-search="${escape(`${muscle.name} ${muscle.id} ${muscle.model_actuators.join(' ')}`.toLowerCase())}">
-      <th scope="row"><span class="name">${escape(muscle.name)}</span><code>${escape(muscle.id)}</code></th>
+    <tr data-muscle="${escape(muscle.id)}" data-status="${status(muscle)}" data-search="${escape(`${muscle.name} ${muscle.name_zh ?? ''} ${muscle.id} ${muscle.model_actuators.join(' ')}`.toLowerCase())}">
+      <th scope="row"><span class="name">${escape(muscle.name)}</span>${zh(muscle.name_zh)}<code>${escape(muscle.id)}</code></th>
       <td data-label="Origin">${escape(muscle.origin)}</td>
       <td data-label="Insertion">${escape(muscle.insertion)}</td>
       <td data-label="Function">${escape(muscle.function)}</td>
@@ -134,7 +135,7 @@ function render(data: Anatomy) {
         <div class="section-heading"><h2 id="bones-title">Bones</h2><span class="group-count">${data.bones.length} bones</span></div>
         <table class="compact-table">
           <thead><tr><th scope="col">Bone</th><th scope="col">Group</th><th scope="col">Function</th></tr></thead>
-          <tbody>${data.bones.map(bone => `<tr><th scope="row">${escape(bone.name)}</th><td>${escape(bone.group)}</td><td>${escape(bone.function)}</td></tr>`).join('')}</tbody>
+          <tbody>${data.bones.map(bone => `<tr><th scope="row">${escape(bone.name)}${zh(bone.name_zh)}</th><td>${escape(bone.group)}</td><td>${escape(bone.function)}</td></tr>`).join('')}</tbody>
         </table>
       </section>
 
