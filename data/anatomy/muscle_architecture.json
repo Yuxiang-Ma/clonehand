@@ -17,7 +17,7 @@
     "MRI volumes are about 1.5-3x cadaver mass / 1.056 g/cm3 (FDS: 74 versus about 38 cm3).",
     "Hand volumes: Kerkhof 2018 is 2-3x Mirakhorlo 2016 (AdP 17.0 versus about 6.2 cm3); each is a single cadaver.",
     "Max force: Saul 2015 re-derived forces from MRI volume at 50.8 N/cm2, 2-5x Holzbaur 2005. MyoHand lumbrical forces (48-98 N) far exceed Jacobson PCSA x specific tension (3-6 N).",
-    "MUSIC max forces (APB 42.7, FPB 80, AdP 100, FDM 30, ADM 12.3 N) cite Holzbaur 2005 and Del Santo 2007, neither of which contains these muscles; they are untraced."
+    "MUSIC's maximum forces for its five added muscles cite Holzbaur 2005 and Del Santo 2007, neither of which contains these muscles, so they are untraced. The values are not reproduced here because MUSIC has no license."
   ],
   "sources": [
     {
@@ -1495,11 +1495,6 @@
             "source": "mirakhorlo_2016",
             "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
             "specific_tension_n_per_cm2": 50.8
-          },
-          {
-            "value": 42.7,
-            "source": "music_2026",
-            "note": "MUSIC model value; provenance not traceable"
           }
         ]
       },
@@ -1578,11 +1573,6 @@
             "value": 19.0,
             "source": "mirakhorlo_2016",
             "note": "Derived: Mirakhorlo summed PCSA x 50.8"
-          },
-          {
-            "value": 80,
-            "source": "music_2026",
-            "note": "MUSIC model value; provenance not traceable"
           }
         ]
       },
@@ -1671,11 +1661,6 @@
               "oblique": 65.7,
               "transverse": 27.1
             }
-          },
-          {
-            "value": 100,
-            "source": "music_2026",
-            "note": "MUSIC model value (single AdP actuator); provenance not traceable (see source note)"
           }
         ]
       },
@@ -1729,11 +1714,6 @@
         "specific_tension_n_per_cm2": 50.8,
         "alternatives": [
           {
-            "value": 12.3,
-            "source": "music_2026",
-            "note": "MUSIC model value; provenance not traceable"
-          },
-          {
             "value": 47.9,
             "source": "myohand",
             "note": "MyoHand UI_UB5 (ulnar side of little finger), which acts as the ADM-like ulnar intrinsic; mapping uncertain"
@@ -1782,14 +1762,7 @@
         "value": 5.7,
         "source": "mirakhorlo_2016",
         "note": "Derived: Mirakhorlo PCSA x 50.8 N/cm^2",
-        "specific_tension_n_per_cm2": 50.8,
-        "alternatives": [
-          {
-            "value": 30,
-            "source": "music_2026",
-            "note": "MUSIC model value; provenance not traceable"
-          }
-        ]
+        "specific_tension_n_per_cm2": 50.8
       }
     },
     "ODM": {
