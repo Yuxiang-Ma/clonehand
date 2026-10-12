@@ -36,6 +36,8 @@ export class HandViewer {
   private framed = false;
   private center = new THREE.Vector3();
   private extent = 0.5;
+  private handCenter = new THREE.Vector3();
+  private handExtent = 0.25;
   private transform = new THREE.Object3D();
   private start = new THREE.Vector3();
   private end = new THREE.Vector3();
@@ -205,6 +207,11 @@ export class HandViewer {
       this.bones.forEach(bone => box.expandByObject(bone));
       box.getCenter(this.center);
       this.extent = box.getSize(new THREE.Vector3()).length();
+      // Hand and wrist only (no radius or ulna), for small screens.
+      const hand = new THREE.Box3();
+      this.bones.forEach((bone, index) => { if (!/^(radius|ulna)/.test(this.model.bones[index].id)) hand.expandByObject(bone); });
+      hand.getCenter(this.handCenter);
+      this.handExtent = hand.getSize(new THREE.Vector3()).length();
       this.frame('palm');
       this.framed = true;
     }
@@ -299,11 +306,17 @@ export class HandViewer {
   frame(view: 'palm' | 'dorsal' | 'reset') {
     // The source model's forearm runs along X. Keep the fingertips at the top.
     this.camera.up.set(1, 0, 0);
-    const verticalFov = THREE.MathUtils.degToRad(this.camera.fov);
-    const distance = this.extent / (2 * Math.tan(verticalFov / 2)) * 1.1;
+    // Fit the model in whichever direction is tighter, so narrow phone views do not crop it.
+    const halfVertical = Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2);
+    const halfTight = Math.min(halfVertical, halfVertical * this.camera.aspect);
+    // On a phone-sized view the whole forearm leaves the hand tiny, so frame the hand and wrist.
+    const compact = this.host.clientWidth < 600 || this.host.clientHeight < 420;
+    const center = compact ? this.handCenter : this.center;
+    const extent = compact ? this.handExtent * 1.15 : this.extent;
+    const distance = extent / (2 * halfTight) * 1.1;
     const direction = view === 'dorsal' ? new THREE.Vector3(0.08, 1, 0.4) : new THREE.Vector3(0.08, -1, 0.4);
-    this.camera.position.copy(this.center).addScaledVector(direction.normalize(), distance);
-    this.controls.target.copy(this.center);
+    this.camera.position.copy(center).addScaledVector(direction.normalize(), distance);
+    this.controls.target.copy(center);
     this.controls.update();
   }
 }

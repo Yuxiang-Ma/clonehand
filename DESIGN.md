@@ -141,7 +141,9 @@ A warm off-white bench with graphite text, one teal for selection, and one red f
 
 ## Layout
 
-A three-column workspace fills the window below the header: muscle list (260px), 3D view (flexible, at least 320px), and inspector (310px). At 1500px and wider the side columns grow to 280px and 340px. Below 1150px they shrink to 220px and 280px. Below 880px the inspector moves under the 3D view. Below 600px everything stacks into one column, the muscle list is capped at 70% of the viewport height, and sliders grow to 32px tall for touch. The page body never scrolls sideways.
+A three-column workspace fills the window below the header: muscle list (260px), 3D view (flexible, at least 320px), and inspector (310px). At 1500px and wider the side columns grow to 280px and 340px. Below 1150px they shrink to 220px and 280px. Below 880px the inspector moves under the 3D view. Below 600px (phones in portrait) the screen becomes an app frame: the 3D view stays at the top (34% of the viewport height, framed on the hand and wrist), then one scrolling row of view options, the run controls, and two tabs. The tabs switch the remaining space between the muscle list and the selected muscle, so the hand is always visible while muscles are chosen and driven. Sliders grow to 32px tall for touch. On short landscape screens the muscle list and the hand sit side by side at full height, with the inspector below. The page body never scrolls sideways.
+
+**The Hand Stays Visible Rule.** On any screen, choosing a muscle or moving its slider must not push the 3D view off screen.
 
 Rows in the muscle list use 11px top and 16px side padding with a hairline between rows. The inspector uses 22px padding. The 3D view keeps its legend and view caption as overlays in its corners, so the hand gets the full panel.
 

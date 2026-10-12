@@ -106,16 +106,6 @@ test('search and group filter narrow the muscle list', async ({ page }) => {
   await expect(page.locator('#muscle-count')).not.toHaveText('44 / 44');
 });
 
-test('narrow layout has no horizontal overflow and shows several muscle rows', async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await open(page);
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow).toBeLessThanOrEqual(0);
-  const listHeight = await page.locator('#muscle-list').evaluate(el => el.getBoundingClientRect().height);
-  expect(listHeight).toBeGreaterThanOrEqual(300);
-  await expect(page.locator('#play')).toBeVisible();
-});
-
 test('anatomy inventory page is readable and filters by model status', async ({ page, context }) => {
   await open(page);
   await page.locator('summary', { hasText: 'Model scope' }).click();

@@ -52,6 +52,35 @@ async function redPixels(page: Page) {
 }
 
 export function sceneTests(open: (page: Page) => Promise<void>) {
+  test('on a phone the hand and the muscle list are on screen together', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 760 });
+    await open(page);
+    const inViewport = (selector: string) => page.locator(selector).first().evaluate(element => {
+      const box = element.getBoundingClientRect();
+      return box.height > 0 && box.top >= 0 && box.bottom <= window.innerHeight;
+    });
+    const scrollY = await page.evaluate(() => window.scrollY);
+    expect(scrollY).toBe(0);
+    expect(await inViewport('#viewer canvas')).toBe(true);
+    expect(await page.locator('.muscle-row').evaluateAll(rows => rows.filter(row => {
+      const box = row.getBoundingClientRect();
+      return box.top >= 0 && box.top + 40 <= window.innerHeight;
+    }).length)).toBeGreaterThanOrEqual(2);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    // A row slider drives the hand while both stay visible.
+    await page.locator('.muscle-row.selected input[type=range]').fill('1');
+    await page.click('#play');
+    await expect.poll(async () => (await scene(page)).state.activation[(await scene(page)).selected]).toBeGreaterThan(0.5);
+    expect(await inViewport('#viewer canvas')).toBe(true);
+    // The tabs swap the pane under the hand for the selected muscle.
+    await expect(page.locator('#selected-title')).toBeHidden();
+    await page.click('.phone-tabs [data-pane="inspector"]');
+    await expect(page.locator('#selected-title')).toBeVisible();
+    await expect(page.locator('#muscle-list')).toBeHidden();
+    expect(await inViewport('#viewer canvas')).toBe(true);
+  });
+
+
   test('3D paths are highlighted from simulation activation, separately from selection', async ({ page }) => {
     await open(page);
     const fds2 = await exciteOneSelectAnother(page);

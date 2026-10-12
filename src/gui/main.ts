@@ -33,7 +33,7 @@ app.innerHTML = `
     <div class="connection" id="connection" role="status"><span class="status-dot"></span><span id="connection-text">Loading model</span></div>
   </header>
   <div id="error" class="error-banner" role="alert" hidden><span id="error-text"></span><button id="retry">${STANDALONE ? 'Restart' : 'Reconnect'}</button></div>
-  <main class="workspace" aria-label="Hand simulation">
+  <main class="workspace" data-pane="muscles" aria-label="Hand simulation">
     <aside class="muscle-panel" aria-labelledby="muscles-title">
       <div class="panel-heading"><h2 id="muscles-title">Muscles</h2><span id="muscle-count" class="subtle">Loading</span></div>
       <div class="search-field">${icon('search')}<input type="search" id="search" placeholder="Find a muscle" aria-label="Find a muscle" /></div>
@@ -65,6 +65,10 @@ app.innerHTML = `
       </div>
       <p class="transport-help" id="transport-help">Set a muscle’s excitation, then run the simulation to see it contract.</p>
     </section>
+    <nav class="phone-tabs" aria-label="Panel">
+      <button data-pane="muscles" aria-pressed="true">Muscles <span class="tab-detail" id="tab-muscles">0 active</span></button>
+      <button data-pane="inspector" aria-pressed="false">Selected <span class="tab-detail" id="tab-selected">–</span></button>
+    </nav>
     <aside class="inspector" aria-labelledby="selected-title">
       <div class="inspector-heading"><h2>Selected muscle</h2><span id="selected-id" class="anatomical-id"></span></div>
       <h3 id="selected-title">Loading anatomy…</h3><p id="selected-name-zh" class="name-zh" lang="zh-Hans"></p><p id="selected-group" class="subtle"></p>
@@ -133,6 +137,7 @@ function selectMuscle(index: number) {
   selected = index;
   const muscle = model.actuators[index];
   element('selected-title').textContent = muscle.name;
+  element('tab-selected').textContent = muscle.id;
   element('selected-name-zh').textContent = muscle.name_zh ?? '';
   element('selected-id').textContent = muscle.id;
   element('selected-group').textContent = groupName(muscle.group);
@@ -226,7 +231,9 @@ function renderState(next: State) {
     element('transport-help').textContent = next.paused ? 'Set excitation, then run. Pausing holds the current posture.' : 'Combine muscle excitations to explore movement. Relax all lets activation decay.';
   }
   element('time').textContent = `${next.time.toFixed(2)} s`;
-  element('active-count').textContent = String(next.activation.filter(value => value > 0.025).length);
+  const activeCount = next.activation.filter(value => value > 0.025).length;
+  element('active-count').textContent = String(activeCount);
+  element('tab-muscles').textContent = `${activeCount} active`;
   rowControls.forEach((control, index) => {
     const active = next.activation[index] > 0.025;
     control.indicator.classList.toggle('is-active', active);
@@ -262,6 +269,11 @@ async function connect() {
   });
 }
 
+// Phone layout: the tabs pick which pane fills the space under the hand.
+document.querySelectorAll<HTMLButtonElement>('.phone-tabs [data-pane]').forEach(button => button.addEventListener('click', () => {
+  app.querySelector<HTMLElement>('.workspace')!.dataset.pane = button.dataset.pane;
+  document.querySelectorAll('.phone-tabs [data-pane]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+}));
 element('search').addEventListener('input', filterList);
 element('group').addEventListener('change', filterList);
 element('excitation').addEventListener('input', event => setExcitation(selected, Number((event.target as HTMLInputElement).value)));

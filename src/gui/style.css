@@ -152,35 +152,59 @@ details li + li { margin-top: 7px; }
 @media (min-width: 1500px) { .workspace { grid-template-columns: 280px minmax(400px, 1fr) 340px; } .inspector { padding: 22px 26px; } }
 @media (max-width: 1150px) { .workspace { grid-template-columns: 220px minmax(300px, 1fr) 280px; } .brand-description { display: none; } .inspector { padding: 22px 18px; } .view-controls { gap: 11px; } .orbit-hint { width: 100%; margin-left: 0; } }
 @media (max-width: 880px) { .workspace { grid-template-columns: 230px minmax(0, 1fr); height: auto; } .muscle-panel { grid-column: 1; grid-row: 1 / 3; max-height: 1150px; } .specimen-panel { grid-column: 2; min-height: 650px; } .inspector { grid-column: 2; border-top: 1px solid var(--line); border-left: 0; max-height: none; } .viewer { min-height: 380px; } .model-label { display: none; } .connection { margin-left: auto; } }
+.phone-tabs { display: none; }
+/* Short landscape screens (phones on their side): muscles and hand side by side, filling the screen. */
+@media (min-width: 601px) and (max-width: 1150px) and (max-height: 540px) {
+  .app-header { height: 48px; }
+  .workspace { grid-template-columns: 250px minmax(0, 1fr); grid-template-rows: calc(100dvh - 49px) auto; height: auto; min-height: 0; }
+  .muscle-panel { grid-column: 1; grid-row: 1; max-height: none; }
+  .specimen-panel { grid-column: 2; grid-row: 1; min-height: 0; }
+  .specimen-heading, .transport-help, .viewer-caption, .list-help { display: none; }
+  .viewer { min-height: 0; }
+  .view-controls { padding: 6px 16px; }
+  .transport { padding: 6px 16px 8px; }
+  .inspector { grid-column: 1 / 3; grid-row: 2; border-left: 0; border-top: 1px solid var(--line); max-height: none; }
+}
+/*
+ * Phones in portrait: the hand stays on screen. The 3D view and the run controls sit on top; below,
+ * two tabs switch one scrolling pane between the muscle list and the selected muscle.
+ */
 @media (max-width: 600px) {
-  .app-header { height: 61px; padding: 0 17px; gap: 10px; }
-  .brand h1 { font-size: 22px; }
-  .workspace { display: flex; flex-direction: column; min-height: 0; }
-  .specimen-panel { order: 0; min-height: 615px; }
-  .specimen-heading { padding: 18px 18px 0; }
-  .specimen-heading h2 { font-size: 15px; }
-  .viewer { min-height: 380px; }
-  .viewer-caption { left: 18px; top: 14px; }
-  .viewer-caption p { max-width: 145px; }
-  .viewer-legend { left: 18px; bottom: 10px; }
-  .view-controls { padding: 8px 18px 12px; gap: 15px; }
-  .orbit-hint { display: none; }
-  .transport { padding: 14px 18px 0; gap: 7px; }
-  .transport button { font-size: 12px; }
-  .transport-help { padding: 10px 18px 16px; }
-  .muscle-panel { order: 1; border: 0; border-top: 1px solid var(--line); }
-  .panel-heading { padding-top: 18px; }
-  .muscle-list { min-height: 300px; max-height: 70dvh; }
-  .list-help { margin-top: 10px; margin-bottom: 10px; }
-  .muscle-row { padding: 10px 18px 8px; }
-  .muscle-select { min-height: 35px; }
+  .app-header { height: 48px; padding: 0 16px; gap: 10px; }
+  .brand h1 { font-size: 19px; }
+  .workspace { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); height: calc(100dvh - 49px); min-height: 520px; }
+  .specimen-panel { grid-column: 1; grid-row: 1; min-height: 0; }
+  .specimen-heading, .transport-help, .viewer-caption, .orbit-hint { display: none; }
+  .viewer { flex: none; height: 34dvh; min-height: 200px; }
+  .viewer-legend { left: 12px; bottom: 6px; gap: 10px; }
+  .view-controls { flex-wrap: nowrap; overflow-x: auto; padding: 6px 12px; gap: 10px; scrollbar-width: none; }
+  .view-controls > * { flex: none; }
+  .button-group button { min-height: 36px; }
+  .transport { padding: 6px 12px; gap: 8px; }
+  .transport button { min-height: 40px; font-size: 13px; }
+  .clock { flex-direction: row; align-items: baseline; gap: 6px; }
+  .clock output { font-size: 15px; }
+  .phone-tabs { grid-column: 1; grid-row: 2; display: flex; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--surface); }
+  .phone-tabs button { flex: 1; min-height: 44px; border: 0; border-radius: 0; border-bottom: 2px solid transparent; font-size: 13px; color: var(--muted); gap: 6px; }
+  .phone-tabs button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--selection); }
+  .phone-tabs .tab-detail { font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .muscle-panel, .inspector { grid-column: 1; grid-row: 3; min-height: 0; max-height: none; border: 0; }
+  .workspace[data-pane='muscles'] .inspector, .workspace[data-pane='inspector'] .muscle-panel { display: none; }
+  .muscle-panel .panel-heading, .list-help { display: none; }
+  .muscle-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr); grid-template-rows: auto minmax(0, 1fr) auto; }
+  .search-field { grid-column: 1; margin: 8px 6px 8px 12px; }
+  #group { grid-column: 2; margin: 8px 12px 8px 0; height: 38px; }
+  .muscle-list, .list-footer { grid-column: 1 / -1; }
+  .list-footer { padding: 6px 14px; }
+  .muscle-row { padding: 8px 14px 6px; }
+  .muscle-select { min-height: 34px; }
   .muscle-name { font-size: 13px; }
   .muscle-code { margin-top: 2px; }
-  .row-slider { margin-top: 4px; }
+  .row-slider { margin-top: 2px; }
   .row-slider input, #excitation { height: 32px; }
-  .inspector { order: 2; padding: 22px 18px; overflow: visible; }
-  .inspector h3 { max-width: 25ch; }
-  .app-footer { padding: 12px 18px; flex-direction: column; align-items: flex-start; gap: 4px; }
-  .error-banner { padding: 12px 18px; }
+  .inspector { padding: 16px 16px 24px; overflow-y: auto; }
+  .inspector h3 { max-width: 25ch; font-size: 20px; margin-top: 10px; }
+  .app-footer { display: none; }
+  .error-banner { padding: 10px 16px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
