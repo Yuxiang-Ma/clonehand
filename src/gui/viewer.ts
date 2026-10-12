@@ -20,6 +20,19 @@ const CONTEXT_OPACITY = { belly: 0.14, tendon: 0.22 };
 const OUTLINE = 0.0013;
 
 export type MuscleView = 'paths' | 'anatomical';
+export type CameraView = 'palm' | 'dorsal' | 'radial' | 'ulnar';
+
+/**
+ * Where each preset camera looks from, in MuJoCo world axes. In the reference posture the forearm
+ * runs along +X, the index side of the hand is +Y, and the palm faces −Z (the flexor tendons lie
+ * below the extensors in Z). The views are fixed to the world, so a pronated hand turns within them.
+ */
+const CAMERA_DIRECTIONS: Record<CameraView, [number, number, number]> = {
+  palm: [0, 0, -1],
+  dorsal: [0, 0, 1],
+  radial: [0, 1, 0],
+  ulnar: [0, -1, 0],
+};
 
 /** Render model geometry in metres; every transform comes from MuJoCo. */
 export class HandViewer {
@@ -46,7 +59,7 @@ export class HandViewer {
   private pointer = new THREE.Vector2();
   private raycaster = new THREE.Raycaster();
   private down = new THREE.Vector2();
-  private view: MuscleView = 'paths';
+  private view: MuscleView = 'anatomical';
   private bellies: THREE.Mesh[] = [];
   private tendons: THREE.InstancedMesh[] = [];
   private split: { belly: number; tendon: number; ratio: number }[] = [];
@@ -270,6 +283,7 @@ export class HandViewer {
     const matrix = new THREE.Matrix4();
     return {
       view: this.view,
+      camera: this.camera.position.clone().sub(this.controls.target).normalize().toArray(),
       selected: this.selected,
       state: this.state,
       bones: this.bones.map(bone => bone.position.toArray()),
@@ -303,7 +317,7 @@ export class HandViewer {
   showAll(show: boolean) { this.allPaths = show; if (this.state) this.update(this.state); }
   showBones(show: boolean) { this.bones.forEach(bone => { bone.visible = show; }); }
 
-  frame(view: 'palm' | 'dorsal' | 'reset') {
+  frame(view: CameraView) {
     // The source model's forearm runs along X. Keep the fingertips at the top.
     this.camera.up.set(1, 0, 0);
     // Fit the model in whichever direction is tighter, so narrow phone views do not crop it.
@@ -314,8 +328,7 @@ export class HandViewer {
     const center = compact ? this.handCenter : this.center;
     const extent = compact ? this.handExtent * 1.15 : this.extent;
     const distance = extent / (2 * halfTight) * 1.1;
-    const direction = view === 'dorsal' ? new THREE.Vector3(0.08, 1, 0.4) : new THREE.Vector3(0.08, -1, 0.4);
-    this.camera.position.copy(center).addScaledVector(direction.normalize(), distance);
+    this.camera.position.copy(center).addScaledVector(new THREE.Vector3(...CAMERA_DIRECTIONS[view]), distance);
     this.controls.target.copy(center);
     this.controls.update();
   }

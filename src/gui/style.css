@@ -83,6 +83,7 @@ input::placeholder { color: #696e66; }
 .viewer-caption p { max-width: 180px; margin-top: 3px; font-size: 10px; line-height: 1.5; color: var(--muted); }
 .viewer-legend { position: absolute; bottom: 15px; left: 24px; display: flex; flex-wrap: wrap; gap: 16px; font-size: 11px; color: var(--muted); pointer-events: none; }
 .viewer-legend > span { display: flex; align-items: center; gap: 6px; }
+.legend-short { display: none; }
 .legend-line { width: 15px; height: 2px; display: inline-block; }
 .legend-line.selected { background: var(--selection); }
 .legend-line.active { background: var(--activation); }
@@ -176,7 +177,9 @@ details li + li { margin-top: 7px; }
   .specimen-panel { grid-column: 1; grid-row: 1; min-height: 0; }
   .specimen-heading, .transport-help, .viewer-caption, .orbit-hint { display: none; }
   .viewer { flex: none; height: 34dvh; min-height: 200px; }
-  .viewer-legend { left: 12px; bottom: 6px; gap: 10px; }
+  .viewer-legend { left: 12px; right: 12px; bottom: 6px; gap: 10px; flex-wrap: nowrap; white-space: nowrap; }
+  .legend-long { display: none; }
+  .legend-short { display: inline; }
   .view-controls { flex-wrap: nowrap; overflow-x: auto; padding: 6px 12px; gap: 10px; scrollbar-width: none; }
   .view-controls > * { flex: none; }
   .button-group button { min-height: 36px; }

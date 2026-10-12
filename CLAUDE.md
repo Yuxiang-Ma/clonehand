@@ -39,9 +39,9 @@ npm run build          # tsc + vite build -> dist/ (served by FastAPI at /)
 npm run dev            # http://127.0.0.1:5173
 ```
 
-`npm run test:browser` (13 Playwright tests) builds, starts uvicorn on port 8765, and drives headless Chromium with SwiftShader WebGL. It needs `npx playwright install chromium` once; the installed Playwright (1.64) wants Chromium build 1248.
+`npm run test:browser` (14 Playwright tests) builds, starts uvicorn on port 8765, and drives headless Chromium with SwiftShader WebGL. It needs `npx playwright install chromium` once; the installed Playwright (1.64) wants Chromium build 1248.
 
-`npm run test:demo` (6 Playwright tests) runs `npm run build:demo` and serves `dist-demo/` with a plain static server, then checks that the page never calls `/api` or `/ws`.
+`npm run test:demo` (8 Playwright tests) runs `npm run build:demo` and serves `dist-demo/` with a plain static server, then checks that the page never calls `/api` or `/ws`.
 
 `README.md` holds the user-facing setup, run, and test instructions. Keep it in sync with this block.
 

@@ -145,7 +145,7 @@ A three-column workspace fills the window below the header: muscle list (260px),
 
 **The Hand Stays Visible Rule.** On any screen, choosing a muscle or moving its slider must not push the 3D view off screen.
 
-Rows in the muscle list use 11px top and 16px side padding with a hairline between rows. The inspector uses 22px padding. The 3D view keeps its legend and view caption as overlays in its corners, so the hand gets the full panel.
+Rows in the muscle list use 11px top and 16px side padding with a hairline between rows. The inspector uses 22px padding. The 3D view keeps its legend and view caption as overlays in its corners, so the hand gets the full panel. It opens on the belly & tendon view, looking straight at the palm.
 
 ## Elevation & Depth
 
@@ -153,7 +153,7 @@ The interface is flat. Panels sit side by side on the same paper, separated by 1
 
 ## Shapes
 
-Controls have small 4px corners. Segmented controls (Paths / Belly & tendon, Palm / Dorsal) join their buttons with square inner edges and keep the 4px radius only on the outer ends. Panels, rows, and the 3D view have square corners. Status dots and activation indicators are circles.
+Controls have small 4px corners. Segmented controls (Belly & tendon / Paths; Palm / Dorsal / Radial / Ulnar / reset) join their buttons with square inner edges and keep the 4px radius only on the outer ends. Panels, rows, and the 3D view have square corners. Status dots and activation indicators are circles.
 
 ## Components
 

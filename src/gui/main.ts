@@ -4,7 +4,7 @@ import '@fontsource/ibm-plex-sans/600.css';
 import './style.css';
 import type { Joint, Model, State } from './types';
 import { splitMuscle } from './muscle-geometry';
-import { HandViewer, type MuscleView } from './viewer';
+import { HandViewer, type CameraView, type MuscleView } from './viewer';
 import { MODEL_URL, STANDALONE, openLink, type SimulationLink } from './link';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
@@ -22,6 +22,17 @@ const stiffnessText = (joint: Joint) => {
   const [positive, negative] = joint.passive_stiffness_nm_per_rad;
   if (positive === negative) return `${positive.toFixed(2)} N·m/rad`;
   return `${positive.toFixed(2)} toward ${joint.positive.toLowerCase()}, ${negative.toFixed(2)} toward ${joint.negative.toLowerCase()} (N·m/rad)`;
+};
+// [view, button label, tooltip, view tag]
+const CAMERA_VIEWS: [CameraView, string, string, string][] = [
+  ['palm', 'Palm', 'Look at the palm', 'Palm view'],
+  ['dorsal', 'Dorsal', 'Look at the back of the hand', 'Dorsal view'],
+  ['radial', 'Radial', 'Thumb side', 'Radial view (thumb side)'],
+  ['ulnar', 'Ulnar', 'Little-finger side', 'Ulnar view (little-finger side)'],
+];
+const CAPTIONS: Record<MuscleView, string> = {
+  anatomical: '<span>Muscle bellies and tendons</span><p>Belly volume and rest length per muscle; the inspector names the source. Shortening happens only in the belly.</p>',
+  paths: '<span>Muscle–tendon paths</span><p>Paths show force transmission, not muscle belly volume.</p>',
 };
 const percent = (value: number) => `${Math.round(value * 100)}%`;
 const degrees = (radians: number) => `${(radians * 180 / Math.PI).toFixed(1)}°`;
@@ -47,13 +58,13 @@ app.innerHTML = `
       <div class="specimen-heading"><div><h2 id="specimen-title">Right hand & wrist</h2><p id="model-counts">Loading model geometry</p></div><span class="view-tag" id="view-tag">Palm view</span></div>
       <div id="viewer" class="viewer">
         <div class="viewer-loading" id="viewer-loading"><span class="loading-bar"></span><p>Loading hand geometry…</p></div>
-        <div class="viewer-caption" id="view-caption"><span>Muscle–tendon paths</span><p>Paths show force transmission, not muscle belly volume.</p></div>
-        <div class="viewer-legend" id="legend-paths" aria-label="Path colors"><span><i class="legend-line selected"></i>Selected</span><span><i class="legend-line active"></i>Active</span><span><i class="legend-line resting"></i>Resting</span></div>
-        <div class="viewer-legend" id="legend-anatomical" aria-label="Muscle colors" hidden><span><i class="legend-swatch selected"></i>Selected (outlined)</span><span><i class="legend-swatch belly"></i>Active belly, low to high</span><span><i class="legend-line tendon"></i>Tendon</span><span><i class="legend-swatch context"></i>Other muscles, relaxed</span></div>
+        <div class="viewer-caption" id="view-caption">${CAPTIONS.anatomical}</div>
+        <div class="viewer-legend" id="legend-paths" aria-label="Path colors" hidden><span><i class="legend-line selected"></i>Selected</span><span><i class="legend-line active"></i>Active</span><span><i class="legend-line resting"></i>Resting</span></div>
+        <div class="viewer-legend" id="legend-anatomical" aria-label="Muscle colors"><span><i class="legend-swatch selected"></i><span>Selected<span class="legend-long"> (outlined)</span></span></span><span><i class="legend-swatch belly"></i><span>Active belly<span class="legend-long">, low to high</span></span></span><span><i class="legend-line tendon"></i>Tendon</span><span><i class="legend-swatch context"></i><span><span class="legend-long">Other muscles, relaxed</span><span class="legend-short">Relaxed</span></span></span></div>
       </div>
       <div class="view-controls">
-        <div class="button-group" role="group" aria-label="Muscle display"><button data-muscle-view="paths" aria-pressed="true">Paths</button><button data-muscle-view="anatomical" aria-pressed="false">Belly &amp; tendon</button></div>
-        <div class="button-group" aria-label="Camera view"><button data-view="palm" aria-pressed="true">Palm</button><button data-view="dorsal" aria-pressed="false">Dorsal</button><button data-view="reset" aria-label="Reset camera">${icon('reset')}</button></div>
+        <div class="button-group" role="group" aria-label="Muscle display"><button data-muscle-view="anatomical" aria-pressed="true">Belly &amp; tendon</button><button data-muscle-view="paths" aria-pressed="false">Paths</button></div>
+        <div class="button-group" role="group" aria-label="Camera view">${CAMERA_VIEWS.map(([view, label, title]) => `<button data-view="${view}" aria-pressed="${view === 'palm'}" title="${title}">${label}</button>`).join('')}<button data-view="reset" aria-label="Reset camera to the palm view" title="Reset camera">${icon('reset')}</button></div>
         <label class="check-control"><input type="checkbox" id="all-paths" checked />All paths</label>
         <label class="check-control"><input type="checkbox" id="bones" checked />Bones</label>
         <span class="orbit-hint">Drag to orbit · Scroll to zoom</span>
@@ -288,17 +299,15 @@ document.querySelectorAll<HTMLButtonElement>('[data-muscle-view]').forEach(butto
   const anatomical = view === 'anatomical';
   element('legend-paths').hidden = anatomical;
   element('legend-anatomical').hidden = !anatomical;
-  element('view-caption').innerHTML = anatomical
-    ? '<span>Muscle bellies and tendons</span><p>Belly volume and rest length per muscle; the inspector names the source. Shortening happens only in the belly.</p>'
-    : '<span>Muscle–tendon paths</span><p>Paths show force transmission, not muscle belly volume.</p>';
+  element('view-caption').innerHTML = CAPTIONS[view];
 }));
 element('all-paths').addEventListener('change', event => viewer?.showAll((event.target as HTMLInputElement).checked));
 element('bones').addEventListener('change', event => viewer?.showBones((event.target as HTMLInputElement).checked));
 document.querySelectorAll<HTMLButtonElement>('[data-view]').forEach(button => button.addEventListener('click', () => {
-  const view = button.dataset.view as 'palm' | 'dorsal' | 'reset';
-  viewer?.frame(view);
-  document.querySelectorAll('[data-view]').forEach(item => item.setAttribute('aria-pressed', String((item as HTMLElement).dataset.view === (view === 'reset' ? 'palm' : view))));
-  element('view-tag').textContent = view === 'dorsal' ? 'Dorsal view' : 'Palm view';
+  const chosen = button.dataset.view === 'reset' ? 'palm' : button.dataset.view as CameraView;
+  viewer?.frame(chosen);
+  document.querySelectorAll('[data-view]').forEach(item => item.setAttribute('aria-pressed', String((item as HTMLElement).dataset.view === chosen)));
+  element('view-tag').textContent = CAMERA_VIEWS.find(([view]) => view === chosen)![3];
 }));
 
 async function start() {

@@ -5,7 +5,7 @@ import { expect, test, type Page } from '@playwright/test';
 import type { State } from '../../src/gui/types';
 
 interface DrawnMuscle { id: string; visible: boolean; color: string; opacity: number; outlined: boolean; firstSegment: number[] | null }
-interface Scene { view: string; selected: number; state: State; bones: number[][]; muscles: DrawnMuscle[] }
+interface Scene { view: string; camera: number[]; selected: number; state: State; bones: number[][]; muscles: DrawnMuscle[] }
 
 // Path-view colors from src/gui/viewer.ts.
 const PATH = { active: '#c85836', selected: '#166b65', resting: '#9b958b' };
@@ -81,8 +81,35 @@ export function sceneTests(open: (page: Page) => Promise<void>) {
   });
 
 
+  test('opens on the belly view looking at the palm, with four camera presets', async ({ page }) => {
+    await open(page);
+    const drawn = await scene(page);
+    expect(drawn.view).toBe('anatomical');
+    await expect(page.locator('#legend-anatomical')).toBeVisible();
+    await expect(page.locator('#legend-paths')).toBeHidden();
+    await expect(page.locator('#view-tag')).toHaveText('Palm view');
+    // The camera looks at the palm from −Z, so the finger flexors lie nearer to it than the extensors.
+    const facing = (camera: number[], axis: number[]) => camera.reduce((sum, value, i) => sum + value * axis[i], 0);
+    expect(facing(drawn.camera, [0, 0, -1])).toBeGreaterThan(0.99);
+    const meanFacing = (id: string) => {
+      const path = drawn.state.paths[drawn.muscles.findIndex(muscle => muscle.id === id)];
+      return path.reduce((sum, point) => sum + facing(point, drawn.camera), 0) / path.length;
+    };
+    expect(meanFacing('FDS2_r')).toBeGreaterThan(meanFacing('EDC2_r'));
+    for (const [view, axis, tag] of [['dorsal', [0, 0, 1], 'Dorsal view'], ['radial', [0, 1, 0], 'Radial view (thumb side)'], ['ulnar', [0, -1, 0], 'Ulnar view (little-finger side)']] as const) {
+      await page.click(`[data-view="${view}"]`);
+      await expect(page.locator('#view-tag')).toHaveText(tag);
+      await expect(page.locator(`[data-view="${view}"]`)).toHaveAttribute('aria-pressed', 'true');
+      expect(facing((await scene(page)).camera, [...axis])).toBeGreaterThan(0.99);
+    }
+    await page.click('[data-view="reset"]');
+    await expect(page.locator('[data-view="palm"]')).toHaveAttribute('aria-pressed', 'true');
+    expect(facing((await scene(page)).camera, [0, 0, -1])).toBeGreaterThan(0.99);
+  });
+
   test('3D paths are highlighted from simulation activation, separately from selection', async ({ page }) => {
     await open(page);
+    await page.click('[data-muscle-view="paths"]');
     const fds2 = await exciteOneSelectAnother(page);
     const drawn = await scene(page);
     const active = drawn.state.activation.map(value => value > ACTIVE);
@@ -139,6 +166,7 @@ export function sceneTests(open: (page: Page) => Promise<void>) {
 
   test('activating a muscle turns its path red in the rendered image', async ({ page }) => {
     await open(page);
+    await page.click('[data-muscle-view="paths"]');
     // Hide relaxed paths so only the selected and active ones are drawn.
     await page.locator('#all-paths').uncheck();
     await page.waitForTimeout(300);
