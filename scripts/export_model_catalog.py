@@ -11,7 +11,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.simulation.engine import HandSimulation
+from src.simulation.engine import HandSimulation, load_joint_ranges
 
 
 def render():
@@ -143,6 +143,14 @@ def render():
     lines += [
         "",
         "MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Where two values are given (+ / −), the spring is stiffer on one side: the first resists motion in the positive direction, the second in the negative direction. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).",
+        "",
+        "Ranges for "
+        + ", ".join(
+            f"`{name}`"
+            for name, entry in load_joint_ranges()["joints"].items()
+            if entry["range_deg"] != entry["upstream_deg"]
+        )
+        + " differ from upstream MyoHand: limits outside normal range of motion were moved toward published means, stopping where a muscle path fails. The upstream values, sources, and reasons are in [joint_ranges.json](../models/myohand/joint_ranges.json); [validation.md](validation.md) compares every limit with published range of motion.",
     ]
     lines += [
         "",

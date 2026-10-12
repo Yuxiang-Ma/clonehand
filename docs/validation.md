@@ -8,12 +8,10 @@ Two things are compared: **moment arms** (how strongly each muscle can turn each
 
 ## Main findings
 
-Moment arms that meet the agreement rule below: wrist 12 of 22, forearm rotation 5 of 6, thumb 9 of 15, index finger 27 of 32. The rest are listed by region, with the ratio of model to published value.
+Moment arms that meet the agreement rule below: wrist 14 of 22, forearm rotation 5 of 6, thumb 9 of 15, index finger 27 of 32. The rest are listed by region, with the ratio of model to published value.
 
-- **Ulnar deviation stops at 10°.** Moment-arm signs confirm that the model's positive deviation is radial (ECU and FCU pull negative; ECRL, APL, and EPB pull positive), and the joint allows 25° radial but only 10° ulnar deviation. People have about 23–26° radial and 37–38° ulnar deviation, so the range looks mirrored. Ulnar deviators reach the limit early.
-- **Wrist flexion and extension stop at 45°**, against about 66–80° of normal motion.
-- **The index MCP and PIP joints cannot hyperextend.** Their lower limits are 0°, against about 26° and 14° in people. The relaxed hand starts at these limits, which is why the GUI often shows *At extension limit*. The thumb MCP has the opposite problem: it extends to 40° (people: about 8°) but flexes only to 45° (people: about 60°).
-- **The wrist prime movers act in the right directions.** FCR, FCU, ECRL, ECRB, ECU, and APL match Garland's directions on both wrist axes. APL's moment arms agree in size. The other five have flexion-extension moment arms 1.4–1.8× Garland's tendon-excursion means; FCR and FCU at 17–18 mm sit closer to the older Brand and Hollister data (about 18 mm). FCR's radial deviation moment arm is less than half of Garland's.
+- **Joint limits now follow normal range of motion where MyoHand's paths allow it.** Upstream MyoHand stopped ulnar deviation at 10° (people: about 37°; with 25° radial deviation, the range looked mirrored), wrist flexion and extension at 45° (people: about 66–80°), and finger hyperextension at 0°, and its thumb MCP extended to 40° but flexed only to 45°. These limits were moved to the published means. Three stop short because MyoHand's muscle paths fail beyond them: wrist flexion at 56° (EDC3 starts to flex the wrist at 57°), wrist extension at 65° (the FDS2 path snaps across its wrapping surface at 65.8°), and little-finger PIP hyperextension at 11° (the EDC5 path snaps to the palmar side at 11.7°). The index MCP keeps its 0° stop, because RI2_r's passive pull at rest would otherwise hold the relaxed index 17° hyperextended.
+- **The wrist prime movers act in the right directions.** FCR, FCU, ECRL, ECRB, ECU, and APL match Garland's directions on both wrist axes. APL's moment arms agree in size. The other five have flexion-extension moment arms 1.3–1.8× Garland's tendon-excursion means (ECU is the largest at 1.8×); FCR and FCU at 15–16 mm sit between Garland's values and the older Brand and Hollister data (about 18 mm). FCR's radial deviation moment arm is a third of Garland's.
 - **The thumb extrinsics have wrist deviation moment arms 2.5–4× too large** (FPL 21 mm, EPL 23 mm, against about 5 and 9 mm read from Brand and Hollister's figure). EIP's small deviation moment arm has the opposite sign to the figure value, which is within reading error of zero.
 - **Pronator teres is 1.4–1.6× cadaver values** (11.6 mm against 7.3–8.5 mm). Murray et al. (1995) found a similar gap in their own model (about 12 mm against 5–7.5 mm). Pronator quadratus agrees.
 - **FPL flexes the thumb CMC and MCP too weakly** (6 mm against 14 and 11 mm in Smutz's data). APL extends the CMC by almost nothing (published: 7 mm). EPL acts in the published direction at every thumb joint, and FPL agrees at the IP joint. EPB and OP agree on their main CMC actions; their CMC abduction moment arms are near zero, where Smutz's SDs are larger than the means.
@@ -37,18 +35,18 @@ Moment arms that meet the agreement rule below: wrist 12 of 22, forearm rotation
 
 | Muscle | DOF (model + direction) | Published, mm | Model, mm | Agreement | Source | Posture |
 | --- | --- | --- | --- | --- | --- | --- |
-| FCR_r | Wrist flexion (+ flexion) | 12.2 ± 2.1 SD | 17.0 | agrees | [1](#sources) | range |
-| FCR_r | Wrist deviation (+ radial deviation) | 10.2 ± 2.5 SD | 4.5 | same direction, 0.4× | [1](#sources) | range |
-| FCU_r | Wrist flexion (+ flexion) | 11.3 ± 2.1 SD | 17.6 | same direction, 1.6× | [1](#sources) | range |
-| FCU_r | Wrist deviation (+ radial deviation) | -11.7 ± 4.2 SD | -9.7 | agrees | [1](#sources) | range |
-| ECRL_r | Wrist flexion (+ flexion) | -6.6 ± 3 SD | -10.9 | same direction, 1.7× | [1](#sources) | range |
-| ECRL_r | Wrist deviation (+ radial deviation) | 17.2 ± 3.6 SD | 23.8 | agrees | [1](#sources) | range |
-| ECRB_r | Wrist flexion (+ flexion) | -10.8 ± 2.8 SD | -14.8 | agrees | [1](#sources) | range |
-| ECRB_r | Wrist deviation (+ radial deviation) | 10.0 ± 2.2 SD | 14.9 | agrees | [1](#sources) | range |
-| ECU_r | Wrist flexion (+ flexion) | -4.0 ± 0.9 SD | -7.2 | same direction, 1.8× | [1](#sources) | range |
-| ECU_r | Wrist deviation (+ radial deviation) | -23.7 ± 3.3 SD | -26.7 | agrees | [1](#sources) | range |
-| APL_r | Wrist flexion (+ flexion) | 6.8 ± 1.9 SD | 6.4 | agrees | [1](#sources) | range |
-| APL_r | Wrist deviation (+ radial deviation) | 23.6 ± 2.5 SD | 25.7 | agrees | [1](#sources) | range |
+| FCR_r | Wrist flexion (+ flexion) | 12.2 ± 2.1 SD | 15.4 | agrees | [1](#sources) | range |
+| FCR_r | Wrist deviation (+ radial deviation) | 10.2 ± 2.5 SD | 3.2 | same direction, 0.3× | [1](#sources) | range |
+| FCU_r | Wrist flexion (+ flexion) | 11.3 ± 2.1 SD | 16.4 | agrees | [1](#sources) | range |
+| FCU_r | Wrist deviation (+ radial deviation) | -11.7 ± 4.2 SD | -10.9 | agrees | [1](#sources) | range |
+| ECRL_r | Wrist flexion (+ flexion) | -6.6 ± 3 SD | -9.8 | agrees | [1](#sources) | range |
+| ECRL_r | Wrist deviation (+ radial deviation) | 17.2 ± 3.6 SD | 22.4 | agrees | [1](#sources) | range |
+| ECRB_r | Wrist flexion (+ flexion) | -10.8 ± 2.8 SD | -14.6 | agrees | [1](#sources) | range |
+| ECRB_r | Wrist deviation (+ radial deviation) | 10.0 ± 2.2 SD | 13.3 | agrees | [1](#sources) | range |
+| ECU_r | Wrist flexion (+ flexion) | -4.0 ± 0.9 SD | -7.0 | same direction, 1.8× | [1](#sources) | range |
+| ECU_r | Wrist deviation (+ radial deviation) | -23.7 ± 3.3 SD | -28.0 | agrees | [1](#sources) | range |
+| APL_r | Wrist flexion (+ flexion) | 6.8 ± 1.9 SD | 5.7 | agrees | [1](#sources) | range |
+| APL_r | Wrist deviation (+ radial deviation) | 23.6 ± 2.5 SD | 25.4 | agrees | [1](#sources) | range |
 | PL_r | Wrist flexion (+ flexion) | 22.0 (approx.) | 25.1 | agrees | [2](#sources) | reference |
 | PL_r | Wrist deviation (+ radial deviation) | 2.5 (approx.) | 7.2 | same direction, 2.9× | [2](#sources) | reference |
 | FPL_r | Wrist flexion (+ flexion) | 15.0 (approx.) | 11.2 | agrees | [2](#sources) | reference |
@@ -130,26 +128,44 @@ Moment arms that meet the agreement rule below: wrist 12 of 22, forearm rotation
 
 ## Joint ranges
 
-The model's joint limits against normal range of motion. *Below normal* marks a limit more than one SD under the published mean; *above normal*, more than two SD over it.
+The model's joint limits against normal range of motion. *Below normal* marks a limit more than one SD under the published mean; *above normal*, more than two SD over it. *Upstream* is MyoHand's own limit. Limits that were outside normal range in MyoHand were moved to these same published means ([joint_ranges.json](../models/myohand/joint_ranges.json)), so those rows agree by construction; the notes say where a limit stops short and why.
 
-| Motion | Model limit | Published mean ± SD | Source | |
-| --- | --- | --- | --- | --- |
-| Wrist flexion | 45° | women 79.7 ± 6.5; men 70.2 ± 11.2 | [10](#sources) | **below normal** |
-| Wrist extension | 45° | women 74.4 ± 7.6; men 65.6 ± 10.1 | [10](#sources) | **below normal** |
-| Radial deviation | 25° | women 26 ± 14.9; men 23.2 ± 11.6 | [10](#sources) |  |
-| Ulnar deviation | 10° | women 37.9 ± 14; men 37.2 ± 10.2 | [10](#sources) | **below normal** |
-| Pronation | 90° | women 82.4 ± 7.5; men 78.9 ± 9.3 | [10](#sources) |  |
-| Supination | 90° | women 89.3 ± 8.6; men 87.7 ± 9.2 | [10](#sources) |  |
-| Index MCP flexion | 90° | 86 ± 9.2 | [11](#sources) |  |
-| Index MCP hyperextension | 0° | 25.7 ± 6.8 | [11](#sources) | **below normal** |
-| Index PIP flexion | 90° | 97.2 ± 16.9 | [11](#sources) |  |
-| Index PIP hyperextension | 0° | 13.7 ± 7.8 | [11](#sources) | **below normal** |
-| Index DIP flexion | 90° | 81.6 ± 13.9 | [11](#sources) |  |
-| Index DIP hyperextension | 0° | 6 ± 6 | [11](#sources) |  |
-| Thumb MCP flexion | 45° | 60 ± 5.5 | [12](#sources) | **below normal** |
-| Thumb MCP extension | 40° | 8.1 ± 4.4 | [12](#sources) | **above normal** |
-| Thumb IP flexion | 75° | 88 ± 2.3 | [12](#sources) | **below normal** |
-| Thumb IP extension | 25° | 12 ± 9.2 | [12](#sources) |  |
+| Motion | Model limit | Upstream | Published mean ± SD | Source | | Note |
+| --- | --- | --- | --- | --- | --- | --- |
+| Wrist flexion | 56° | 45° | women 79.7 ± 6.5; men 70.2 ± 11.2 | [10](#sources) | **below normal** | path fails beyond (see joint_ranges.json) |
+| Wrist extension | 65° | 45° | women 74.4 ± 7.6; men 65.6 ± 10.1 | [10](#sources) |  | path fails beyond (see joint_ranges.json) |
+| Radial deviation | 25° | 25° | women 26 ± 14.9; men 23.2 ± 11.6 | [10](#sources) |  |  |
+| Ulnar deviation | 37.55° | 10° | women 37.9 ± 14; men 37.2 ± 10.2 | [10](#sources) |  | set to published mean |
+| Pronation | 90° | 90° | women 82.4 ± 7.5; men 78.9 ± 9.3 | [10](#sources) |  |  |
+| Supination | 90° | 90° | women 89.3 ± 8.6; men 87.7 ± 9.2 | [10](#sources) |  |  |
+| Index MCP flexion | 90° | 90° | 86 ± 9.2 | [11](#sources) |  |  |
+| Index MCP hyperextension | 0° | 0° | 25.7 ± 6.8 | [11](#sources) | **below normal** | kept upstream (see joint_ranges.json) |
+| Index PIP flexion | 90° | 90° | 97.2 ± 16.9 | [11](#sources) |  |  |
+| Index PIP hyperextension | 13.7° | 0° | 13.7 ± 7.8 | [11](#sources) |  | set to published mean |
+| Index DIP flexion | 90° | 90° | 81.6 ± 13.9 | [11](#sources) |  |  |
+| Index DIP hyperextension | 0° | 0° | 6 ± 6 | [11](#sources) |  |  |
+| Middle MCP flexion | 90° | 90° | 86.6 ± 10.4 | [11](#sources) |  |  |
+| Middle MCP hyperextension | 24.7° | 0° | 24.7 ± 6.7 | [11](#sources) |  | set to published mean |
+| Middle PIP flexion | 90° | 90° | 96.2 ± 15.8 | [11](#sources) |  |  |
+| Middle PIP hyperextension | 15.6° | 0° | 15.6 ± 8.1 | [11](#sources) |  | set to published mean |
+| Middle DIP flexion | 90° | 90° | 84.5 ± 13.1 | [11](#sources) |  |  |
+| Middle DIP hyperextension | 8.4° | 0° | 8.4 ± 6.7 | [11](#sources) |  | set to published mean |
+| Ring MCP flexion | 90° | 90° | 84.2 ± 8.6 | [11](#sources) |  |  |
+| Ring MCP hyperextension | 22.3° | 0° | 22.3 ± 7.1 | [11](#sources) |  | set to published mean |
+| Ring PIP flexion | 90° | 90° | 96 ± 15.9 | [11](#sources) |  |  |
+| Ring PIP hyperextension | 16.2° | 0° | 16.2 ± 8 | [11](#sources) |  | set to published mean |
+| Ring DIP flexion | 90° | 90° | 82.1 ± 14.6 | [11](#sources) |  |  |
+| Ring DIP hyperextension | 8.1° | 0° | 8.1 ± 6.8 | [11](#sources) |  | set to published mean |
+| Little MCP flexion | 90° | 90° | 85 ± 8.4 | [11](#sources) |  |  |
+| Little MCP hyperextension | 26.3° | 0° | 26.3 ± 6.2 | [11](#sources) |  | set to published mean |
+| Little PIP flexion | 90° | 90° | 91.8 ± 12.7 | [11](#sources) |  |  |
+| Little PIP hyperextension | 11° | 0° | 13.2 ± 8.4 | [11](#sources) |  | path fails beyond (see joint_ranges.json) |
+| Little DIP flexion | 90° | 90° | 84.6 ± 12.9 | [11](#sources) |  |  |
+| Little DIP hyperextension | 6.8° | 0° | 6.8 ± 6.7 | [11](#sources) |  | set to published mean |
+| Thumb MCP flexion | 60° | 45° | 60 ± 5.5 | [12](#sources) |  | set to published mean |
+| Thumb MCP extension | 8.1° | 40° | 8.1 ± 4.4 | [12](#sources) |  | set to published mean |
+| Thumb IP flexion | 88° | 75° | 88 ± 2.3 | [12](#sources) |  | set to published mean |
+| Thumb IP extension | 25° | 25° | 12 ± 9.2 | [12](#sources) |  |  |
 
 Thumb CMC ranges are not compared: clinical goniometry measures palmar and radial abduction in planes that do not match the model's CMC axes.
 
@@ -172,5 +188,5 @@ Thumb CMC ranges are not compared: clinical goniometry measures palmar and radia
 8. Ettema GJC, Styles G, Kippers V. The moment arms of 23 muscle segments of the upper limb with varying elbow and forearm positions. Hum Mov Sci 1998;17:201-220. <https://doi.org/10.1016/S0167-9457(97)00030-4>. 3 embalmed cadavers, muscles replaced by strings; mid-prone forearm. Convention: pronation +. Values from: Table 2, forearm rows (one value per specimen).
 9. Murray WM, Delp SL, Buchanan TS. Variation of muscle moment arms with elbow and forearm position. J Biomech 1995;28:513-525. <https://doi.org/10.1016/0021-9290(94)00114-J>. 2 cadavers. Convention: pronation +. Values from: Results text, p. 520 (cited in the findings, not in the tables).
 10. Fan S, Cepek J, Symonette C, Ross D, Chinchalkar S, Grant A. Variation of grip strength and wrist range of motion with forearm rotation in healthy young volunteers aged 23 to 30. J Hand Microsurg 2019;11:88. <https://pmc.ncbi.nlm.nih.gov/articles/PMC6692155/>. 30 adults aged 23-30, dominant side. Convention: degrees from neutral. Values from: Table 1.
-11. B K MI, Baba PUF, Singh V, et al. The normal active range of motion of the index, middle, ring, and little fingers in a sample of Indian population. Indian J Plast Surg 2024;57:248. <https://pmc.ncbi.nlm.nih.gov/articles/PMC11436331/>. 390 hands, active motion. Convention: degrees from neutral. Values from: Table 2.
+11. B K MI, Baba PUF, Singh V, et al. The normal active range of motion of the index, middle, ring, and little fingers in a sample of Indian population. Indian J Plast Surg 2024;57:248. <https://pmc.ncbi.nlm.nih.gov/articles/PMC11436331/>. 390 hands, active motion. Convention: degrees from neutral. Values from: Table 2, national column.
 12. Barakat MJ, Field J, Taylor J. The range of movement of the thumb. Hand 2013;8:179-182. <https://pmc.ncbi.nlm.nih.gov/articles/PMC3653006/>. 100 right thumbs. Convention: degrees from neutral. Values from: Results.

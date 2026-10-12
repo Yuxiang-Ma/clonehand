@@ -10,6 +10,7 @@ from src.simulation.engine import (
     ROOT,
     HandSimulation,
     directional_stiffness,
+    load_joint_ranges,
     load_music_muscles,
     load_passive_stiffness,
 )
@@ -192,6 +193,120 @@ def test_directional_springs_resist_each_side_with_the_measured_stiffness(name):
         mujoco.mj_forward(m, d)
         # Velocity is zero, so damping adds nothing; the passive force is the spring alone.
         assert d.qfrc_passive[m.joint(name).dofadr[0]] == pytest.approx(expected, abs=1e-9)
+
+
+def _published_mean(joint, direction):
+    references = json.loads((ROOT / "data/validation/references.json").read_text())
+    (entry,) = [
+        e
+        for e in references["range_of_motion"]
+        if e["joint"] == joint and e["direction"] == direction
+    ]
+    means = [entry[k][0] for k in ("women", "men", "all") if k in entry]
+    return entry["source"], sum(means) / len(means)
+
+
+def test_joint_ranges_follow_the_published_means_or_say_why_not():
+    upstream = mujoco.MjModel.from_xml_path(str(ROOT / "models/myohand/hand.xml"))
+    m = HandSimulation().model
+    overrides = load_joint_ranges()["joints"]
+    for i in range(m.njnt):
+        name = m.joint(i).name
+        low, high = np.rad2deg(m.jnt_range[i])
+        up_low, up_high = np.rad2deg(upstream.jnt_range[upstream.joint(name).id])
+        entry = overrides.get(name)
+        if entry is None:
+            assert (low, high) == pytest.approx((up_low, up_high)), name
+            continue
+        # hand.xml stores radians to six digits, so its degrees are not exactly round.
+        assert entry["upstream_deg"] == pytest.approx([up_low, up_high], abs=0.01), name
+        assert [low, high] == pytest.approx(entry["range_deg"], abs=1e-3), name
+        for direction, index, limit, up in (
+            ("negative", 0, -low, -up_low),
+            ("positive", 1, high, up_high),
+        ):
+            side = entry["sides"].get(direction)
+            if side is None:
+                assert limit == pytest.approx(up, abs=1e-3), (name, direction)
+                continue
+            source, mean = _published_mean(name, direction)
+            assert source in entry["source_ids"]
+            assert side["published_deg"] == pytest.approx(mean), (name, direction)
+            if "kept_upstream" in side:
+                assert limit == pytest.approx(up, abs=1e-3), (name, direction)
+            elif "limited_by" in side:
+                # Moved toward the published mean but stopped short of it.
+                assert min(up, mean) < limit < max(up, mean), (name, direction)
+            else:
+                assert limit == pytest.approx(mean, abs=1e-3), (name, direction)
+
+
+# Prime movers whose action at a joint must not reverse inside its range: the muscles whose
+# function in anatomy.json names that motion (wrist), or the long flexors and extensors of the
+# digit. Keys are the joint's + and − directions.
+_FLEXORS = ["FCR_r", "PL_r", "FCU_r"] + [f"FD{s}{k}_r" for s in "SP" for k in "2345"]
+_EXTENSORS = ["ECRL_r", "ECRB_r", "ECU_r"] + [f"EDC{k}_r" for k in "2345"]
+PRIME_MOVERS = {
+    "flexion_r": {1: _FLEXORS, -1: _EXTENSORS},
+    "deviation_r": {1: ["FCR_r", "ECRL_r", "ECRB_r"], -1: ["FCU_r", "ECU_r"]},
+    "mp_flexion_r": {-1: ["FPL_r"], 1: ["EPL_r", "EPB_r"]},
+    "ip_flexion_r": {-1: ["FPL_r"], 1: ["EPL_r"]},
+    **{
+        f"{joint}{k}_flexion_r": {
+            1: ([f"FDS{k}_r"] if joint != "md" else []) + [f"FDP{k}_r"],
+            -1: [f"EDC{k}_r"],
+        }
+        for k in "2345"
+        for joint in ("mcp", "pm", "md")
+    },
+}
+
+
+def _first_path_failure(sim, joint, start, stop, step=0.05):
+    """First angle (degrees) from start toward stop where a moment arm jumps by more than 2 mm
+    between samples or a prime mover's moment arm changes sign; None if there is none."""
+    m, d = sim.model, sim.data
+    qpos = m.joint(joint).qposadr[0]
+    dof = m.joint(joint).dofadr[0]
+    primes = [
+        (sign, m.actuator(n).id) for sign, names in PRIME_MOVERS[joint].items() for n in names
+    ]
+
+    def arms(angle):
+        d.qpos[:] = 0
+        d.qpos[qpos] = np.deg2rad(angle)
+        mujoco.mj_forward(m, d)
+        return sim.moment_arms()[:, dof] * 1000
+
+    previous = arms(start)
+    direction = 1 if stop > start else -1
+    for angle in np.arange(start + direction * step, stop + direction * 1e-9, direction * step):
+        current = arms(angle)
+        if np.any(np.abs(current - previous) > 2) or any(current[i] * s < 0 for s, i in primes):
+            return angle
+        previous = current
+    return None
+
+
+def test_muscle_paths_hold_over_the_widened_ranges():
+    sim = HandSimulation(include_music=False)
+    for name, entry in load_joint_ranges()["joints"].items():
+        (up_low, up_high), (low, high) = entry["upstream_deg"], entry["range_deg"]
+        for start, stop in ((min(up_low, 0), low), (max(up_high, 0), high)):
+            if stop != start:
+                assert _first_path_failure(sim, name, start, stop) is None, (name, stop)
+
+
+def test_limits_that_stop_short_stop_at_a_real_path_failure():
+    sim = HandSimulation(include_music=False)
+    for name, entry in load_joint_ranges()["joints"].items():
+        low, high = entry["range_deg"]
+        for direction, side in entry["sides"].items():
+            if "limited_by" not in side:
+                continue
+            limit = high if direction == "positive" else low
+            beyond = limit + (1 if direction == "positive" else -1)
+            assert _first_path_failure(sim, name, limit, beyond) is not None, (name, direction)
 
 
 def test_relaxed_hand_holds_its_reference_posture():

@@ -13,30 +13,32 @@ Moment arms are −d(tendon length)/d(joint angle), displayed in millimetres. Th
 | Coordinate | Display name | Range (degrees) | Positive direction | Negative direction | Passive stiffness (N·m/rad) |
 | --- | --- | --- | --- | --- | --- |
 | `pro_sup_r` | Forearm rotation | -90.0 to 90.0 | Pronation | Supination | +0.24 / −0.186 (measured) |
-| `deviation_r` | Wrist deviation | -10.0 to 25.0 | Radial deviation | Ulnar deviation | +1.71 / −1.25 (measured) |
-| `flexion_r` | Wrist flexion | -45.0 to 45.0 | Flexion | Extension | +0.554 / −1.02 (measured) |
+| `deviation_r` | Wrist deviation | -37.5 to 25.0 | Radial deviation | Ulnar deviation | +1.71 / −1.25 (measured) |
+| `flexion_r` | Wrist flexion | -65.0 to 56.0 | Flexion | Extension | +0.554 / −1.02 (measured) |
 | `cmc_flexion_r` | Thumb CMC flexion | -44.7 to 40.1 | Extension | Flexion | 0.15 (assumed) |
 | `cmc_abduction_r` | Thumb CMC abduction | -28.6 to 44.7 | Abduction | Adduction | 0.15 (assumed) |
-| `mp_flexion_r` | Thumb MCP flexion | -45.0 to 40.0 | Extension | Flexion | 0.1 (assumed) |
-| `ip_flexion_r` | Thumb IP flexion | -75.0 to 25.0 | Extension | Flexion | 0.05 (assumed) |
+| `mp_flexion_r` | Thumb MCP flexion | -60.0 to 8.1 | Extension | Flexion | 0.1 (assumed) |
+| `ip_flexion_r` | Thumb IP flexion | -88.0 to 25.0 | Extension | Flexion | 0.05 (assumed) |
 | `mcp2_flexion_r` | Index MCP flexion | 0.0 to 90.0 | Flexion | Extension | 0.04 (measured) |
 | `mcp2_abduction_r` | Index MCP abduction | -15.0 to 15.0 | Radial motion | Ulnar motion | 0.06 (assumed) |
-| `pm2_flexion_r` | Index PIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.029 (measured) |
+| `pm2_flexion_r` | Index PIP flexion | -13.7 to 90.0 | Flexion | Extension | 0.029 (measured) |
 | `md2_flexion_r` | Index DIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.015 (assumed) |
-| `mcp3_flexion_r` | Middle MCP flexion | 0.0 to 90.0 | Flexion | Extension | 0.04 (assumed) |
+| `mcp3_flexion_r` | Middle MCP flexion | -24.7 to 90.0 | Flexion | Extension | 0.04 (assumed) |
 | `mcp3_abduction_r` | Middle MCP abduction | -15.0 to 15.0 | Radial motion | Ulnar motion | 0.06 (assumed) |
-| `pm3_flexion_r` | Middle PIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.029 (measured) |
-| `md3_flexion_r` | Middle DIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.015 (assumed) |
-| `mcp4_flexion_r` | Ring MCP flexion | 0.0 to 90.0 | Flexion | Extension | 0.04 (assumed) |
+| `pm3_flexion_r` | Middle PIP flexion | -15.6 to 90.0 | Flexion | Extension | 0.029 (measured) |
+| `md3_flexion_r` | Middle DIP flexion | -8.4 to 90.0 | Flexion | Extension | 0.015 (assumed) |
+| `mcp4_flexion_r` | Ring MCP flexion | -22.3 to 90.0 | Flexion | Extension | 0.04 (assumed) |
 | `mcp4_abduction_r` | Ring MCP abduction | -15.0 to 15.0 | Radial motion | Ulnar motion | 0.06 (assumed) |
-| `pm4_flexion_r` | Ring PIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.029 (measured) |
-| `md4_flexion_r` | Ring DIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.015 (assumed) |
-| `mcp5_flexion_r` | Little MCP flexion | 0.0 to 90.0 | Flexion | Extension | 0.04 (assumed) |
+| `pm4_flexion_r` | Ring PIP flexion | -16.2 to 90.0 | Flexion | Extension | 0.029 (measured) |
+| `md4_flexion_r` | Ring DIP flexion | -8.1 to 90.0 | Flexion | Extension | 0.015 (assumed) |
+| `mcp5_flexion_r` | Little MCP flexion | -26.3 to 90.0 | Flexion | Extension | 0.04 (assumed) |
 | `mcp5_abduction_r` | Little MCP abduction | -15.0 to 15.0 | Radial motion | Ulnar motion | 0.06 (assumed) |
-| `pm5_flexion_r` | Little PIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.029 (assumed) |
-| `md5_flexion_r` | Little DIP flexion | 0.0 to 90.0 | Flexion | Extension | 0.015 (assumed) |
+| `pm5_flexion_r` | Little PIP flexion | -11.0 to 90.0 | Flexion | Extension | 0.029 (assumed) |
+| `md5_flexion_r` | Little DIP flexion | -6.8 to 90.0 | Flexion | Extension | 0.015 (assumed) |
 
 MyoHand defines joint damping but no joint stiffness. The engine adds linear passive springs toward the reference posture at load time. Where two values are given (+ / −), the spring is stiffer on one side: the first resists motion in the positive direction, the second in the negative direction. Values marked measured come from in-vivo studies of relaxed joints; values marked assumed have no direct measurement. Sources, sample sizes, and simplifications are in [passive_stiffness.json](../models/myohand/passive_stiffness.json).
+
+Ranges for `flexion_r`, `deviation_r`, `mp_flexion_r`, `ip_flexion_r`, `pm2_flexion_r`, `mcp3_flexion_r`, `pm3_flexion_r`, `md3_flexion_r`, `mcp4_flexion_r`, `pm4_flexion_r`, `md4_flexion_r`, `mcp5_flexion_r`, `pm5_flexion_r`, `md5_flexion_r` differ from upstream MyoHand: limits outside normal range of motion were moved toward published means, stopping where a muscle path fails. The upstream values, sources, and reasons are in [joint_ranges.json](../models/myohand/joint_ranges.json); [validation.md](validation.md) compares every limit with published range of motion.
 
 ## Muscle-to-DOF mapping
 

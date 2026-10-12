@@ -17,6 +17,20 @@ def load_passive_stiffness():
     return json.loads((ROOT / "models/myohand/passive_stiffness.json").read_text())
 
 
+@lru_cache(maxsize=1)
+def load_joint_ranges():
+    return json.loads((ROOT / "models/myohand/joint_ranges.json").read_text())
+
+
+def apply_joint_ranges(spec):
+    """Replace the upstream limits that fall outside normal range of motion (joint_ranges.json)."""
+    for name, entry in load_joint_ranges()["joints"].items():
+        if name not in LOCKED_JOINTS:
+            # Six significant digits, as MJCF files store them, so the exported browser model
+            # (scripts/export_web_demo.py) has exactly the same limits.
+            spec.joint(name).range = [float(f"{v:.6g}") for v in np.deg2rad(entry["range_deg"])]
+
+
 def directional_stiffness(entry):
     """(positive, negative) stiffness in N·m/rad: resisting motion in each joint direction."""
     value = entry["stiffness_nm_per_rad"]
@@ -131,7 +145,8 @@ def add_music_muscles(spec):
 
 
 def build_spec(include_music=True):
-    """MyoHand with the load-time edits: excluded actuators, locked joints, MUSIC muscles."""
+    """MyoHand with the load-time edits: excluded actuators, locked joints, joint ranges, passive
+    springs, and MUSIC muscles."""
     spec = mujoco.MjSpec.from_file(str(ROOT / "models/myohand/hand.xml"))
     for name in EXCLUDED_ACTUATORS:
         actuator = spec.actuator(name)
@@ -140,6 +155,7 @@ def build_spec(include_music=True):
         spec.delete(spec.tendon(tendon))
     for name in LOCKED_JOINTS:
         spec.delete(spec.joint(name))
+    apply_joint_ranges(spec)
     add_one_sided_springs(spec)
     if include_music:
         add_music_muscles(spec)
@@ -459,6 +475,7 @@ class HandSimulation:
                 "Paths show muscle–tendon routing, not muscle-belly volumes. Intrinsic bundles have unresolved anatomical mappings.",
                 "Forearm rotation has two pronator actuators and no supinator. Gravity is disabled for supported-hand exploration.",
                 "Passive joint stiffness is added as linear springs toward the reference posture; wrist and forearm springs are stiffer on one side, as measured. Wrist, forearm, index MCP flexion, and PIP values are measured population means; the others are assumptions.",
+                "Joint limits outside normal range of motion were moved to published means: ulnar deviation, the thumb MCP and IP, and finger hyperextension (except the index MCP, held at 0° because RI2_r would otherwise hold the relaxed index 17° hyperextended). Wrist flexion and extension stop at 56° and 65° (people: about 75° and 70°), and little-finger PIP hyperextension at 11°, because MyoHand's muscle paths fail beyond those angles.",
                 "RI2_r starts beyond its model length range and pulls with about 12 N at zero activation, so the relaxed index finger rests about 7° toward radial motion.",
                 "No independent ring/little CMC motion, deformable skin, or external grasp objects in this scene.",
                 "Moment arms describe local mechanical influence at the current posture, not guaranteed movement.",

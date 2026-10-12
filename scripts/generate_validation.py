@@ -15,7 +15,12 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.simulation.engine import ROOT, HandSimulation, joint_description  # noqa: E402
+from src.simulation.engine import (  # noqa: E402
+    ROOT,
+    HandSimulation,
+    joint_description,
+    load_joint_ranges,
+)
 
 REFERENCES = ROOT / "data/validation/references.json"
 OUTPUT = ROOT / "docs/validation.md"
@@ -40,20 +45,22 @@ REGIONS = [
 ]
 
 FINDINGS = [
-    "**Ulnar deviation stops at 10°.** Moment-arm signs confirm that the model's positive "
-    "deviation is radial (ECU and FCU pull negative; ECRL, APL, and EPB pull positive), and the "
-    "joint allows 25° radial but only 10° ulnar deviation. People have about 23–26° radial and "
-    "37–38° ulnar deviation, so the range looks mirrored. Ulnar deviators reach the limit early.",
-    "**Wrist flexion and extension stop at 45°**, against about 66–80° of normal motion.",
-    "**The index MCP and PIP joints cannot hyperextend.** Their lower limits are 0°, against "
-    "about 26° and 14° in people. The relaxed hand starts at these limits, which is why the GUI "
-    "often shows *At extension limit*. The thumb MCP has the opposite problem: it extends to "
-    "40° (people: about 8°) but flexes only to 45° (people: about 60°).",
+    "**Joint limits now follow normal range of motion where MyoHand's paths allow it.** Upstream "
+    "MyoHand stopped ulnar deviation at 10° (people: about 37°; with 25° radial deviation, the "
+    "range looked mirrored), wrist flexion and extension at 45° (people: about 66–80°), and "
+    "finger hyperextension at 0°, and its thumb MCP extended to 40° but flexed only to 45°. "
+    "These limits were moved to the published means. Three stop short because MyoHand's muscle "
+    "paths fail beyond them: wrist flexion at 56° (EDC3 starts to flex the wrist at 57°), wrist "
+    "extension at 65° (the FDS2 path snaps across its wrapping surface at 65.8°), and "
+    "little-finger PIP hyperextension at 11° (the EDC5 path snaps to the palmar side at 11.7°). "
+    "The index MCP keeps its 0° stop, because RI2_r's passive pull at rest would otherwise hold "
+    "the relaxed index 17° hyperextended.",
     "**The wrist prime movers act in the right directions.** FCR, FCU, ECRL, ECRB, ECU, and APL "
     "match Garland's directions on both wrist axes. APL's moment arms agree in size. The other "
-    "five have flexion-extension moment arms 1.4–1.8× Garland's tendon-excursion means; FCR and "
-    "FCU at 17–18 mm sit closer to the older Brand and Hollister data (about 18 mm). FCR's "
-    "radial deviation moment arm is less than half of Garland's.",
+    "five have flexion-extension moment arms 1.3–1.8× Garland's tendon-excursion means (ECU is "
+    "the largest at 1.8×); FCR and FCU at 15–16 mm sit between Garland's values and the older "
+    "Brand and Hollister data (about 18 mm). FCR's radial deviation moment arm is a third of "
+    "Garland's.",
     "**The thumb extrinsics have wrist deviation moment arms 2.5–4× too large** (FPL 21 mm, "
     "EPL 23 mm, against about 5 and 9 mm read from Brand and Hollister's figure). EIP's small "
     "deviation moment arm has the opposite sign to the figure value, which is within reading "
@@ -131,6 +138,10 @@ def spread_text(entry):
         low, high = sorted(entry["to_model"] * np.array(spread))
         return f" (range {low:.1f} to {high:.1f})"
     return f" ± {spread:g} {kind}"
+
+
+def degrees(value):
+    return f"{round(abs(value), 2):g}°"
 
 
 def joint_label(joint):
@@ -220,15 +231,33 @@ def build(sim, references):
         "## Joint ranges",
         "",
         "The model's joint limits against normal range of motion. *Below normal* marks a limit "
-        "more than one SD under the published mean; *above normal*, more than two SD over it.",
+        "more than one SD under the published mean; *above normal*, more than two SD over it. "
+        "*Upstream* is MyoHand's own limit. Limits that were outside normal range in MyoHand "
+        "were moved to these same published means "
+        "([joint_ranges.json](../models/myohand/joint_ranges.json)), so those rows agree by "
+        "construction; the notes say where a limit stops short and why.",
         "",
-        "| Motion | Model limit | Published mean ± SD | Source | |",
-        "| --- | --- | --- | --- | --- |",
+        "| Motion | Model limit | Upstream | Published mean ± SD | Source | | Note |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
     m = sim.model
+    overrides = load_joint_ranges()["joints"]
     for entry in references["range_of_motion"]:
         low, high = np.rad2deg(m.jnt_range[m.joint(entry["joint"]).id])
         limit = high if entry["direction"] == "positive" else -low
+        override = overrides.get(entry["joint"], {})
+        upstream_low, upstream_high = override.get("upstream_deg", (low, high))
+        upstream = upstream_high if entry["direction"] == "positive" else -upstream_low
+        side = override.get("sides", {}).get(entry["direction"], {})
+        note = (
+            "path fails beyond (see joint_ranges.json)"
+            if "limited_by" in side
+            else "kept upstream (see joint_ranges.json)"
+            if "kept_upstream" in side
+            else "set to published mean"
+            if side
+            else ""
+        )
         groups = [(k, entry[k]) for k in ("women", "men", "all") if k in entry]
         text = "; ".join(
             f"{k} {mean:g} ± {sd:g}" if k != "all" else f"{mean:g} ± {sd:g}"
@@ -238,8 +267,8 @@ def build(sim, references):
         above = all(limit > mean + 2 * sd for _, (mean, sd) in groups)
         flag = "**below normal**" if below else "**above normal**" if above else ""
         lines.append(
-            f"| {entry['label']} | {abs(limit):.0f}° | {text} | "
-            f"[{number[entry['source']]}](#sources) | {flag} |"
+            f"| {entry['label']} | {degrees(limit)} | {degrees(upstream)} | {text} | "
+            f"[{number[entry['source']]}](#sources) | {flag} | {note} |"
         )
     lines += [
         "",

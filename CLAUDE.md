@@ -16,7 +16,7 @@ AGENTS.md defines scope, deliverables, and contribution rules. This file adds wh
 All of these were run and passed on 2026-10-09 unless noted.
 
 ```bash
-# Python tests (39 tests with the MUSIC cache; the web-engine comparison needs node and npm install). The shell sources ROS Humble, whose pytest plugin
+# Python tests (46 tests with the MUSIC cache; the web-engine comparison needs node and npm install). The shell sources ROS Humble, whose pytest plugin
 # (launch_testing) needs yaml and crashes collection. Disable plugin autoload:
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m pytest -q
 
@@ -88,7 +88,8 @@ Keep the layers separate. `anatomy.json` must not depend on MuJoCo. The engine m
 - **Units.** Metres, newtons, seconds, and radians internally. The GUI shows degrees. Moment arms are −d(tendon length)/d(angle), shown in mm.
 - **Signs.** Thumb flexion is negative in this model; pronation and radial deviation are positive. Finger "radial motion" is not always abduction. `joint_description()` in `engine.py` holds the positive and negative labels. Fix wrong labels there, then regenerate the catalog.
 - **Excitation and activation.** Controls set excitation in [0, 1]. Activation lags behind it through MuJoCo activation dynamics. The UI must show both and must not present influence (moment arm) as measured motion.
-- **Runtime overrides** in `load_model()`: zero gravity, 0.002 s timestep, implicitfast integrator, passive joint stiffness from `models/myohand/passive_stiffness.json`, and the MUSIC graft when the cache exists. They are recorded in `provenance.json` (and in `scripts/vendor_model.py`, which rewrites it) and must stay in sync.
+- **Runtime overrides** in `load_model()`: zero gravity, 0.002 s timestep, implicitfast integrator, joint limits from `models/myohand/joint_ranges.json`, passive joint stiffness from `models/myohand/passive_stiffness.json`, and the MUSIC graft when the cache exists. They are recorded in `provenance.json` (and in `scripts/vendor_model.py`, which rewrites it) and must stay in sync.
+- **Joint ranges.** `joint_ranges.json` changes only limits that `docs/validation.md` flags as outside normal range of motion, moving each to the published mean in `data/validation/references.json`. A limit stops short where a MyoHand muscle path fails (a moment arm jumps by more than 2 mm, or a prime mover reverses), with `limited_by` giving the reason; `kept_upstream` marks a limit left alone (index MCP extension, because of RI2_r). `apply_joint_ranges()` rounds the radians to six significant digits so the browser export matches exactly. The three range tests in `tests/test_simulation.py` recheck all of this, so rerun them after any model change.
 - **Passive stiffness.** Every joint needs an entry with `basis` `measured` or `assumed` and `source_ids`; assumed entries need `notes`. `stiffness_nm_per_rad` is a number (one joint spring) or `{positive, negative}`; the latter becomes two one-sided fixed-tendon springs (`add_one_sided_springs()` in `engine.py`), because MuJoCo's polynomial joint stiffness needs 3.7+ and the browser build is 3.5.1. Without stiffness, any unopposed torque drives joints to their limits, so do not remove it to "match upstream".
 
 ## Rules specific to this repo
@@ -109,4 +110,4 @@ AGENTS.md requires the `impeccable` and `no-ai-slop` skills. They are installed 
 ## Known issues
 
 - Git repository at github.com/Yuxiang-Ma/clonehand, created 2026-10-10 and made public on 2026-10-11 at the user's request. Never commit MUSIC files or values derived from them.
-- `RI2_r` starts 38% beyond its length range and pulls ~12 N at zero activation, so the relaxed index rests ~7° radial. `RI5_r` starts below its range. Both are left as upstream artifacts and pinned in `test_relaxed_hand_holds_its_reference_posture`. Fixing them needs a sourced re-derivation, not a hand-tuned override.
+- `RI2_r` starts 38% beyond its length range and pulls ~12 N at zero activation, so the relaxed index rests ~7° radial. `RI5_r` starts below its range. Both are left as upstream artifacts and pinned in `test_relaxed_hand_holds_its_reference_posture`. Fixing them needs a sourced re-derivation, not a hand-tuned override. RI2_r is also why the index MCP keeps its 0° extension stop (see `joint_ranges.json`); once it is fixed, widen that limit to the published 25.7°.

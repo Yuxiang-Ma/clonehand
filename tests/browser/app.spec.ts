@@ -26,8 +26,8 @@ test('excitation produces activation, force, and joint motion while running', as
   // FDS2_r is selected by default and crosses the index MCP.
   const before = await angle(page, 'Index MCP flexion');
   const limitFlag = (joint: string) => page.locator('.angle-list > div', { hasText: joint }).locator('.limit-flag');
-  // At rest the fingers are straight, which is the extension limit; the wrist is mid-range.
-  await expect(limitFlag('Index PIP flexion')).toHaveText('At extension limit');
+  // At rest the fingers are straight, short of their hyperextension limits; the wrist is mid-range.
+  await expect(limitFlag('Index PIP flexion')).toBeHidden();
   await expect(limitFlag('Wrist flexion')).toBeHidden();
   await page.locator('#excitation').fill('1');
   await expect(page.locator('#excitation-output')).toHaveText('1.00');

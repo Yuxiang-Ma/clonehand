@@ -1,0 +1,80 @@
+{
+  "description": "Joint limits changed at runtime from the vendored MyoHand model. Every other joint keeps its upstream range.",
+  "model": "models/myohand/hand.xml",
+  "units": "Degrees in each joint's own sign convention (positive and negative directions are named in docs/model.md). range_deg is [lower, upper].",
+  "rule": "A limit is changed only where docs/validation.md finds it outside normal active range of motion (more than one SD below or two SD above the published mean). It is moved to the published mean; where the source reports women and men separately, the mean of the two is used. If a MyoHand muscle path fails before that angle, the limit stops at the last whole degree before the failure. A limit that would expose a known model artifact in the relaxed hand keeps its upstream value (kept_upstream gives the reason).",
+  "path_failure": "A path fails when any muscle's moment arm about the joint jumps by more than 2 mm between samples 0.05 degrees apart (the path snaps across a wrapping surface), or when a prime mover's moment arm changes sign (for example a wrist extensor starts to flex the wrist). Prime movers are the muscles whose function in data/anatomy/anatomy.json names that motion. tests/test_simulation.py repeats this check over every changed range.",
+  "source_note": "source_ids refer to sources in data/validation/references.json, which also holds the published means.",
+  "simplifications": [
+    "Published values are active range of motion in healthy adults. Passive end range is larger, so these limits are on the conservative side.",
+    "A mean describes a typical adult; individuals differ by tens of degrees (see the SDs in docs/validation.md).",
+    "Limits are independent per joint. Real wrist range depends on finger posture (tenodesis) and forearm rotation; the model does not couple them.",
+    "Past the old limits, moment arms come from MyoHand's path geometry without separate validation. The wrist was extended only as far as its paths stay intact."
+  ],
+  "joints": {
+    "flexion_r": {
+      "upstream_deg": [-45, 45],
+      "range_deg": [-65, 56],
+      "source_ids": ["fan_2019"],
+      "sides": {
+        "positive": {
+          "published_deg": 74.95,
+          "limited_by": "EDC3_r starts to flex the wrist at 57.0 degrees (its moment arm changes sign); EDM_r, not a listed prime mover, already changes sign at about 50 degrees."
+        },
+        "negative": {
+          "published_deg": 70.0,
+          "limited_by": "The FDS2_r path snaps across its wrapping surface at -65.8 degrees (moment arm +8 to -16 mm); FDS3_r follows within half a degree."
+        }
+      }
+    },
+    "deviation_r": {
+      "upstream_deg": [-10, 25],
+      "range_deg": [-37.55, 25],
+      "source_ids": ["fan_2019"],
+      "sides": { "negative": { "published_deg": 37.55 } }
+    },
+    "mp_flexion_r": {
+      "upstream_deg": [-45, 40],
+      "range_deg": [-60, 8.1],
+      "source_ids": ["barakat_2013"],
+      "sides": { "negative": { "published_deg": 60.0 }, "positive": { "published_deg": 8.1 } }
+    },
+    "ip_flexion_r": {
+      "upstream_deg": [-75, 25],
+      "range_deg": [-88, 25],
+      "source_ids": ["barakat_2013"],
+      "sides": { "negative": { "published_deg": 88.0 } }
+    },
+    "mcp2_flexion_r": {
+      "upstream_deg": [0, 90],
+      "range_deg": [0, 90],
+      "source_ids": ["bk_2024"],
+      "sides": {
+        "negative": {
+          "published_deg": 25.7,
+          "kept_upstream": "RI2_r pulls with passive force at rest (a known upstream artifact) and extends the MCP. With the limit at the published 25.7 degrees, the relaxed index rests at 17 degrees of hyperextension and 15 degrees of radial motion. The 0 degree stop stays until RI2_r is re-derived."
+        }
+      }
+    },
+    "pm2_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-13.7, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 13.7 } } },
+    "mcp3_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-24.7, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 24.7 } } },
+    "pm3_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-15.6, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 15.6 } } },
+    "md3_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-8.4, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 8.4 } } },
+    "mcp4_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-22.3, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 22.3 } } },
+    "pm4_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-16.2, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 16.2 } } },
+    "md4_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-8.1, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 8.1 } } },
+    "mcp5_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-26.3, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 26.3 } } },
+    "pm5_flexion_r": {
+      "upstream_deg": [0, 90],
+      "range_deg": [-11, 90],
+      "source_ids": ["bk_2024"],
+      "sides": {
+        "negative": {
+          "published_deg": 13.2,
+          "limited_by": "The EDC5_r path snaps to the palmar side of the PIP at -11.7 degrees (moment arm -5.7 to +4.1 mm), turning the extensor into a flexor."
+        }
+      }
+    },
+    "md5_flexion_r": { "upstream_deg": [0, 90], "range_deg": [-6.8, 90], "source_ids": ["bk_2024"], "sides": { "negative": { "published_deg": 6.8 } } }
+  }
+}

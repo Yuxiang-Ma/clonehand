@@ -9,6 +9,7 @@
   "runtime_changes": [
     "gravity disabled for supported-hand exploration",
     "timestep 0.002 s; implicitfast integrator",
+    "joint limits from models/myohand/joint_ranges.json (14 joints widened toward published range of motion)",
     "passive joint stiffness from models/myohand/passive_stiffness.json",
     "5 actuators (APB, FPB, AdP, ADM, FDM) grafted from MUSIC commit 1b13b79 when its local cache exists; unlicensed, not vendored"
   ]

@@ -10,6 +10,7 @@
     "runtime_changes": [
       "gravity disabled for supported-hand exploration",
       "timestep 0.002 s; implicitfast integrator",
+      "joint limits from models/myohand/joint_ranges.json (14 joints widened toward published range of motion)",
       "passive joint stiffness from models/myohand/passive_stiffness.json",
       "5 actuators (APB, FPB, AdP, ADM, FDM) grafted from MUSIC commit 1b13b79 when its local cache exists; unlicensed, not vendored"
     ]
@@ -75,7 +76,7 @@
       "positive": "Radial deviation",
       "negative": "Ulnar deviation",
       "range": [
-        -10.000004285756797,
+        -37.54999231526828,
         24.999982066502238
       ],
       "axis": [
@@ -89,7 +90,7 @@
       ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
-        -0.174533,
+        -0.655371,
         0.436332
       ],
       "axis_frame": "lunate_r",
@@ -101,8 +102,8 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        -44.99999063801583,
-        44.99999063801583
+        -64.99977002641137,
+        55.99997816361446
       ],
       "axis": [
         1.0,
@@ -115,8 +116,8 @@
       ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
-        -0.785398,
-        0.785398
+        -1.13446,
+        0.977384
       ],
       "axis_frame": "lunate_r",
       "reference_rad": 0.0
@@ -179,8 +180,8 @@
       "positive": "Extension",
       "negative": "Flexion",
       "range": [
-        -44.99999063801583,
-        40.000017143027186
+        -60.0001403060998,
+        8.100018941323475
       ],
       "axis": [
         -0.08429499542560574,
@@ -193,8 +194,8 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        -0.785398,
-        0.698132
+        -1.0472,
+        0.141372
       ],
       "axis_frame": "proximal_thumb_r",
       "reference_rad": 0.0
@@ -205,7 +206,7 @@
       "positive": "Extension",
       "negative": "Flexion",
       "range": [
-        -75.00017538262476,
+        -88.00001479634801,
         24.999982066502238
       ],
       "axis": [
@@ -219,7 +220,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        -1.309,
+        -1.53589,
         0.436332
       ],
       "axis_frame": "distal_thumb_r",
@@ -283,7 +284,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -13.699993839373114,
         90.00021045914971
       ],
       "axis": [
@@ -297,7 +298,7 @@
       ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
-        0.0,
+        -0.23911,
         1.5708
       ],
       "axis_frame": "midph2_r",
@@ -335,7 +336,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -24.699981364971737,
         90.00021045914971
       ],
       "axis": [
@@ -349,7 +350,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.431096,
         1.5708
       ],
       "axis_frame": "3proxph_r",
@@ -387,7 +388,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -15.599979183806436,
         90.00021045914971
       ],
       "axis": [
@@ -401,7 +402,7 @@
       ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
-        0.0,
+        -0.272271,
         1.5708
       ],
       "axis_frame": "midph3_r",
@@ -413,7 +414,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -8.400019642853973,
         90.00021045914971
       ],
       "axis": [
@@ -427,7 +428,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.146608,
         1.5708
       ],
       "axis_frame": "distph3_r",
@@ -439,7 +440,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -22.299975752727743,
         90.00021045914971
       ],
       "axis": [
@@ -453,7 +454,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.389208,
         1.5708
       ],
       "axis_frame": "4proxph_r",
@@ -491,7 +492,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -16.199980586867436,
         90.00021045914971
       ],
       "axis": [
@@ -505,7 +506,7 @@
       ],
       "passive_stiffness_basis": "measured",
       "range_rad": [
-        0.0,
+        -0.282743,
         1.5708
       ],
       "axis_frame": "midph4_r",
@@ -517,7 +518,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -8.100018941323475,
         90.00021045914971
       ],
       "axis": [
@@ -531,7 +532,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.141372,
         1.5708
       ],
       "axis_frame": "distph4_r",
@@ -543,7 +544,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -26.300023303654072,
         90.00021045914971
       ],
       "axis": [
@@ -557,7 +558,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.459022,
         1.5708
       ],
       "axis_frame": "5proxph_r",
@@ -595,7 +596,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -10.999987525598621,
         90.00021045914971
       ],
       "axis": [
@@ -609,7 +610,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.191986,
         1.5708
       ],
       "axis_frame": "midph5_r",
@@ -621,7 +622,7 @@
       "positive": "Flexion",
       "negative": "Extension",
       "range": [
-        0.0,
+        -6.799977704171636,
         90.00021045914971
       ],
       "axis": [
@@ -635,7 +636,7 @@
       ],
       "passive_stiffness_basis": "assumed",
       "range_rad": [
-        0.0,
+        -0.118682,
         1.5708
       ],
       "axis_frame": "distph5_r",
@@ -727,12 +728,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 23.64457,
-          "max_sampled_abs_moment_arm_mm": 24.15854
+          "max_sampled_abs_moment_arm_mm": 24.22495
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -11.65742,
-          "max_sampled_abs_moment_arm_mm": 11.86674
+          "max_sampled_abs_moment_arm_mm": 12.30136
         }
       ],
       "length_range_m": [
@@ -835,12 +836,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 14.19859,
-          "max_sampled_abs_moment_arm_mm": 16.12834
+          "max_sampled_abs_moment_arm_mm": 15.94537
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -15.33117,
-          "max_sampled_abs_moment_arm_mm": 17.75321
+          "max_sampled_abs_moment_arm_mm": 18.05689
         }
       ],
       "length_range_m": [
@@ -963,12 +964,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -27.81298,
-          "max_sampled_abs_moment_arm_mm": 28.57142
+          "max_sampled_abs_moment_arm_mm": 30.09966
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -7.54842,
-          "max_sampled_abs_moment_arm_mm": 9.60409
+          "max_sampled_abs_moment_arm_mm": 11.43866
         }
       ],
       "length_range_m": [
@@ -1066,12 +1067,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 3.96621,
-          "max_sampled_abs_moment_arm_mm": 5.37699
+          "max_sampled_abs_moment_arm_mm": 5.22648
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 18.46425,
-          "max_sampled_abs_moment_arm_mm": 18.59567
+          "max_sampled_abs_moment_arm_mm": 18.46425
         }
       ],
       "length_range_m": [
@@ -1184,12 +1185,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -10.55772,
-          "max_sampled_abs_moment_arm_mm": 12.91983
+          "max_sampled_abs_moment_arm_mm": 14.24062
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 18.41159,
-          "max_sampled_abs_moment_arm_mm": 20.10393
+          "max_sampled_abs_moment_arm_mm": 19.40117
         }
       ],
       "length_range_m": [
@@ -1292,12 +1293,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 7.24697,
-          "max_sampled_abs_moment_arm_mm": 7.62691
+          "max_sampled_abs_moment_arm_mm": 7.30897
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 25.10612,
-          "max_sampled_abs_moment_arm_mm": 26.82897
+          "max_sampled_abs_moment_arm_mm": 25.71221
         }
       ],
       "length_range_m": [
@@ -1631,17 +1632,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -0.40553,
-          "max_sampled_abs_moment_arm_mm": 6.60488
+          "max_sampled_abs_moment_arm_mm": 10.48454
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 15.27775,
-          "max_sampled_abs_moment_arm_mm": 25.42005
+          "max_sampled_abs_moment_arm_mm": 27.14173
         },
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": 6.47805,
-          "max_sampled_abs_moment_arm_mm": 10.90104
+          "max_sampled_abs_moment_arm_mm": 10.96461
         },
         {
           "joint_id": "mcp5_abduction_r",
@@ -1651,7 +1652,7 @@
         {
           "joint_id": "pm5_flexion_r",
           "neutral_moment_arm_mm": 3.89821,
-          "max_sampled_abs_moment_arm_mm": 10.12109
+          "max_sampled_abs_moment_arm_mm": 10.09776
         }
       ],
       "length_range_m": [
@@ -1799,27 +1800,27 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 1.31207,
-          "max_sampled_abs_moment_arm_mm": 8.23995
+          "max_sampled_abs_moment_arm_mm": 8.79295
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 14.85936,
-          "max_sampled_abs_moment_arm_mm": 24.93089
+          "max_sampled_abs_moment_arm_mm": 26.64148
         },
         {
           "joint_id": "mcp4_flexion_r",
           "neutral_moment_arm_mm": 6.75237,
-          "max_sampled_abs_moment_arm_mm": 10.85111
+          "max_sampled_abs_moment_arm_mm": 10.93269
         },
         {
           "joint_id": "mcp4_abduction_r",
           "neutral_moment_arm_mm": -0.86078,
-          "max_sampled_abs_moment_arm_mm": 3.0206
+          "max_sampled_abs_moment_arm_mm": 2.75234
         },
         {
           "joint_id": "pm4_flexion_r",
           "neutral_moment_arm_mm": 3.11831,
-          "max_sampled_abs_moment_arm_mm": 5.07445
+          "max_sampled_abs_moment_arm_mm": 5.12385
         }
       ],
       "length_range_m": [
@@ -1952,17 +1953,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 7.3256,
-          "max_sampled_abs_moment_arm_mm": 14.301
+          "max_sampled_abs_moment_arm_mm": 13.43764
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 14.63163,
-          "max_sampled_abs_moment_arm_mm": 24.80187
+          "max_sampled_abs_moment_arm_mm": 26.54406
         },
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": 9.5083,
-          "max_sampled_abs_moment_arm_mm": 16.63556
+          "max_sampled_abs_moment_arm_mm": 16.78905
         },
         {
           "joint_id": "mcp3_abduction_r",
@@ -1972,7 +1973,7 @@
         {
           "joint_id": "pm3_flexion_r",
           "neutral_moment_arm_mm": 7.03029,
-          "max_sampled_abs_moment_arm_mm": 9.5756
+          "max_sampled_abs_moment_arm_mm": 9.27166
         }
       ],
       "length_range_m": [
@@ -2115,12 +2116,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 9.56235,
-          "max_sampled_abs_moment_arm_mm": 16.5422
+          "max_sampled_abs_moment_arm_mm": 15.68432
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 14.1185,
-          "max_sampled_abs_moment_arm_mm": 24.40771
+          "max_sampled_abs_moment_arm_mm": 26.18797
         },
         {
           "joint_id": "mcp2_flexion_r",
@@ -2135,7 +2136,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": 4.75965,
-          "max_sampled_abs_moment_arm_mm": 6.5887
+          "max_sampled_abs_moment_arm_mm": 6.40719
         }
       ],
       "length_range_m": [
@@ -2298,17 +2299,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 0.92762,
-          "max_sampled_abs_moment_arm_mm": 7.43776
+          "max_sampled_abs_moment_arm_mm": 8.5415
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 11.59815,
-          "max_sampled_abs_moment_arm_mm": 21.16986
+          "max_sampled_abs_moment_arm_mm": 22.82874
         },
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": 5.87361,
-          "max_sampled_abs_moment_arm_mm": 11.00011
+          "max_sampled_abs_moment_arm_mm": 10.97088
         },
         {
           "joint_id": "mcp5_abduction_r",
@@ -2318,12 +2319,12 @@
         {
           "joint_id": "pm5_flexion_r",
           "neutral_moment_arm_mm": 4.83584,
-          "max_sampled_abs_moment_arm_mm": 7.28113
+          "max_sampled_abs_moment_arm_mm": 7.33245
         },
         {
           "joint_id": "md5_flexion_r",
           "neutral_moment_arm_mm": 2.83683,
-          "max_sampled_abs_moment_arm_mm": 5.17903
+          "max_sampled_abs_moment_arm_mm": 5.19499
         }
       ],
       "length_range_m": [
@@ -2481,17 +2482,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 2.69833,
-          "max_sampled_abs_moment_arm_mm": 9.40526
+          "max_sampled_abs_moment_arm_mm": 8.56488
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 11.82654,
-          "max_sampled_abs_moment_arm_mm": 21.7992
+          "max_sampled_abs_moment_arm_mm": 23.55928
         },
         {
           "joint_id": "mcp4_flexion_r",
           "neutral_moment_arm_mm": 6.58119,
-          "max_sampled_abs_moment_arm_mm": 10.90933
+          "max_sampled_abs_moment_arm_mm": 10.96002
         },
         {
           "joint_id": "mcp4_abduction_r",
@@ -2501,12 +2502,12 @@
         {
           "joint_id": "pm4_flexion_r",
           "neutral_moment_arm_mm": 7.14199,
-          "max_sampled_abs_moment_arm_mm": 9.55569
+          "max_sampled_abs_moment_arm_mm": 9.43328
         },
         {
           "joint_id": "md4_flexion_r",
           "neutral_moment_arm_mm": 2.30478,
-          "max_sampled_abs_moment_arm_mm": 5.61612
+          "max_sampled_abs_moment_arm_mm": 5.61734
         }
       ],
       "length_range_m": [
@@ -2659,17 +2660,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 5.25227,
-          "max_sampled_abs_moment_arm_mm": 12.07005
+          "max_sampled_abs_moment_arm_mm": 11.22217
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 11.69713,
-          "max_sampled_abs_moment_arm_mm": 22.00408
+          "max_sampled_abs_moment_arm_mm": 23.85146
         },
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": 8.45683,
-          "max_sampled_abs_moment_arm_mm": 14.12562
+          "max_sampled_abs_moment_arm_mm": 14.15074
         },
         {
           "joint_id": "mcp3_abduction_r",
@@ -2679,12 +2680,12 @@
         {
           "joint_id": "pm3_flexion_r",
           "neutral_moment_arm_mm": 7.5454,
-          "max_sampled_abs_moment_arm_mm": 12.02109
+          "max_sampled_abs_moment_arm_mm": 11.90267
         },
         {
           "joint_id": "md3_flexion_r",
           "neutral_moment_arm_mm": 2.66426,
-          "max_sampled_abs_moment_arm_mm": 4.30593
+          "max_sampled_abs_moment_arm_mm": 4.32625
         }
       ],
       "length_range_m": [
@@ -2852,12 +2853,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 9.61582,
-          "max_sampled_abs_moment_arm_mm": 16.32167
+          "max_sampled_abs_moment_arm_mm": 15.50028
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 11.59517,
-          "max_sampled_abs_moment_arm_mm": 21.57146
+          "max_sampled_abs_moment_arm_mm": 23.33054
         },
         {
           "joint_id": "mcp2_flexion_r",
@@ -2872,7 +2873,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": 6.86152,
-          "max_sampled_abs_moment_arm_mm": 10.39219
+          "max_sampled_abs_moment_arm_mm": 10.37563
         },
         {
           "joint_id": "md2_flexion_r",
@@ -3045,17 +3046,17 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -9.89246,
-          "max_sampled_abs_moment_arm_mm": 11.11084
+          "max_sampled_abs_moment_arm_mm": 14.79124
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -11.07134,
-          "max_sampled_abs_moment_arm_mm": 17.76488
+          "max_sampled_abs_moment_arm_mm": 20.35632
         },
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": -5.89682,
-          "max_sampled_abs_moment_arm_mm": 6.88672
+          "max_sampled_abs_moment_arm_mm": 6.78389
         },
         {
           "joint_id": "mcp5_abduction_r",
@@ -3065,7 +3066,7 @@
         {
           "joint_id": "pm5_flexion_r",
           "neutral_moment_arm_mm": -5.30762,
-          "max_sampled_abs_moment_arm_mm": 5.30762
+          "max_sampled_abs_moment_arm_mm": 5.34698
         },
         {
           "joint_id": "md5_flexion_r",
@@ -3238,12 +3239,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -9.0523,
-          "max_sampled_abs_moment_arm_mm": 10.69795
+          "max_sampled_abs_moment_arm_mm": 15.09689
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -17.31759,
-          "max_sampled_abs_moment_arm_mm": 22.81577
+          "max_sampled_abs_moment_arm_mm": 23.95155
         },
         {
           "joint_id": "mcp4_flexion_r",
@@ -3431,32 +3432,32 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -2.19861,
-          "max_sampled_abs_moment_arm_mm": 3.93337
+          "max_sampled_abs_moment_arm_mm": 9.21245
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -17.83929,
-          "max_sampled_abs_moment_arm_mm": 24.60543
+          "max_sampled_abs_moment_arm_mm": 25.35216
         },
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": -9.36641,
-          "max_sampled_abs_moment_arm_mm": 9.40793
+          "max_sampled_abs_moment_arm_mm": 9.36641
         },
         {
           "joint_id": "mcp3_abduction_r",
           "neutral_moment_arm_mm": 0.9452,
-          "max_sampled_abs_moment_arm_mm": 0.94542
+          "max_sampled_abs_moment_arm_mm": 0.9452
         },
         {
           "joint_id": "pm3_flexion_r",
           "neutral_moment_arm_mm": -5.44608,
-          "max_sampled_abs_moment_arm_mm": 5.44608
+          "max_sampled_abs_moment_arm_mm": 5.56128
         },
         {
           "joint_id": "md3_flexion_r",
           "neutral_moment_arm_mm": -3.06341,
-          "max_sampled_abs_moment_arm_mm": 3.10352
+          "max_sampled_abs_moment_arm_mm": 3.07573
         }
       ],
       "length_range_m": [
@@ -3624,12 +3625,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 2.27068,
-          "max_sampled_abs_moment_arm_mm": 7.50236
+          "max_sampled_abs_moment_arm_mm": 8.09687
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -17.31717,
-          "max_sampled_abs_moment_arm_mm": 22.35237
+          "max_sampled_abs_moment_arm_mm": 21.56449
         },
         {
           "joint_id": "mcp2_flexion_r",
@@ -3644,7 +3645,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": -5.21493,
-          "max_sampled_abs_moment_arm_mm": 5.21493
+          "max_sampled_abs_moment_arm_mm": 5.28141
         },
         {
           "joint_id": "md2_flexion_r",
@@ -3816,32 +3817,32 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -14.49731,
-          "max_sampled_abs_moment_arm_mm": 15.50815
+          "max_sampled_abs_moment_arm_mm": 18.63993
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -9.47198,
-          "max_sampled_abs_moment_arm_mm": 15.09986
+          "max_sampled_abs_moment_arm_mm": 17.14885
         },
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": -5.72916,
-          "max_sampled_abs_moment_arm_mm": 5.88488
+          "max_sampled_abs_moment_arm_mm": 6.35998
         },
         {
           "joint_id": "mcp5_abduction_r",
           "neutral_moment_arm_mm": -0.80423,
-          "max_sampled_abs_moment_arm_mm": 3.6768
+          "max_sampled_abs_moment_arm_mm": 3.52495
         },
         {
           "joint_id": "pm5_flexion_r",
           "neutral_moment_arm_mm": -2.94649,
-          "max_sampled_abs_moment_arm_mm": 2.98105
+          "max_sampled_abs_moment_arm_mm": 2.96845
         },
         {
           "joint_id": "md5_flexion_r",
           "neutral_moment_arm_mm": -2.31466,
-          "max_sampled_abs_moment_arm_mm": 2.99961
+          "max_sampled_abs_moment_arm_mm": 2.97745
         }
       ],
       "length_range_m": [
@@ -4029,12 +4030,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": -2.80424,
-          "max_sampled_abs_moment_arm_mm": 4.08828
+          "max_sampled_abs_moment_arm_mm": 8.73859
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -12.77234,
-          "max_sampled_abs_moment_arm_mm": 16.26503
+          "max_sampled_abs_moment_arm_mm": 16.92665
         },
         {
           "joint_id": "mcp2_flexion_r",
@@ -4049,7 +4050,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": -6.51601,
-          "max_sampled_abs_moment_arm_mm": 6.51601
+          "max_sampled_abs_moment_arm_mm": 6.52926
         },
         {
           "joint_id": "md2_flexion_r",
@@ -4241,12 +4242,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 22.73655,
-          "max_sampled_abs_moment_arm_mm": 24.26209
+          "max_sampled_abs_moment_arm_mm": 23.08601
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -13.40498,
-          "max_sampled_abs_moment_arm_mm": 15.31855
+          "max_sampled_abs_moment_arm_mm": 15.07918
         },
         {
           "joint_id": "cmc_flexion_r",
@@ -4261,12 +4262,12 @@
         {
           "joint_id": "mp_flexion_r",
           "neutral_moment_arm_mm": 9.0186,
-          "max_sampled_abs_moment_arm_mm": 11.10813
+          "max_sampled_abs_moment_arm_mm": 11.25236
         },
         {
           "joint_id": "ip_flexion_r",
           "neutral_moment_arm_mm": 5.16053,
-          "max_sampled_abs_moment_arm_mm": 8.79942
+          "max_sampled_abs_moment_arm_mm": 8.98269
         }
       ],
       "length_range_m": [
@@ -4404,12 +4405,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 34.17772,
-          "max_sampled_abs_moment_arm_mm": 34.17772
+          "max_sampled_abs_moment_arm_mm": 34.42087
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": -1.02994,
-          "max_sampled_abs_moment_arm_mm": 5.14007
+          "max_sampled_abs_moment_arm_mm": 4.48328
         },
         {
           "joint_id": "cmc_flexion_r",
@@ -4424,7 +4425,7 @@
         {
           "joint_id": "mp_flexion_r",
           "neutral_moment_arm_mm": 9.1313,
-          "max_sampled_abs_moment_arm_mm": 9.87401
+          "max_sampled_abs_moment_arm_mm": 9.90505
         }
       ],
       "length_range_m": [
@@ -4591,12 +4592,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 20.8178,
-          "max_sampled_abs_moment_arm_mm": 21.03754
+          "max_sampled_abs_moment_arm_mm": 20.94033
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 11.21043,
-          "max_sampled_abs_moment_arm_mm": 12.84517
+          "max_sampled_abs_moment_arm_mm": 12.80184
         },
         {
           "joint_id": "cmc_flexion_r",
@@ -4611,7 +4612,7 @@
         {
           "joint_id": "mp_flexion_r",
           "neutral_moment_arm_mm": -7.11974,
-          "max_sampled_abs_moment_arm_mm": 7.11974
+          "max_sampled_abs_moment_arm_mm": 7.19005
         },
         {
           "joint_id": "ip_flexion_r",
@@ -4749,12 +4750,12 @@
         {
           "joint_id": "deviation_r",
           "neutral_moment_arm_mm": 26.81667,
-          "max_sampled_abs_moment_arm_mm": 32.58977
+          "max_sampled_abs_moment_arm_mm": 32.64098
         },
         {
           "joint_id": "flexion_r",
           "neutral_moment_arm_mm": 6.81128,
-          "max_sampled_abs_moment_arm_mm": 9.85879
+          "max_sampled_abs_moment_arm_mm": 11.92467
         },
         {
           "joint_id": "cmc_flexion_r",
@@ -5063,7 +5064,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": -3.48387,
-          "max_sampled_abs_moment_arm_mm": 3.7844
+          "max_sampled_abs_moment_arm_mm": 3.76547
         }
       ],
       "length_range_m": [
@@ -5191,7 +5192,7 @@
         {
           "joint_id": "pm2_flexion_r",
           "neutral_moment_arm_mm": -2.51377,
-          "max_sampled_abs_moment_arm_mm": 3.18075
+          "max_sampled_abs_moment_arm_mm": 3.11408
         }
       ],
       "length_range_m": [
@@ -5274,7 +5275,7 @@
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": 3.36452,
-          "max_sampled_abs_moment_arm_mm": 11.48814
+          "max_sampled_abs_moment_arm_mm": 11.3859
         },
         {
           "joint_id": "mcp3_abduction_r",
@@ -5387,7 +5388,7 @@
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": 2.99034,
-          "max_sampled_abs_moment_arm_mm": 5.20547
+          "max_sampled_abs_moment_arm_mm": 5.24466
         },
         {
           "joint_id": "mcp3_abduction_r",
@@ -5397,7 +5398,7 @@
         {
           "joint_id": "pm3_flexion_r",
           "neutral_moment_arm_mm": -1.25069,
-          "max_sampled_abs_moment_arm_mm": 1.40108
+          "max_sampled_abs_moment_arm_mm": 1.43916
         }
       ],
       "length_range_m": [
@@ -5505,7 +5506,7 @@
         {
           "joint_id": "mcp3_flexion_r",
           "neutral_moment_arm_mm": 4.62183,
-          "max_sampled_abs_moment_arm_mm": 4.63981
+          "max_sampled_abs_moment_arm_mm": 4.62183
         },
         {
           "joint_id": "mcp3_abduction_r",
@@ -5515,7 +5516,7 @@
         {
           "joint_id": "pm3_flexion_r",
           "neutral_moment_arm_mm": -1.28904,
-          "max_sampled_abs_moment_arm_mm": 1.28904
+          "max_sampled_abs_moment_arm_mm": 1.35588
         }
       ],
       "length_range_m": [
@@ -5598,12 +5599,12 @@
         {
           "joint_id": "mcp4_flexion_r",
           "neutral_moment_arm_mm": 3.42634,
-          "max_sampled_abs_moment_arm_mm": 9.89001
+          "max_sampled_abs_moment_arm_mm": 9.85652
         },
         {
           "joint_id": "mcp4_abduction_r",
           "neutral_moment_arm_mm": 6.94821,
-          "max_sampled_abs_moment_arm_mm": 8.53223
+          "max_sampled_abs_moment_arm_mm": 8.44204
         }
       ],
       "length_range_m": [
@@ -5706,17 +5707,17 @@
         {
           "joint_id": "mcp4_flexion_r",
           "neutral_moment_arm_mm": 2.37817,
-          "max_sampled_abs_moment_arm_mm": 2.91476
+          "max_sampled_abs_moment_arm_mm": 2.92886
         },
         {
           "joint_id": "mcp4_abduction_r",
           "neutral_moment_arm_mm": 3.7661,
-          "max_sampled_abs_moment_arm_mm": 4.74855
+          "max_sampled_abs_moment_arm_mm": 4.72127
         },
         {
           "joint_id": "pm4_flexion_r",
           "neutral_moment_arm_mm": -0.60182,
-          "max_sampled_abs_moment_arm_mm": 0.63753
+          "max_sampled_abs_moment_arm_mm": 0.64098
         }
       ],
       "length_range_m": [
@@ -5829,7 +5830,7 @@
         {
           "joint_id": "mcp4_flexion_r",
           "neutral_moment_arm_mm": 2.49323,
-          "max_sampled_abs_moment_arm_mm": 2.49323
+          "max_sampled_abs_moment_arm_mm": 2.53997
         },
         {
           "joint_id": "mcp4_abduction_r",
@@ -5922,7 +5923,7 @@
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": 5.70697,
-          "max_sampled_abs_moment_arm_mm": 10.60046
+          "max_sampled_abs_moment_arm_mm": 10.58889
         },
         {
           "joint_id": "mcp5_abduction_r",
@@ -6040,17 +6041,17 @@
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": 2.84954,
-          "max_sampled_abs_moment_arm_mm": 3.4926
+          "max_sampled_abs_moment_arm_mm": 3.48978
         },
         {
           "joint_id": "mcp5_abduction_r",
           "neutral_moment_arm_mm": 6.49437,
-          "max_sampled_abs_moment_arm_mm": 7.55215
+          "max_sampled_abs_moment_arm_mm": 7.50894
         },
         {
           "joint_id": "pm5_flexion_r",
           "neutral_moment_arm_mm": -3.764,
-          "max_sampled_abs_moment_arm_mm": 3.90485
+          "max_sampled_abs_moment_arm_mm": 3.764
         }
       ],
       "length_range_m": [
@@ -6163,7 +6164,7 @@
         {
           "joint_id": "mcp5_flexion_r",
           "neutral_moment_arm_mm": 3.19792,
-          "max_sampled_abs_moment_arm_mm": 3.37661
+          "max_sampled_abs_moment_arm_mm": 3.49073
         },
         {
           "joint_id": "mcp5_abduction_r",
